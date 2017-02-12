@@ -1,0 +1,97 @@
+﻿@model IEnumerable<CTM.Areas.Search.Models.RefresherTrainingViewModels.DisplayRefresherTrainingsViewModel>
+
+@{
+    DateTime today = DateTime.Today;
+    DateTime dateLastDayOfAdded2Month = new DateTime(today.Year, today.Month, 1).AddMonths(3).AddDays(-1).Date;
+    DateTime dateLastDayOfAdded1Month = new DateTime(today.Year, today.Month, 1).AddMonths(2).AddDays(-1).Date;
+    DateTime dateLastDayOfThisMonth = new DateTime(today.Year, today.Month, 1).AddMonths(1).AddDays(-1).Date;
+}
+
+
+
+    @if (Model.Any())
+    {
+
+
+        <table class="table mdl-data-table mdl-js-data-table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CabinCrewName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                @if (ViewBag.IsLatest)
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExpiryDate)
+                    </th>
+                }
+
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Remark)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CabinCrewName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    @if (ViewBag.IsLatest)
+                    {
+                        <td>
+
+                            @if (dateLastDayOfAdded2Month.Equals(item.ExpiryDate.Date))
+                            {
+                                <span class="label label-info">@Html.DisplayFor(modelItem => item.ExpiryDate)</span>
+                            }
+                            else if (dateLastDayOfAdded1Month.Equals(item.ExpiryDate.Date))
+                            {
+                                <span class="label label-warning">@Html.DisplayFor(modelItem => item.ExpiryDate)</span>
+                            }
+                            else if (dateLastDayOfThisMonth.Equals(item.ExpiryDate.Date))
+                            {
+                                <span class="label label-danger">@Html.DisplayFor(modelItem => item.ExpiryDate)</span>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.ExpiryDate)
+                            }
+
+                        </td>
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remark)
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new {id = item.ID})
+                        @*@Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    }
+    else
+    {
+        <p>@Resources.Views.ConstViews.INFO_RecordsNotFound</p>
+    }

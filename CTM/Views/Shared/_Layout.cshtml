@@ -1,0 +1,270 @@
+﻿@using CTM.Codes.Extensions
+@using CTM.Codes.Helpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Resources.Settings.ConstSettings.WebAppName</title>
+    @Styles.Render("~/bundles/bundleCss")
+    @Styles.Render("~/bundles/bundleCustomizedCSS")
+    @Scripts.Render("~/bundles/bundleModernizr")
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+</head>
+<body>
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+        <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__header-row">
+                <span class="android-title mdl-layout-title">
+                    <a href=@Url.Action("Index","Home",new { area = "Home" })>
+                        <img class="android-logo-image" src="~/Images/logo_westair.gif">
+                    </a> 
+                </span>
+                <!-- Add spacer, to align navigation to the right in desktop -->
+                <div class="android-header-spacer mdl-layout-spacer"></div>
+                @*<div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="search-field">
+                    </div>
+                </div>*@
+                
+                @* ACCOUNT  *@
+                @Html.Partial("_LoginPartial")
+              
+
+                <!-- Navigation -->
+                <div class="android-navigation-container">
+                    <nav class="android-navigation mdl-navigation">
+                        @Html.ActionLink("英语","Index","EnglishTests", new {area="Search"},new {@class="mdl-navigation__link mdl-typography--text-uppercase"})
+
+
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#DangerousGoodsTraining">危险品</a>
+                        @Html.ActionLink("复训", "Index", "RefresherTrainings", new { area = "Search" }, new { @class = "mdl-navigation__link mdl-typography--text-uppercase" })
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#Promotion">晋级</a>
+
+                    </nav>
+                </div>
+                <span class="android-mobile-title mdl-layout-title">
+                    <img class="android-logo-image" src="~/Images/logo_westair.gif">
+                </span>
+
+            </div>
+        </div>
+
+        <div class="android-drawer mdl-layout__drawer">
+            <span class="mdl-layout-title">
+                <img class="android-logo-image" src="~/Images/logo_westair.gif">
+            </span>
+            <nav class="mdl-navigation">
+                @Html.ActionLink("英语", "Index", "EnglishTests", new { area = "Search" }, new { @class = "mdl-navigation__link mdl-typography--text-uppercase" })
+
+
+
+                @*<a class="mdl-navigation__link mdl-typography--text-uppercase" href="#EnglishTest">英语</a>*@
+                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#DangerousGoodsTraining">危险品</a>
+                @Html.ActionLink("复训", "Index", "RefresherTrainings", new { area = "Search" }, new { @class = "mdl-navigation__link mdl-typography--text-uppercase" })
+                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#Promotion">晋级</a>
+
+
+            </nav>
+        </div>
+        <!-- MDL Progress Bar with Indeterminate Progress -->
+        <div id="loader">
+            <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        </div>
+        <div class="mdl-layout__content">
+        
+            @RenderBody()
+        </div>
+    </div>
+    
+    @* -- Loader Start -- *@
+
+@*<svg id="loader" class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+    <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+</svg>*@
+
+
+@* -- Loader End -- *@
+    
+<!-- #region Message_box_modal -->
+    <!-- Modal Structure -->
+    <div id="message_box_modal" class="modal message_box_modal">
+        <div class="modal-content">
+            <h4>@Resources.Views.ConstViews.INFO_Confirm</h4>
+            <p>@Resources.Views.ConstViews.INFO_Confirm_String</p>
+        </div>
+        <div class="modal-footer">
+            <a class=" modal-action modal-close waves-effect waves-green btn-flat">@Resources.Views.ConstViews.BTN_No</a>
+
+            <a  class=" modal-action modal-close waves-effect waves-green btn-flat btn-yes">@Resources.Views.ConstViews.BTN_Yes</a>
+        </div>
+    </div>
+<!-- #endregion -->
+    
+<!-- #region mid_size_modal -->
+<!-- Modal Structure -->
+<div id="mid_size_modal" class="modal  mid_size_modal">
+    <div class="modal-content">
+        @*<h4>Modal Header</h4>*@
+        <div id="mid_size_modal_content"></div>
+    </div>
+   @* <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+    </div>*@
+</div>
+
+    <!-- #endregion -->
+    
+    
+<!-- #region Alert -->
+@*<div id="alert">
+
+
+</div>*@
+    @Html.Alert(text:"").Attributes( htmlAttributes: new { id = "alert" })
+
+<!-- #endregion -->
+    
+@Scripts.Render("~/bundles/bundleJquery")
+@Scripts.Render("~/bundles/bundleJqueryval")
+@Scripts.Render("~/bundles/bundleBootstrap")
+@Scripts.Render("~/bundles/bundleCustomizedJS")
+@RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<script>
+    // Methods 
+    // Event handler when mid size modal is opened.
+    function openMidSizeModal() {
+        // Open
+        $("#mid_size_modal").modal('open');
+
+        openModal("mid_size_modal", true);
+    };
+
+
+    $(function () {
+        
+
+
+        //Get all cabin crew names for autocomplete
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetCabinCrewNames","CabinCrews", new { area = "ManageData" })"
+        }).done(function (data) {
+
+            var returnData = jQuery.parseJSON(data);
+
+            $('#mid_size_modal form input.autocomplete').autocomplete({
+                data: returnData
+            });
+        }).fail(function () {
+            console("ajax failed");
+        });
+
+
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal({
+
+            ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+
+                // Set the data-url for yes btn based on thr trigger button
+                console.log(modal, trigger);
+                $('.message_box_modal').find('.btn-yes').attr('data-url', trigger.data('url')).attr('data-rowid', trigger.data('rowid'));
+            },
+            complete: function() {
+
+            } // Callback for Modal close
+        });
+
+
+
+        // Modal del confirm button click event
+        $(".btn-yes").on("click",
+            function () {
+                var data_url = $(this).data("url");
+                var data_rowid = $(this).data("rowid");
+                $.ajax({
+                    type: "GET",
+                    url: data_url
+                }).done(function (data) {
+
+                    // Del the row if qurested
+
+                    console.log(data_rowid);
+                    if (data_rowid !=="undefined") {
+                        // If row id is defined,delete the row
+                        console.log($("#" + data_rowid));
+                        $("#" + data_rowid).css("display", "none");
+                    }
+
+                }).fail(function () {
+                    console.log("ajax failed");
+                });
+            });
+
+        // Search button click event
+        // Clear current search result
+        $(".search_btn").on("click",
+            function () {
+                $("#search_result_table").empty();
+            });
+
+
+        //Get all cabin crew names
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetCabinCrewNames","CabinCrews", new { area = "ManageData" })"
+        }).done(function (data) {
+
+            var returnData = jQuery.parseJSON(data);
+
+            $('input.autocomplete').autocomplete({
+                data: returnData
+            });
+        }).fail(function () {
+            console("ajax failed");
+        });
+
+        // AJAX Global Settings   
+        $(document).ajaxStart(function () {
+            $("#loader").css("display", "block");
+        });
+
+        $(document).ajaxComplete(function () {
+            $("#loader").css("display", "none");
+        });
+
+        $(document).ajaxSuccess(function () { 
+            $("#alert").fadeOut().empty();         
+        });
+
+
+        $(document).ajaxError(function (event,jqxhr, settings) {
+
+            console.log(jqxhr);
+            console.log(settings);
+            // If server effor:
+            if (jqxhr.status === 500) {
+                showAlert(jqxhr.responseText,"danger");
+            } else {
+                showAlert(jqxhr.statusText);
+            }
+        });
+
+
+
+    });
+
+
+</script>

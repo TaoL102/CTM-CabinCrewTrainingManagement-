@@ -1,0 +1,1030 @@
+﻿/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+body {
+    margin: 0;
+    background-color: #f3f3f3;
+    font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
+}
+
+/* Disable ugly boxes around images in IE10 */
+a img {
+    border: 0px;
+}
+
+::-moz-selection {
+    background-color: #682687;
+    color: #fff;
+}
+
+::selection {
+    background-color: #682687;
+    color: #fff;
+}
+
+.android-search-box .mdl-textfield__input {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.android-header .mdl-menu__container {
+    z-index: 50;
+    margin: 0 !important;
+}
+
+
+.mdl-textfield--expandable {
+    width: auto;
+}
+
+.android-fab {
+    position: absolute;
+    right: 20%;
+    bottom: -26px;
+    z-index: 3;
+    background: #64ffda !important;
+    color: black !important;
+}
+
+.android-mobile-title {
+    display: none !important;
+}
+
+
+.android-logo-image {
+    height: 42px;
+    width: 102px;
+}
+
+
+.android-header {
+    overflow: visible;
+    background-color: white;
+}
+
+    .android-header .material-icons {
+        color: #767777 !important;
+    }
+
+    .android-header .mdl-layout__drawer-button {
+        background: transparent;
+        color: #767777;
+    }
+
+    .android-header .mdl-navigation__link {
+        color: #757575;
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+.android-navigation-container {
+    /* Simple hack to make the overflow happen to the left instead... */
+    direction: rtl;
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1;
+    width: 500px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.android-navigation {
+    /* ... and now make sure the content is actually LTR */
+    direction: ltr;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    width: 800px;
+}
+
+.android-search-box.is-focused + .android-navigation-container {
+    opacity: 0;
+    width: 100px;
+}
+
+
+.android-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    line-height: 68px;
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+}
+
+    .android-navigation .mdl-navigation__link:hover {
+        border-bottom: 4px solid #682687;
+    }
+
+.android-search-box {
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.android-more-button {
+    -webkit-order: 3;
+    -ms-flex-order: 3;
+    order: 3;
+}
+
+
+.android-drawer {
+    border-right: none;
+}
+
+.android-drawer-separator {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+}
+
+.android-drawer .mdl-navigation__link.mdl-navigation__link {
+    font-size: 14px;
+    color: #757575;
+}
+
+.android-drawer span.mdl-navigation__link.mdl-navigation__link {
+    color: #682687;
+}
+
+.android-drawer .mdl-layout-title {
+    position: relative;
+    background: #682687;
+    height: 160px;
+}
+
+.android-drawer .android-logo-image {
+    position: absolute;
+    bottom: 16px;
+}
+
+.android-be-together-section {
+    position: relative;
+    height: 800px;
+    width: auto;
+    background-color: #f3f3f3;
+    /*background: url('images/slide01.jpg') center 30% no-repeat;*/
+    background-size: cover;
+}
+
+.logo-font {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    line-height: 1;
+    color: #767777;
+    font-weight: 500;
+}
+
+.android-slogan {
+    font-size: 60px;
+    padding-top: 160px;
+}
+
+.android-sub-slogan {
+    font-size: 21px;
+    padding-top: 24px;
+}
+
+.android-create-character {
+    font-size: 21px;
+    padding-top: 400px;
+}
+
+    .android-create-character a {
+        text-decoration: none;
+        color: #767777;
+        font-weight: 300;
+    }
+
+.android-screen-section {
+    position: relative;
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.android-screens {
+    text-align: right;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.android-screen {
+    text-align: center;
+}
+
+    .android-screen .android-link {
+        margin-top: 16px;
+        display: block;
+        z-index: 2;
+    }
+
+.android-image-link {
+    text-decoration: none;
+}
+
+.android-wear {
+    display: inline-block;
+    width: 160px;
+    margin-right: 32px;
+}
+
+    .android-wear .android-screen-image {
+        width: 40%;
+        z-index: 1;
+    }
+
+
+.android-phone {
+    display: inline-block;
+    width: 64px;
+    margin-right: 48px;
+}
+
+    .android-phone .android-screen-image {
+        width: 100%;
+        z-index: 1;
+    }
+
+
+.android-tablet {
+    display: inline-block;
+    width: 110px;
+    margin-right: 64px;
+}
+
+    .android-tablet .android-screen-image {
+        width: 100%;
+        z-index: 1;
+    }
+
+    .android-tablet .android-link {
+        display: block;
+        z-index: 2;
+    }
+
+
+.android-tv {
+    display: inline-block;
+    width: 300px;
+    margin-right: 80px;
+}
+
+    .android-tv .android-screen-image {
+        width: 100%;
+        z-index: 1;
+    }
+
+
+.android-auto {
+    display: inline-block;
+    width: 300px;
+    overflow: hidden;
+}
+
+    .android-auto .android-screen-image {
+        display: block;
+        height: 300px;
+        z-index: 1;
+    }
+
+
+.android-wear-section {
+    position: relative;
+    background: url('images/wear.png') center top no-repeat;
+    background-size: cover;
+    height: 800px;
+}
+
+.android-wear-band {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #37474f;
+}
+
+.android-wear-band-text {
+    max-width: 800px;
+    margin-left: 25%;
+    padding: 24px;
+    text-align: left;
+    color: white;
+}
+
+    .android-wear-band-text p {
+        padding-top: 8px;
+    }
+
+.android-link {
+    text-decoration: none;
+    color: #682687 !important;
+}
+
+    .android-link:hover {
+        color: #7cb342 !important;
+    }
+
+    .android-link .material-icons {
+        position: relative;
+        top: -1px;
+        vertical-align: middle;
+    }
+
+.android-alt-link {
+    text-decoration: none;
+    color: #64ffda !important;
+    font-size: 16px;
+}
+
+    .android-alt-link:hover {
+        color: #00bfa5 !important;
+    }
+
+    .android-alt-link .material-icons {
+        position: relative;
+        top: 6px;
+    }
+
+.android-customized-section {
+    text-align: center;
+}
+
+.android-customized-section-text {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 80px 16px 0 16px;
+}
+
+    .android-customized-section-text p {
+        padding-top: 16px;
+    }
+
+.android-customized-section-image {
+    background: url('images/devices.jpg') center top no-repeat;
+    background-size: cover;
+    height: 400px;
+}
+
+.android-more-section {
+    padding: 80px 0;
+    max-width: 1044px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .android-more-section .android-section-title {
+        margin-left: 12px;
+        padding-bottom: 24px;
+    }
+
+.android-card-container {
+}
+
+    .android-card-container .mdl-card__media {
+        overflow: hidden;
+        background: transparent;
+    }
+
+        .android-card-container .mdl-card__media img {
+            width: 100%;
+        }
+
+    .android-card-container .mdl-card__title {
+        background: transparent;
+        height: auto;
+    }
+
+    .android-card-container .mdl-card__title-text {
+        color: black;
+        height: auto;
+    }
+
+    .android-card-container .mdl-card__supporting-text {
+        height: auto;
+        color: black;
+        padding-bottom: 56px;
+    }
+
+    .android-card-container .mdl-card__actions {
+        position: absolute;
+        bottom: 0;
+    }
+
+        .android-card-container .mdl-card__actions a {
+            border-top: none;
+            font-size: 16px;
+        }
+
+.android-footer {
+    background-color: #fafafa;
+    position: relative;
+}
+
+    .android-footer a:hover {
+        color: #682687;
+    }
+
+    .android-footer .mdl-mega-footer--top-section::after {
+        border-bottom: none;
+    }
+
+    .android-footer .mdl-mega-footer--middle-section::after {
+        border-bottom: none;
+    }
+
+    .android-footer .mdl-mega-footer--bottom-section {
+        position: relative;
+    }
+
+        .android-footer .mdl-mega-footer--bottom-section a {
+            margin-right: 2em;
+        }
+
+    .android-footer .mdl-mega-footer--right-section a .material-icons {
+        position: relative;
+        top: 6px;
+    }
+
+
+.android-link-menu:hover {
+    cursor: pointer;
+}
+
+
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+    .android-navigation-container {
+        display: none;
+    }
+
+    .android-title {
+        display: none !important;
+    }
+
+    .android-mobile-title {
+        display: block !important;
+        position: absolute;
+        left: calc(50% - 70px);
+        top: 12px;
+        transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
+     consecutive "+" operators in some cases. Therefore, we need to use both
+     here to cover all the bases. */
+    .android.android-search-box.is-focused ~ .android-mobile-title,
+    .android-search-box.is-focused + .android-navigation-container + .android-mobile-title {
+        opacity: 0;
+    }
+
+    .android-more-button {
+        display: none;
+    }
+
+    .android-search-box.is-focused {
+        width: calc(100% - 48px);
+    }
+
+    .android-search-box .mdl-textfield__expandable-holder {
+        width: 100%;
+    }
+
+    .android-be-together-section {
+        height: 350px;
+    }
+
+    .android-slogan {
+        font-size: 26px;
+        margin: 0 16px;
+        padding-top: 24px;
+    }
+
+    .android-sub-slogan {
+        font-size: 16px;
+        margin: 0 16px;
+        padding-top: 8px;
+    }
+
+    .android-create-character {
+        padding-top: 200px;
+        font-size: 16px;
+    }
+
+        .android-create-character img {
+            height: 12px;
+        }
+
+    .android-fab {
+        display: none;
+    }
+
+    .android-wear-band-text {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .android-footer .mdl-mega-footer--bottom-section {
+        display: none;
+    }
+}
+
+a:hover, a:focus {
+
+     text-decoration: none;
+}
+
+/*#region ALL */
+
+a {
+    color: black;
+}
+
+.mdl-layout__content {
+    /*padding-top: 30px;
+    padding-left: 10%;
+    padding-right: 10%;*/
+    z-index: unset;
+}
+
+.mdl-data-table {
+    width: 100%;
+    white-space: normal;
+}
+
+.label-warning {
+    background-color: #ff9800;
+}
+
+.label-info {
+    background-color: #00bcd4;
+}
+
+.label-danger {
+    background-color: #f44336;
+}
+
+.label {
+    border-radius: 12px;
+    padding: 5px 12px;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.label {
+    display: inline;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+
+
+.autocomplete-content {
+    position: absolute;
+}
+
+form {
+    height: 100%;
+    display: inline;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.mdl-data-table td, th {
+    text-align: center;
+}
+
+.font-primary {
+    color:#00bcd4 !important
+}
+
+.font-accent {
+    color: #7cb342 !important;
+}
+
+.font-warning {
+    color: #ff9800 !important;
+}
+
+.font-info {
+    color: #00bcd4 !important;
+}
+
+.font-danger {
+    color: #f44336 !important;
+}
+
+.background-info {
+    background: #00bcd4 !important;
+}
+
+.background-danger {
+    background: #f44336 !important;
+    color: black;
+}
+
+/*#endregion */
+
+/*#region Pagination */
+.pagination li a {
+    font-size: 1rem;
+    padding: 0;
+}
+/*#endregion */
+/*#region Loader */
+.spinner {
+    -webkit-animation: rotator 1.4s linear infinite;
+    animation: rotator 1.4s linear infinite;
+    position: fixed;
+    z-index: 2000;
+    height: 2em;
+    width: 2em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+
+
+@-webkit-keyframes rotator {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+}
+
+@keyframes rotator {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+}
+
+.path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+
+    25% {
+        stroke: #DE3E35;
+    }
+
+    50% {
+        stroke: #F7C223;
+    }
+
+    75% {
+        stroke: #1B9A59;
+    }
+
+    100% {
+        stroke: #4285F4;
+    }
+}
+
+@keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+
+    25% {
+        stroke: #DE3E35;
+    }
+
+    50% {
+        stroke: #F7C223;
+    }
+
+    75% {
+        stroke: #1B9A59;
+    }
+
+    100% {
+        stroke: #4285F4;
+    }
+}
+
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+
+    50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+
+    50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+    }
+}
+
+
+/* -- Loader End-- */
+
+/*  --  MDL loader start --*/
+#loader {
+    display: none;
+}
+
+.mdl-progress {
+    width: 100%;
+}
+/* -- MDL loader end --*/
+
+/*#endregion */
+
+
+/*#region Login */
+
+
+.login-page-mdl-grid {
+   
+    max-width: 600px;
+    min-width: 350px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /*
+  Nope =(
+  margin-left: -25%;
+  margin-top: -25%;
+  */
+    /* 
+  Yep!
+  */
+    transform: translate(-50%, -50%);
+    /*
+  Not even necessary really. 
+  e.g. Height could be left out!
+  */
+    width: 40%;
+    /*height: 50%;*/
+}
+
+.login-page-mdl-grid > form{
+
+    width: 100%
+}
+
+.login-card-wide.mdl-card {
+    width: unset;
+   
+}
+
+.login-card-wide  > .mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background-image: url('../Images/login_card_bg.jpg') ;
+}
+
+.login-card-wide > .mdl-card__menu {
+    color: #fff;
+}
+
+.login-card-wide > .mdl-card__supporting-text {
+
+    width: 100%;
+}
+
+
+/*#endregion */
+
+
+/*#region Home page */
+
+
+.home-englishtest-section {
+    position: relative;
+    padding-top: 60px;
+    padding-bottom: 80px;
+    background-color: #f3f3f3;
+}
+
+.home-dangerousgoodstraining-section {
+    position: relative;
+    padding-top: 60px;
+    padding-bottom: 80px;
+   
+}
+
+.home-refreshertraining-section {
+    position: relative;
+    padding-top: 60px;
+    padding-bottom: 80px;
+    background-color: #f3f3f3;
+}
+
+.home-promotion-section {
+    position: relative;
+    padding-top: 60px;
+    padding-bottom: 80px;
+   
+}
+
+
+
+/*#endregion */
+
+
+/*#region English Test page */
+
+
+.englishtest-query-mdl-grid {
+    max-width: 70%;
+    margin-top: 10%;
+
+}
+
+.englishtest-query-sub-mdl-grid {
+    width: inherit;
+}
+
+.englishtest-query-mdl-grid > form {
+   width: 100%;
+}
+
+.englishtest-query-mdl-card {
+    width: 100%;
+    padding: 20px;
+    overflow: unset;
+    margin-bottom: 40px;
+}
+
+    .englishtest-query-mdl-card > .mdl-card__title {
+        color: #fff;
+        height: 176px;
+        background-image: url('../Images/login_card_bg.jpg');
+    }
+
+    .englishtest-query-mdl-card > .mdl-card__menu {
+        color: #fff;
+    }
+
+    .englishtest-query-mdl-card > .mdl-card__supporting-text {
+        width: 100%;
+    }
+
+
+/*#endregion */
+
+
+
+/*#region Admin data */
+
+
+.admin-data-card-square.mdl-card {
+    width: 320px;
+    height: 320px;
+}
+
+.admin-data-card-square > .mdl-card__title {
+    color: #fff;
+    background: url('../Images/bg_dog.png') bottom right 15% no-repeat orange;
+}
+
+
+/*#endregion */
+
+
+/*#region _Shared_layout*/
+
+.message_box_modal {
+    width: 300px;
+    height: 185px;
+    bottom: 10%;
+}
+
+@media only screen and (max-width: 400px) {
+    .message_box_modal {
+        width: 80%;
+    }
+}
+
+.message_box_modal h4 {
+    font-size: 1.5em;
+}
+
+
+.mid_size_modal {
+    width: 500px;
+    top: 5%;
+    bottom: 5%;
+    height: 90%;
+    max-height: 90%;
+}
+
+@media only screen and (max-width: 500px) {
+    .mid_size_modal {
+        width: 80%;
+    }
+}
+
+.mid_size_modal h4 {
+    font-size: 1.5em;
+}
+
+
+/*#endregion*/
+
+
+/*#region Floating btn */
+
+.btn_li_transparent {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: transparent;
+    color: white;
+}
+
+    .btn_li_transparent:focus {
+
+        background-color: unset;
+    }
+/*#endregion */
+
+
+/*#region alert */
+
+#alert {
+       position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 3;
+    border-radius: 0;
+    padding: 10px;
+    display: none;
+}
+
+
+/*#endregion */
+
+
+
+

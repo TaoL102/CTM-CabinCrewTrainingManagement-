@@ -1,0 +1,170 @@
+﻿@inherits CTM.App_Code.HelperPage
+@using System.Dynamic
+@using System.Web.Mvc
+@using System.Web.Mvc.Ajax
+@using System.Web.Mvc.Html
+@using System.Web.Routing
+@using CTM.Codes.Extensions
+@using CTM.Codes.Helpers
+@using log4net.Util.TypeConverters
+
+
+<!-- #region Text_Box_AutoComplete -->
+
+@helper Text_Box_AutoComplete(string name, string id, string labelText, string placeholder)
+        {
+if (!string.IsNullOrEmpty(labelText))
+{
+        @Html.Label(labelText, labelText, new { @for = id })
+}
+
+    @Html.TextBox(name, null, new { @class = ConstantHelper.CssTextBoxAutoComplete, id = id, placeholder = placeholder ?? "" })
+
+}
+<!-- #endregion -->
+<!-- #region Date_Picker -->
+
+@helper Date_Picker(string name, string id, string labelText)
+        {
+if (!string.IsNullOrEmpty(labelText))
+{
+        @Html.Label(labelText, labelText, new { @for = id })
+}
+    <input class="datepicker" id=@id name=@name type="date">
+
+}
+<!-- #endregion -->
+<!-- #region DropDown_List -->
+
+@helper DropDown_List(string name, string id, string labelText, string optionLabel, IEnumerable<System.Web.Mvc.SelectListItem> selectList)
+        {
+
+if (!string.IsNullOrEmpty(labelText))
+{
+        @Html.Label(labelText, labelText, new { @for = id })
+}
+    @Html.DropDownList(name, (SelectList)selectList, optionLabel ?? "", htmlAttributes: new { id = id })
+}
+<!-- #endregion -->
+<!-- #region Check_Box -->
+@helper Check_Box(string name, string id, string labelText)
+        {
+
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for=@id>
+        <input type="checkbox" id=@id class="mdl-checkbox__input" value="true" name=@name>
+        <input type="hidden" value="false" name=@name />
+        <span class="mdl-checkbox__label">@labelText</span>
+    </label>
+}
+<!-- #endregion -->
+<!-- #region Button_Default -->
+@helper Button_Default(string value, string id, string materialIconName, object htmlAttributes, bool isSubmit)
+        {
+
+// Add default button css class
+var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnDefault);
+htmlAttributesDic.Add("id", id);
+
+    @Html.Button().BtnText(value).MaterialIcon(materialIconName).SubmitBtn(isSubmit).Attributes(htmlAttributesDic)
+
+}
+<!-- #endregion -->
+<!-- #region Button_Icon -->
+@helper Button_Icon(string value, string id, string materialIconName, object htmlAttributes, bool isSubmit = false, bool isLinkBtn = false)
+{
+// Add default button css class
+var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnIcon);
+    htmlAttributesDic.Add("id",id);
+
+    @Html.Button().BtnText(value).MaterialIcon(materialIconName).SubmitBtn(isSubmit).LinkBtn(isLinkBtn).Attributes(htmlAttributesDic)
+
+}
+<!-- #endregion -->
+<!-- #region Ajax_Button_Icon -->
+@helper Ajax_Button_Icon(string actionName, string controllerName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes, string btnText, string id, string materialIconName, string updateTargetId, string loadingElementId, bool isLinkBtn = false)
+{
+// Add default button css class
+var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnIcon);
+
+  //  @Ajax.Button(actionName, controllerName, routeValues, htmlAttributesDic, btnText, null, materialIconName, updateTargetId, loadingElementId, isLinkBtn)
+    @Ajax.Button(actionName,controllerName,updateTargetId,loadingElementId).BtnText(btnText).MaterialIcon(materialIconName).LinkBtn(isLinkBtn).Attributes(htmlAttributesDic).RouteValues(routeValues);
+}
+<!-- #endregion -->
+
+
+<!-- #region Pagination -->
+@helper Pagination(string actionName, string controllerName, string updateTargetId, string loadingElementId, object routeValues, int currentPage, int lastPage)
+{
+var trueCurrentPage = currentPage;
+currentPage = currentPage >= lastPage - 3 ? lastPage - 4 : currentPage;
+var prePage = trueCurrentPage - 1;
+var nextPage = trueCurrentPage + 1;
+var currentPageMinus1 = currentPage - 1;
+var currentPagePlus1 = currentPage + 1;
+var currentPageMinus2 = currentPage - 2;
+var currentPagePlus2 = currentPage + 2;
+string[] pageArray = new string[9];
+pageArray[0] = "1";
+pageArray[8] = lastPage.ToString();
+if (lastPage <= 7 || trueCurrentPage <= 5)
+{
+    for (int i = 2; i <=7; i++)
+    {
+        pageArray[i - 1] = i.ToString();
+    }
+
+}
+else
+{
+    pageArray[1] = "...";
+    pageArray[2] = currentPageMinus2.ToString();
+    pageArray[3] = currentPageMinus1.ToString();
+    pageArray[4] = currentPage.ToString();
+    pageArray[5] = currentPagePlus1.ToString();
+    pageArray[6] = currentPagePlus2.ToString();
+
+}
+if (currentPage >= lastPage - 4)
+{
+    pageArray[7] = (lastPage - 1).ToString();
+}
+else
+{
+    pageArray[7] = "...";
+
+}
+var htmlAttributes=new Dictionary<string, object>();
+var htmlAttributesCurrentPage = HtmlHelperExtension.AddCssClass(null, ConstantHelper.CssColorFontPrimary+" "+ ConstantHelper.CssUnclickable);
+var htmlAttributesUnClickablePage = HtmlHelperExtension.AddCssClass(null, ConstantHelper.CssUnclickable);
+
+    <ul class="pagination">
+        <li>
+            @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = prePage }),prePage<=0? htmlAttributesUnClickablePage:null, null, null, "chevron_left", updateTargetId, loadingElementId, true)
+        </li>
+        @foreach (string t in pageArray)
+        {
+            string page;
+
+            try
+            {
+                page= Convert.ToInt32(t).ToString();
+                htmlAttributes = page.Equals(trueCurrentPage.ToString()) ? htmlAttributesCurrentPage : null;
+            }
+            catch (Exception e)
+            {
+                page = t;
+                htmlAttributes = htmlAttributesUnClickablePage;
+            }
+
+            <li>
+                @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = page }), htmlAttributes, page, null, null, updateTargetId, loadingElementId, true)
+            </li>
+        }
+        <li>
+            @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = nextPage }),trueCurrentPage>=lastPage? htmlAttributesUnClickablePage:null, null, null, "chevron_right", updateTargetId, loadingElementId, true)
+        </li>
+
+    </ul>
+
+}
+<!-- #endregion -->

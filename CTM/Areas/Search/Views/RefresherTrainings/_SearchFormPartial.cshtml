@@ -1,0 +1,65 @@
+﻿@using (Ajax.BeginForm("Search", "RefresherTrainings",new {area="Search"}, new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "search_result_table",
+    LoadingElementId = "loader"
+}, new { id = "form_search" }))
+{
+    <div class="englishtest-query-mdl-card mdl-card mdl-shadow--2dp">
+
+        <div class="mdl-grid englishtest-query-sub-mdl-grid">
+            <div class="mdl-cell mdl-cell--3-col">
+                @*// Name search*@
+                <div class="input-field col s6">
+
+                    @Html.TextBox("CCName", null, new { @class = "validate autocomplete", id = "CCName", placeholder = "姓名" })
+                    <label for="CCName">姓名</label>
+                </div>
+            </div>
+            <div class="mdl-cell mdl-cell--3-col">
+                @* // CategoryName search*@
+                <div class="input-field col s6">
+
+                    @Html.DropDownList("CategoryID", (SelectList)ViewBag.CategoryList, "类型", htmlAttributes: new { @class = "input-field col s12", id = "Category" })
+                    <label for="CategoryName">类型</label>
+
+                </div>
+            </div>
+
+            <div class="mdl-cell mdl-cell--3-col">
+                @*// FromTime search*@
+                <div class="input-field col s6">
+                    <label for="Date">年、月</label>
+                    <input class="datepicker" id="Date" name="Date" type="date">
+
+                </div>
+            </div>
+
+            @*<i class="material-icons" style="margin: auto">arrow_forward</i>*@
+
+
+            <div class="">
+                <div class="mdl-cell mdl-cell--12-col">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="IsLatest">
+                        <input type="checkbox" id="IsLatest" class="mdl-checkbox__input" value="true" name="IsLatest">
+                        <input type="hidden" value="false" name="IsLatest" />
+                        <span class="mdl-checkbox__label">仅显示当前有效培训 （忽略培训类型和时间区间）</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--6-col">
+                <button type="submit" class="btn btn-simple search_btn" value="Filter" style="width: 100%"><i class="material-icons">search</i></button>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col">
+                <button type="button" class="btn btn-simple search_btn" value="Download" style="width: 100%" onclick="this.form.submit();"><i class="material-icons">file_download</i></button>
+            </div>
+        </div>
+    </div>
+}

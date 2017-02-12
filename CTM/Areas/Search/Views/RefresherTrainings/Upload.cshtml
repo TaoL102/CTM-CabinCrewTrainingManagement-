@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+
+}
+
+<h2>Upload</h2>
+
+
+
+<div class="form-horizontal">
+    <h4>复训上传</h4>
+
+    @using (Html.BeginForm("DownloadTemplate", "RefresherTrainings", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="下载模板" class="mdl-button mdl-js-button mdl-button--primary" />
+            </div>
+        </div>
+    }
+
+    <hr />
+    @using (Html.BeginForm("Upload", "RefresherTrainings", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @* CategoryName*@
+        <div class="form-group">
+            @Html.DisplayName("类型")
+            @Html.DropDownList("CategoryNameID", (SelectList)ViewBag.CategoryList, null, htmlAttributes: new { @class = "form-control" })
+
+
+        </div>
+
+        @*date*@
+        <div class="form-group">
+            @Html.DisplayName("日期")
+            <input class="form-control text-box single-line valid" data-val="true" data-val-date="The field 日期 must be a date." data-val-required="The 日期 field is required." id="Date" name="Date" type="date">
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="file" name="upload" id="ExcelUrl" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" class="btn btn-raised btn-round btn-default btn-file">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" class="mdl-button mdl-js-button mdl-button--primary" />
+            </div>
+        </div>
+    }
+</div>

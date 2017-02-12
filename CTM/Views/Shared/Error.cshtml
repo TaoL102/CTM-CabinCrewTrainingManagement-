@@ -1,0 +1,31 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = null;
+}
+@{
+    var exception = Model.Exception;
+}
+@if (new HttpException((string) null, exception).GetHttpCode() != 500)
+{
+    <div>Model.Exception.Message</div>
+}
+else
+{
+    <div >
+        <span>系统错误</span>
+        @using (Ajax.BeginForm("SendEmail", "EnglishTests",new {area="Search"}, new AjaxOptions() { HttpMethod = "POST" }))
+        {
+            @Html.Hidden("emailto", "lioutau@gmail.com");
+            @Html.Hidden("emailbody", Uri.EscapeDataString(Model.Exception.ToString()))
+            @Html.Hidden("emailSubject", Uri.EscapeDataString(Model.Exception.Message))
+            <input type="submit" class="btn btn-default" value="提交错误代码至开发者" />
+
+
+        }
+    </div>
+}
+
+
+

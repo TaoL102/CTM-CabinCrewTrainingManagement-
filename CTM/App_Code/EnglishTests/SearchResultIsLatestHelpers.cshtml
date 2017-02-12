@@ -1,0 +1,64 @@
+﻿@inherits CTM.App_Code.HelperPage<IEnumerable<CTM.Areas.Search.Models.EnglishTestViewModels.DisplayEnglishTestsIsLatestViewModel>>
+@using System.Reflection
+@using System.Web.Mvc
+@using System.Web.Mvc.Ajax
+@using System.Web.Mvc.Html
+@using System.Web.Routing
+@using CTM.Areas.Search.Models
+@using CTM.Codes.Extensions
+@using CTM.Codes.Helpers
+@using CTM.Models
+
+
+
+<!-- #region Result_Table_Header -->
+@helper Result_Table_Header_IsLatest()
+    {
+
+Dictionary<int, object> tdContentDic = new Dictionary<int, object>()
+    {
+        {1, Html.DisplayNameFor(o=>o.CabinCrewName)},
+         {2, Resources.Models.ConstModels.ResourceManager.GetString("CabinAnnoucement")},
+            {3,Resources.Models.ConstModels.ResourceManager.GetString("SpokenSkill")},
+    };
+
+Dictionary<int, object> htmlAttributesDic = new Dictionary<int, object>()
+    {
+        {2,new {colspan=3,style="border-right:1px solid rgba(0, 0, 0, 0.12);"} },
+        {3,new {colspan=3} },
+    { 1,new {style="border-right:1px solid rgba(0, 0, 0, 0.12);"}},
+};
+
+    @Html.Table_Row(null, null, tdContentDic, htmlAttributesDic)
+}
+<!-- #endregion -->
+
+<!-- #region Result_Table_Row_IsLatest -->
+
+@helper Result_Table_Row_IsLatest(EnglishTestViewModels.DisplayEnglishTestsIsLatestViewModel model)
+{
+
+
+// Contents
+Dictionary<int, object> tdContentDic = new Dictionary<int, object>()
+    {
+        {1, Html.DisplayValueFor(o=>model.CabinCrewName)},
+          {2, Html.DisplayValueFor(o=>model.CabinAnnoucementGrade)},
+           {3, Html.DisplayValueFor(o=>model.CabinAnnoucementCategoryName)},
+            {4,Html.DisplayValueFor(o=>model.CabinAnnoucementDate)},
+             {5,Html.DisplayValueFor(o=>model.SpokenSkillGrade)},
+           {6,Html.DisplayValueFor(o=>model.SpokenSkillCategoryName)},
+            {7,Html.DisplayValueFor(o=>model.SpokenSkillDate)},
+    };
+
+// Attributes
+Dictionary<int, object> htmlAttributesDic = new Dictionary<int, object>()
+{
+    { 1,new {style="border-right:1px solid rgba(0, 0, 0, 0.12);"}},
+    { 4,new {style="border-right:1px solid rgba(0, 0, 0, 0.12);"}},
+
+};
+    @Html.Table_Row(null, null, tdContentDic, htmlAttributesDic)
+}
+
+<!-- #endregion -->

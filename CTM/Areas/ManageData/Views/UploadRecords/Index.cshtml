@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CTM.Models.UploadRecord>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("上传账户")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsWithdrawn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTime)
+        </td>
+        <td>
+            @if (!item.IsWithdrawn)
+            {
+
+                    <a href="@Url.Action( "CheckDetails", new { id = item.ID})" target="_blank" value="" class="mdl-button mdl-js-button mdl-button--accent" >查看上传内容</a>
+            
+                <form action="@Url.Action( "WithDraw", new { id = item.ID })">
+                    <input type="submit" value="撤销上传" class="mdl-button mdl-js-button mdl-button--primary"/>
+                </form>
+            }
+            else
+            {
+                <button class="mdl-button mdl-js-button" disabled>
+                    已撤销
+                </button>
+            
+            }
+           
+        </td>
+        <td>
+            
+          
+            @*@Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+        </td>
+    </tr>
+}
+
+</table>

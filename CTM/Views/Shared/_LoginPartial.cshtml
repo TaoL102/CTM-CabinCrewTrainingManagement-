@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+
+@if (Request.IsAuthenticated)
+{
+    @* Message *@
+    <div class="android-search-box ">
+        <label class="mdl-button mdl-js-button mdl-button--icon" id="">
+            <i class="material-icons">message</i>
+        </label>
+
+    </div>
+
+    @* Account *@
+    <div class="android-search-box ">
+        <label class="mdl-button mdl-js-button mdl-button--icon" id="more-button">
+            <i class="material-icons">account_circle</i>
+        </label>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+            @Html.ActionLink("个人账户设置", "Index", "Manage", new { area = "ManageAccount" }, htmlAttributes: new { title = "Manage",@class="mdl-menu__item" })
+            @Html.ActionLink("后台数据管理", "Index", "AdminData", new { area = "ManageData" }, htmlAttributes: new { title = "Admin Data", @class = "mdl-menu__item" })
+            <li class="mdl-menu__item">用户权限管理</li>
+            <a class = "mdl-menu__item" href="javascript:document.getElementById('logoutForm').submit()">取消登录</a>
+        </ul>
+    </div>
+
+    using (Html.BeginForm("LogOff", "Account", new { area = "ManageAccount" }, FormMethod.Post, new { id = "logoutForm"}))
+    {
+    @Html.AntiForgeryToken()
+
+
+    }
+}
+else
+{
+    <div class="android-search-box ">
+    @* <li>@Html.ActionLink("注册", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+    <li>@Html.ActionLink("登录", "Login", "Account", new { area = "ManageAccount" }, htmlAttributes: new { id = "loginLink" })</li>
+</div>
+}
+
+

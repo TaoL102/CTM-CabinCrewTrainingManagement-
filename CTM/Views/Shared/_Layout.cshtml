@@ -1,11 +1,11 @@
-﻿@using CTM.Codes.Extensions
-@using CTM.Codes.Helpers
+﻿@using CTMLib.Extensions
+@using CTMLib.Resources
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@Resources.Settings.ConstSettings.WebAppName</title>
+    <title>@ConstSettings.WebAppName</title>
     @Styles.Render("~/bundles/bundleCss")
     @Styles.Render("~/bundles/bundleCustomizedCSS")
     @Scripts.Render("~/bundles/bundleModernizr")
@@ -97,13 +97,13 @@
     <!-- Modal Structure -->
     <div id="message_box_modal" class="modal message_box_modal">
         <div class="modal-content">
-            <h4>@Resources.Views.ConstViews.INFO_Confirm</h4>
-            <p>@Resources.Views.ConstViews.INFO_Confirm_String</p>
+            <h4>@ConstViews.INFO_Confirm</h4>
+            <p>@ConstViews.INFO_Confirm_String</p>
         </div>
         <div class="modal-footer">
-            <a class=" modal-action modal-close waves-effect waves-green btn-flat">@Resources.Views.ConstViews.BTN_No</a>
+            <a class=" modal-action modal-close waves-effect waves-green btn-flat">@ConstViews.BTN_No</a>
 
-            <a  class=" modal-action modal-close waves-effect waves-green btn-flat btn-yes">@Resources.Views.ConstViews.BTN_Yes</a>
+            <a  class=" modal-action modal-close waves-effect waves-green btn-flat btn-yes">@ConstViews.BTN_Yes</a>
         </div>
     </div>
 <!-- #endregion -->

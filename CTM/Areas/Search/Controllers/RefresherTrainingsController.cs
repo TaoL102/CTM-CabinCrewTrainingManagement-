@@ -12,9 +12,9 @@ using System.Web;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
 using CTM.Areas.Search.Models;
-using CTM.Codes.Common;
-using CTM.Codes.Helpers;
-using CTM.Models;
+using CTM.Database;
+using CTMLib.Helpers;
+using CTMLib.Models;
 using Microsoft.AspNet.Identity;
 
 namespace CTM.Areas.Search.Controllers
@@ -295,7 +295,10 @@ namespace CTM.Areas.Search.Controllers
         [HttpPost]
         public ActionResult DownloadTemplate()
         {
-            var stream = ExcelHelper.GenerateRefresherTrainingsTemplate(); // Return a MemoryStream 
+            // Get 
+            var listCabinCrews = db.CabinCrews.ToList();
+
+            var stream = ExcelHelper.GenerateRefresherTrainingsTemplate(listCabinCrews); // Return a MemoryStream 
 
             stream.Seek(0, SeekOrigin.Begin);
 

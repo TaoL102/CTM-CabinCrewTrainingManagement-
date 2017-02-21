@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
-using CTM.Codes.Common;
-using CTM.Codes.Helpers;
-using CTM.Models;
+using CTM.Database;
+using CTMLib.Helpers;
+using CTMLib.Models;
 using Newtonsoft.Json;
 
 namespace CTM.Areas.ManageData.Controllers

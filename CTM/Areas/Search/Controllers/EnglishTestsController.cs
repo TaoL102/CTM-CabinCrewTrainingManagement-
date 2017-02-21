@@ -13,15 +13,14 @@ using System.Web;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
 using CTM.Areas.Search.Models;
-using CTM.Models;
 using EntityFramework.BulkInsert.Extensions;
 using Microsoft.AspNet.Identity;
 using PagedList;
 using CTM;
-using CTM.Codes.Common;
-using CTM.Codes.Helpers;
-using CTM.Codes.Managers;
 using CTM.Controllers;
+using CTM.Managers;
+using CTMLib.Helpers;
+using CTMLib.Models;
 using static System.String;
 
 namespace CTM.Areas.Search.Controllers
@@ -413,7 +412,9 @@ namespace CTM.Areas.Search.Controllers
         [HttpPost]
         public ActionResult DownloadTemplate()
         {
-            var stream = ExcelHelper.GenerateEnglishTestTemplate(); // Return a MemoryStream 
+            // Get 
+            var listCabinCrews = _dbManager.CabinCrews.ToList();
+            var stream = ExcelHelper.GenerateEnglishTestTemplate(listCabinCrews); // Return a MemoryStream 
 
             stream.Seek(0, SeekOrigin.Begin);
 

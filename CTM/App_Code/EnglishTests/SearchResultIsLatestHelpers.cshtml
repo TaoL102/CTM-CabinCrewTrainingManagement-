@@ -5,10 +5,8 @@
 @using System.Web.Mvc.Html
 @using System.Web.Routing
 @using CTM.Areas.Search.Models
-@using CTM.Codes.Extensions
-@using CTM.Codes.Helpers
-@using CTM.Models
-
+@using CTMLib.Extensions
+@using CTMLib.Resources
 
 
 <!-- #region Result_Table_Header -->
@@ -18,8 +16,8 @@
 Dictionary<int, object> tdContentDic = new Dictionary<int, object>()
     {
         {1, Html.DisplayNameFor(o=>o.CabinCrewName)},
-         {2, Resources.Models.ConstModels.ResourceManager.GetString("CabinAnnoucement")},
-            {3,Resources.Models.ConstModels.ResourceManager.GetString("SpokenSkill")},
+         {2, ConstModels.ResourceManager.GetString("CabinAnnoucement")},
+            {3,ConstModels.ResourceManager.GetString("SpokenSkill")},
     };
 
 Dictionary<int, object> htmlAttributesDic = new Dictionary<int, object>()

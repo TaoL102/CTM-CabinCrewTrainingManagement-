@@ -225,26 +225,6 @@
   <ItemGroup>
     <Content Include="App_Code\UserRoles.cs" />
     <Content Include="App_Code\HelperPage.cs" />
-    <Compile Include="App_GlobalResources\ConstControllers.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConstControllers.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\ConstViews.designer.cs">
-      <DependentUpon>ConstViews.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="App_GlobalResources\ConstModels.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConstModels.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\ConstSettings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConstSettings.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -254,53 +234,33 @@
     <Compile Include="Areas\ManageAccount\Controllers\AccountController.cs" />
     <Compile Include="Areas\ManageAccount\Controllers\ManageController.cs" />
     <Compile Include="Areas\ManageAccount\Models\AccountViewModels.cs" />
-    <Compile Include="Codes\Attributes\IsNameAttribute.cs" />
-    <Compile Include="Codes\Common\CTMDbContext.cs" />
-    <Compile Include="Codes\Extensions\EnumExtension.cs" />
-    <Compile Include="Codes\Extensions\ModelExtension.cs" />
-    <Compile Include="Codes\Helpers\LocalizationHelper.cs" />
-    <Compile Include="Codes\Helpers\ModelHelper.cs" />
-    <Compile Include="Codes\Managers\DbManager.cs" />
+    <Compile Include="Database\CTMDbContext.cs" />
+    <Compile Include="Attributes\IsNameAttribute.cs" />
+    <Compile Include="Attributes\SystemErrorHandleAttribute.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Codes\Attributes\SystemErrorHandleAttribute.cs" />
-    <Compile Include="Codes\Helpers\ConstantHelper.cs" />
-    <Compile Include="Codes\CustomControls\AlertControl.cs" />
-    <Compile Include="Codes\CustomControls\ButtonControl.cs" />
-    <Compile Include="Codes\CustomControls\ButtonControlAjax.cs" />
-    <Compile Include="Codes\CustomControls\ICustomControl.cs" />
-    <Compile Include="Codes\Extensions\HtmlHelperExtension.cs" />
+    <Compile Include="Database\DbManager.cs" />
     <Compile Include="Migrations\201702120209221_Init.cs" />
     <Compile Include="Migrations\201702120209221_Init.Designer.cs">
       <DependentUpon>201702120209221_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Areas\ManageAccount\Models\ManageViewModels.cs" />
     <Compile Include="Areas\ManageData\ManageDataAreaRegistration.cs" />
     <Compile Include="Areas\ManageData\Controllers\AdminDataController.cs" />
     <Compile Include="Areas\ManageData\Controllers\CabinCrewsController.cs" />
     <Compile Include="Areas\ManageData\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\ManageData\Controllers\UploadRecordsController.cs" />
-    <Compile Include="Models\CabinCrew.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Log.cs" />
-    <Compile Include="Models\Model.cs" />
-    <Compile Include="Models\UploadRecord.cs" />
     <Compile Include="Areas\ManageUserRoles\ManageUserRolesAreaRegistration.cs" />
     <Compile Include="Areas\Search\Controllers\EnglishTestsController.cs" />
     <Compile Include="Areas\Search\SearchAreaRegistration.cs" />
-    <Compile Include="Models\EnglishTest.cs" />
     <Compile Include="Areas\Search\Models\EnglishTestViewModels.cs" />
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
     <Compile Include="Areas\Home\HomeAreaRegistration.cs" />
     <Compile Include="Areas\Search\Controllers\RefresherTrainingsController.cs" />
-    <Compile Include="Models\RefresherTraining.cs" />
     <Compile Include="Areas\Search\Models\RefresherTrainingViewModels.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Codes\Helpers\SqlQueryHelper.cs" />
-    <Compile Include="Codes\Helpers\ExcelHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -322,40 +282,10 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="fonts\Roboto-Bold.eot" />
-    <Content Include="fonts\Roboto-Bold.ttf" />
-    <Content Include="fonts\Roboto-Bold.woff" />
-    <Content Include="fonts\Roboto-Bold.woff2" />
-    <Content Include="fonts\Roboto-Light.eot" />
-    <Content Include="fonts\Roboto-Light.ttf" />
-    <Content Include="fonts\Roboto-Light.woff" />
-    <Content Include="fonts\Roboto-Light.woff2" />
-    <Content Include="fonts\Roboto-Medium.eot" />
-    <Content Include="fonts\Roboto-Medium.ttf" />
-    <Content Include="fonts\Roboto-Medium.woff" />
-    <Content Include="fonts\Roboto-Medium.woff2" />
-    <Content Include="fonts\Roboto-Regular.eot" />
-    <Content Include="fonts\Roboto-Regular.ttf" />
-    <Content Include="fonts\Roboto-Regular.woff" />
-    <Content Include="fonts\Roboto-Regular.woff2" />
-    <Content Include="fonts\Roboto-Thin.eot" />
-    <Content Include="fonts\Roboto-Thin.ttf" />
-    <Content Include="fonts\Roboto-Thin.woff" />
-    <Content Include="fonts\Roboto-Thin.woff2" />
-    <Content Include="fonts\MaterialIcons-Regular.eot" />
-    <Content Include="fonts\MaterialIcons-Regular.ijmap" />
-    <Content Include="fonts\MaterialIcons-Regular.ttf" />
-    <Content Include="fonts\MaterialIcons-Regular.woff" />
-    <Content Include="fonts\MaterialIcons-Regular.woff2" />
     <Content Include="Areas\ManageAccount\Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Areas\ManageAccount\Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Areas\ManageAccount\Views\Account\ExternalLoginFailure.cshtml" />
@@ -563,22 +493,11 @@
     <Folder Include="Areas\ManageUserRoles\Models\" />
     <Folder Include="Areas\ManageUserRoles\Views\Shared\" />
     <Folder Include="Areas\Search\Views\Shared\" />
-    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\ConstModels.resx">
-      <CustomToolNamespace>Resources.Models</CustomToolNamespace>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConstModels.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\ConstSettings.resx">
-      <CustomToolNamespace>Resources.Settings</CustomToolNamespace>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConstSettings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702120209221_Init.resx">
       <DependentUpon>201702120209221_Init.cs</DependentUpon>
     </EmbeddedResource>
@@ -587,23 +506,17 @@
     <WCFMetadata Include="Service Capabilities\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\ConstControllers.resx">
-      <CustomToolNamespace>Resources.Controllers</CustomToolNamespace>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConstControllers.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\ConstViews.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConstViews.designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources.Views</CustomToolNamespace>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="Scripts\TypeScript\sitemethod.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CTMLib\CTMLib.csproj">
+      <Project>{8499f3a3-45a0-4d63-a9e4-e41be2dee387}</Project>
+      <Name>CTMLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

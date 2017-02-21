@@ -1,5 +1,5 @@
 ﻿@using CTM.Areas.Search.Models
-@using CTM.Models
+@using CTMLib.Resources
 @model IEnumerable<CTM.Areas.Search.Models.EnglishTestViewModels.DisplayEnglishTestsIsLatestViewModel>
 
 
@@ -46,7 +46,7 @@
 }
 else
 {
-    <p>@Resources.Views.ConstViews.INFO_RecordsNotFound</p>
+    <p>@ConstViews.INFO_RecordsNotFound</p>
 }
 
 

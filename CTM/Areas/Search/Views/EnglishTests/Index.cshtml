@@ -1,4 +1,5 @@
-﻿@{
+﻿@using CTMLib.Resources
+@{
     ViewBag.Title = "Index";
 }
 
@@ -32,26 +33,26 @@
             <div class="mdl-grid englishtest-query-sub-mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col">
                     @*// Name search*@
-                    @SharedHelpers.Text_Box_AutoComplete("CCName", "CCName", Resources.Models.ConstModels.CabinCrewName, null)
+                    @SharedHelpers.Text_Box_AutoComplete("CCName", "CCName", ConstModels.CabinCrewName, null)
                 </div>
                 <div class="mdl-cell mdl-cell--3-col">
                     @* // CategoryNameName search*@
-                    @SharedHelpers.DropDown_List("CategoryID", "CategoryID", Resources.Models.ConstModels.Category, null, ViewBag.CategoryID)
+                    @SharedHelpers.DropDown_List("CategoryID", "CategoryID", ConstModels.Category, null, ViewBag.CategoryID)
                 </div>
 
                 <div class="mdl-cell mdl-cell--3-col">
                     @*// FromTime search*@
-                    @SharedHelpers.Date_Picker("FromDate", "FromDate", Resources.Models.ConstModels.FromDate)
+                    @SharedHelpers.Date_Picker("FromDate", "FromDate", ConstModels.FromDate)
                 </div>
 
                 @*<i class="material-icons" style="margin: auto">arrow_forward</i>*@
 
                 <div class="mdl-cell mdl-cell--3-col">
                     @*// ToTime search*@
-                    @SharedHelpers.Date_Picker("ToDate", "ToDate", Resources.Models.ConstModels.ToDate)
+                    @SharedHelpers.Date_Picker("ToDate", "ToDate", ConstModels.ToDate)
                 </div>
                 <div mdl-grid>
-                    @SharedHelpers.Check_Box("IsLatest", "IsLatest", @Resources.Views.ConstViews.EnglishTest_ValidResultOnly)
+                    @SharedHelpers.Check_Box("IsLatest", "IsLatest", ConstViews.EnglishTest_ValidResultOnly)
                 </div>
             </div>
 

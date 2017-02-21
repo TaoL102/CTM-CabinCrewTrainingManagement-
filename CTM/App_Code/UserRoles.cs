@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
+using CTMLib.Resources;
 
 namespace CTM
 {
@@ -12,15 +13,15 @@ namespace CTM
     public enum UserRole
     {
 
-        [Display(Description = "RefresherTrainingAdmin", ResourceType = typeof(Resources.Models.ConstModels))]
+        [Display(Description = "RefresherTrainingAdmin", ResourceType = typeof(ConstModels))]
         RefresherTrainingAdmin = 1 << 1,
-        [Display(Description = "EnglishTestAdmin", ResourceType = typeof(Resources.Models.ConstModels))]
+        [Display(Description = "EnglishTestAdmin", ResourceType = typeof(ConstModels))]
         EnglishTestAdmin = 1 << 2,
-        [Display(Description = "DangerousGoodsTrainingAdmin", ResourceType = typeof(Resources.Models.ConstModels))]
+        [Display(Description = "DangerousGoodsTrainingAdmin", ResourceType = typeof(ConstModels))]
         DangerousGoodsTrainingAdmin = 1 << 3,
-        [Display(Description = "PromotionAdmin", ResourceType = typeof(Resources.Models.ConstModels))]
+        [Display(Description = "PromotionAdmin", ResourceType = typeof(ConstModels))]
         PromotionAdmin = 1 << 4,
-        [Display(Description = "SuperAdmin", ResourceType = typeof(Resources.Models.ConstModels))]
+        [Display(Description = "SuperAdmin", ResourceType = typeof(ConstModels))]
         SuperAdmin = (
             EnglishTestAdmin |
             RefresherTrainingAdmin |

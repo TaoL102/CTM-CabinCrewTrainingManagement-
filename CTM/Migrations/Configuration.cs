@@ -5,14 +5,14 @@ namespace CTM.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CTM.Codes.Common.CTMDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CTM.Database.CTMDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CTM.Codes.Common.CTMDbContext context)
+        protected override void Seed(CTM.Database.CTMDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -4,8 +4,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
-using CTM.Codes.Common;
-using CTM.Models;
+using CTM.Database;
+using CTMLib.Models;
 
 namespace CTM.Areas.ManageData.Controllers
 {

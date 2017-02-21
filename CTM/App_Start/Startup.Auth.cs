@@ -1,7 +1,7 @@
 ﻿using System;
 using CTM.Areas.ManageAccount.Models;
-using CTM.Codes.Common;
-using CTM.Models;
+using CTM.Database;
+using CTMLib.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

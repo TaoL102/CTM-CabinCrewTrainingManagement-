@@ -234,6 +234,10 @@
     <Compile Include="Areas\ManageAccount\Controllers\AccountController.cs" />
     <Compile Include="Areas\ManageAccount\Controllers\ManageController.cs" />
     <Compile Include="Areas\ManageAccount\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\ManageData\Controllers\EnglishTestsController.cs" />
+    <Compile Include="Areas\ManageData\Controllers\RefresherTrainingsController.cs" />
+    <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResult.cs" />
+    <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResultIsLatest.cs" />
     <Compile Include="Database\CTMDbContext.cs" />
     <Compile Include="Attributes\IsNameAttribute.cs" />
     <Compile Include="Attributes\SystemErrorHandleAttribute.cs" />
@@ -253,11 +257,10 @@
     <Compile Include="Areas\ManageUserRoles\ManageUserRolesAreaRegistration.cs" />
     <Compile Include="Areas\Search\Controllers\EnglishTestsController.cs" />
     <Compile Include="Areas\Search\SearchAreaRegistration.cs" />
-    <Compile Include="Areas\Search\Models\EnglishTestViewModels.cs" />
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
     <Compile Include="Areas\Home\HomeAreaRegistration.cs" />
     <Compile Include="Areas\Search\Controllers\RefresherTrainingsController.cs" />
-    <Compile Include="Areas\Search\Models\RefresherTrainingViewModels.cs" />
+    <Compile Include="Areas\Search\ViewModels\RefresherTrainings\RefresherTrainingViewModels.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -315,22 +318,14 @@
     <Content Include="Areas\ManageData\Views\Categories\Index.cshtml" />
     <Content Include="Areas\ManageData\Views\UploadRecords\Index.cshtml" />
     <Content Include="Areas\ManageData\Views\web.config" />
-    <Content Include="Areas\Search\Views\EnglishTests\_CreatePartial.cshtml" />
-    <Content Include="Areas\Search\Views\EnglishTests\_EditPartial.cshtml" />
     <Content Include="Areas\Search\Views\EnglishTests\Index.cshtml" />
-    <Content Include="Areas\Search\Views\EnglishTests\_UploadPartial.cshtml" />
     <Content Include="Areas\Search\Views\EnglishTests\_SearchResultPartial.cshtml" />
     <Content Include="Areas\Search\Views\web.config" />
     <Content Include="Areas\Home\Views\Home\About.cshtml" />
     <Content Include="Areas\Home\Views\Home\Contact.cshtml" />
     <Content Include="Areas\Home\Views\Home\Index.cshtml" />
     <Content Include="Areas\Home\Views\web.config" />
-    <Content Include="Areas\Search\Views\RefresherTrainings\Create.cshtml" />
-    <Content Include="Areas\Search\Views\RefresherTrainings\Delete.cshtml" />
-    <Content Include="Areas\Search\Views\RefresherTrainings\Details.cshtml" />
-    <Content Include="Areas\Search\Views\RefresherTrainings\Edit.cshtml" />
     <Content Include="Areas\Search\Views\RefresherTrainings\Index.cshtml" />
-    <Content Include="Areas\Search\Views\RefresherTrainings\Upload.cshtml" />
     <Content Include="Areas\Search\Views\RefresherTrainings\_SearchFormPartial.cshtml" />
     <Content Include="Areas\Search\Views\RefresherTrainings\_SearchResultPartial.cshtml" />
     <Content Include="Areas\Search\Views\_ViewStart.cshtml" />
@@ -342,7 +337,6 @@
     <Content Include="Areas\ManageData\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Home\Views\_ViewStart.cshtml" />
     <Content Include="Areas\ManageUserRoles\Views\web.config" />
-    <Content Include="Areas\Search\Views\EnglishTests\Delete.cshtml" />
     <Content Include="Areas\Search\Views\EnglishTests\_ManageDataPartial.cshtml" />
     <Content Include="App_Code\SharedHelpers.cshtml" />
     <Content Include="Images\bg_dog.png" />
@@ -454,6 +448,14 @@
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Areas\ManageData\Views\AdminData\Log.cshtml" />
+    <Content Include="Areas\ManageData\Views\EnglishTests\_CreatePartial.cshtml" />
+    <Content Include="Areas\ManageData\Views\EnglishTests\_EditPartial.cshtml" />
+    <Content Include="Areas\ManageData\Views\EnglishTests\_UploadPartial.cshtml" />
+    <Content Include="Areas\ManageData\Views\RefresherTrainings\Create.cshtml" />
+    <Content Include="Areas\ManageData\Views\RefresherTrainings\Delete.cshtml" />
+    <Content Include="Areas\ManageData\Views\RefresherTrainings\Details.cshtml" />
+    <Content Include="Areas\ManageData\Views\RefresherTrainings\Edit.cshtml" />
+    <Content Include="Areas\ManageData\Views\RefresherTrainings\Upload.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

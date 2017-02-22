@@ -1,4 +1,5 @@
-﻿@model CTM.Models.EnglishTest
+﻿@using CTMLib.Models
+@model CTMLib.Models.EnglishTest
 
 
     @using (Html.BeginForm("Create","EnglishTests",new {area="Search"},FormMethod.Post,new{id="create_form"}))
@@ -19,7 +20,7 @@
                         @Html.TextBox("CCName", null, new { @class = "validate autocomplete form-control", id = "CCName"})
                        @*<label for="CCName">姓名</label>*@
                    
-                    @Html.ValidationMessageFor(model => model.CabinCrewID, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
                 </div>
             </div>
             

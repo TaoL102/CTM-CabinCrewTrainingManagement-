@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using CTMLib.CustomControls;
+using CTMLib.CustomControls.Alert;
+using CTMLib.CustomControls.Button;
 
 namespace CTMLib.Extensions
 {
@@ -237,9 +239,9 @@ namespace CTMLib.Extensions
             //    var attributes = HtmlHelperExtension.ConvertHtmlAttributesToIDictionary(htmlAttributes);
             //    attributes.Add("id", id);
             //    var button= MvcHtmlString.Create(
-            //        new ButtonControl().BtnText(btnText)
+            //        new ButtonControlOptions().Text(btnText)
             //            .MaterialIcon(materialIconName)
-            //            .Attributes(htmlAttributes).ToHtmlString());
+            //            .SetAttributes(htmlAttributes).ToHtmlString());
 
 
             //    return MvcHtmlString.Create(form.ToString()+button.ToHtmlString()+"</form>");

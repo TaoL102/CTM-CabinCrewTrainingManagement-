@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CTMLib.Helpers;
+using ResourceType = System.Security.AccessControl.ResourceType;
 
 namespace CTMLib.Models
 {

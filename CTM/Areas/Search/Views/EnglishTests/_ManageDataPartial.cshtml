@@ -7,7 +7,7 @@
 
         <li class="waves-effect waves-light">
        @*     <a href="@Url.Action( "Upload", "EnglishTests", new { area = "Search" })"><i class="material-icons">file_upload</i></a>*@
-            @using (Ajax.BeginForm("Upload", "EnglishTests", new { area = "Search" }, new AjaxOptions
+            @using (Ajax.BeginForm("Upload", "EnglishTests", new { area = "ManageData" }, new AjaxOptions
             {
                 HttpMethod = "GET",
                 InsertionMode = InsertionMode.Replace,
@@ -25,7 +25,7 @@
         
         <li class="waves-effect waves-light">
             @*     <a href="@Url.Action( "Upload", "EnglishTests", new { area = "Search" })"><i class="material-icons">file_upload</i></a>*@
-            @using (Ajax.BeginForm("Create", "EnglishTests", new { area = "Search" }, new AjaxOptions
+            @using (Ajax.BeginForm("Create", "EnglishTests", new { area = "ManageData" }, new AjaxOptions
             {
                 HttpMethod = "GET",
                 InsertionMode = InsertionMode.Replace,

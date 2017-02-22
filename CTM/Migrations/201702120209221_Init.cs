@@ -172,7 +172,7 @@ namespace CTM.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.RefresherTrainings", "UploadRecordID", "dbo.UploadRecords");
             DropForeignKey("dbo.RefresherTrainings", "CategoryID", "dbo.Categories");
-            DropForeignKey("dbo.RefresherTrainings", "CabinCrewID", "dbo.CabinCrews");
+            DropForeignKey("dbo.RefresherTrainings", "ID", "dbo.CabinCrews");
             DropForeignKey("dbo.EnglishTests", "UploadRecordID", "dbo.UploadRecords");
             DropForeignKey("dbo.UploadRecords", "CategoryID", "dbo.Categories");
             DropForeignKey("dbo.UploadRecords", "ApplicationUserID", "dbo.AspNetUsers");
@@ -180,11 +180,11 @@ namespace CTM.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.EnglishTests", "CategoryID", "dbo.Categories");
-            DropForeignKey("dbo.EnglishTests", "CabinCrewID", "dbo.CabinCrews");
+            DropForeignKey("dbo.EnglishTests", "ID", "dbo.CabinCrews");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.RefresherTrainings", new[] { "UploadRecordID" });
             DropIndex("dbo.RefresherTrainings", new[] { "CategoryID" });
-            DropIndex("dbo.RefresherTrainings", new[] { "CabinCrewID" });
+            DropIndex("dbo.RefresherTrainings", new[] { "ID" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
@@ -194,7 +194,7 @@ namespace CTM.Migrations
             DropIndex("dbo.UploadRecords", new[] { "CategoryID" });
             DropIndex("dbo.EnglishTests", new[] { "UploadRecordID" });
             DropIndex("dbo.EnglishTests", new[] { "CategoryID" });
-            DropIndex("dbo.EnglishTests", new[] { "CabinCrewID" });
+            DropIndex("dbo.EnglishTests", new[] { "ID" });
             DropIndex("dbo.CabinCrews", new[] { "Name" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Logs");

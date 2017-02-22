@@ -8,7 +8,7 @@ namespace CTM.Areas.ManageData.Controllers
 {
     public class AdminDataController : Controller
     {
-        private readonly DbManager<Log> _dbManager= new DbManager<Log>();
+        private readonly DbManager _dbManager= new DbManager();
 
         // GET: AdminData
         public ActionResult Index()

@@ -103,14 +103,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomControls\AlertControl.cs" />
-    <Compile Include="CustomControls\ButtonControl.cs" />
-    <Compile Include="CustomControls\ButtonControlAjax.cs" />
-    <Compile Include="CustomControls\ICustomControl.cs" />
+    <Compile Include="CustomControls\Alert\AlertControl.cs" />
+    <Compile Include="CustomControls\Button\ButtonControl.cs" />
+    <Compile Include="CustomControls\Button\ButtonControlAjax.cs" />
+    <Compile Include="CustomControls\Button\ButtonControlBase.cs" />
+    <Compile Include="CustomControls\CustomControlBase.cs" />
+    <Compile Include="Extensions\CustomControlExtension.cs" />
+    <Compile Include="CustomControls\Button\IButtonControlBase.cs" />
+    <Compile Include="CustomControls\CssOptions.cs" />
+    <Compile Include="CustomControls\ICustomControlOptions.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\HtmlHelperExtension.cs" />
     <Compile Include="Extensions\ModelExtension.cs" />
     <Compile Include="Helpers\ConstantHelper.cs" />
+    <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\LocalizationHelper.cs" />
     <Compile Include="Helpers\ModelHelper.cs" />
@@ -145,9 +151,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

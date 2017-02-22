@@ -4,6 +4,8 @@
 @using System.Web.Mvc.Ajax
 @using System.Web.Mvc.Html
 @using System.Web.Routing
+@using CTMLib.CustomControls
+@using CTMLib.CustomControls.Button
 @using CTMLib.Extensions
 @using CTMLib.Helpers
 @using log4net.Util.TypeConverters
@@ -65,8 +67,7 @@ if (!string.IsNullOrEmpty(labelText))
 var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnDefault);
 htmlAttributesDic.Add("id", id);
 
-    @Html.Button().BtnText(value).MaterialIcon(materialIconName).SubmitBtn(isSubmit).Attributes(htmlAttributesDic)
-
+    @Html.Button().SetText(value).SetMaterialIcon(materialIconName).IsSubmitBtn(isSubmit).SetAttributes(htmlAttributesDic)
 }
 <!-- #endregion -->
 <!-- #region Button_Icon -->
@@ -76,8 +77,7 @@ htmlAttributesDic.Add("id", id);
 var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnIcon);
     htmlAttributesDic.Add("id",id);
 
-    @Html.Button().BtnText(value).MaterialIcon(materialIconName).SubmitBtn(isSubmit).LinkBtn(isLinkBtn).Attributes(htmlAttributesDic)
-
+    @Html.Button().SetText(value).SetMaterialIcon(materialIconName).IsSubmitBtn(isSubmit).IsLinkBtn(isLinkBtn).SetAttributes(htmlAttributesDic)
 }
 <!-- #endregion -->
 <!-- #region Ajax_Button_Icon -->
@@ -86,8 +86,9 @@ var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, Constant
 // Add default button css class
 var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnIcon);
 
-  //  @Ajax.Button(actionName, controllerName, routeValues, htmlAttributesDic, btnText, null, materialIconName, updateTargetId, loadingElementId, isLinkBtn)
-    @Ajax.Button(actionName,controllerName,updateTargetId,loadingElementId).BtnText(btnText).MaterialIcon(materialIconName).LinkBtn(isLinkBtn).Attributes(htmlAttributesDic).RouteValues(routeValues);
+    //  @Ajax.Button(actionName, controllerName, routeValues, htmlSetAttributesDic, btnText, null, materialIconName, updateTargetId, loadingElementId, isLinkBtn)
+    @Ajax.Button(actionName,controllerName,updateTargetId,loadingElementId).SetText(btnText).SetMaterialIcon(materialIconName).IsLinkBtn(isLinkBtn).SetAttributes(htmlAttributesDic).SetRouteValues(routeValues)
+    ;
 }
 <!-- #endregion -->
 

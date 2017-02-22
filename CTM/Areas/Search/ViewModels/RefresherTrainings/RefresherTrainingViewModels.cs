@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CTM.Areas.Search.Models
+namespace CTM.Areas.Search.ViewModels.RefresherTrainings
 {
-    public class RefresherTrainingViewModels
-    {
         public class DisplayRefresherTrainingsViewModel
         {
 
@@ -43,4 +41,3 @@ namespace CTM.Areas.Search.Models
 
         }
     }
-}

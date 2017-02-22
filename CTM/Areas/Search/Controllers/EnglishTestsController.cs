@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.SqlClient;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using CTM.Areas.ManageAccount.Models;
-using CTM.Areas.Search.Models;
-using EntityFramework.BulkInsert.Extensions;
-using Microsoft.AspNet.Identity;
-using PagedList;
-using CTM;
+using CTM.Areas.Search.ViewModels.EnglishTests;
 using CTM.Controllers;
 using CTM.Managers;
 using CTMLib.Helpers;
@@ -27,7 +17,7 @@ namespace CTM.Areas.Search.Controllers
 {
     public class EnglishTestsController : BaseController
     {
-        private readonly DbManager<EnglishTest> _dbManager=new DbManager<EnglishTest>();
+        private readonly DbManager _dbManager=new DbManager();
 
         // Parameters
         List<object> parameterValues ;
@@ -220,20 +210,20 @@ namespace CTM.Areas.Search.Controllers
         }
 
 
-        public List<EnglishTestViewModels.DisplayEnglishTestsViewModel> GetResultByFilter(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page)
+        public List<SearchResult> GetResultByFilter(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page)
         {
            //  db.Database.Log = message => System.IO.File.AppendAllText(@"d:\SQLtrace.txt", message);
             var sqlString = GenerateSqlStringByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page,
                 false);
 
             // get data from database
-                var list = _dbManager.SqlQuery<EnglishTestViewModels.DisplayEnglishTestsViewModel>(sqlString, parameterValues.ToArray()).ToList();
+                var list = _dbManager.SqlQuery<SearchResult>(sqlString, parameterValues.ToArray()).ToList();
                 return list;
 
 
         }
 
-        public List<EnglishTestViewModels.DisplayEnglishTestsIsLatestViewModel> GetResultIsLatestByFilter(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page)
+        public List<SearchResultIsLatest> GetResultIsLatestByFilter(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page)
         {
             //  db.Database.Log = message => System.IO.File.AppendAllText(@"d:\SQLtrace.txt", message);
             var sqlString = GenerateSqlStringByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page,
@@ -241,169 +231,10 @@ namespace CTM.Areas.Search.Controllers
 
             // get data from database
 
-            var list = _dbManager.SqlQuery<EnglishTestViewModels.DisplayEnglishTestsIsLatestViewModel>(sqlString, parameterValues.ToArray()).ToList();
+            var list = _dbManager.SqlQuery<SearchResultIsLatest>(sqlString, parameterValues.ToArray()).ToList();
 
             return list;
 
-        }
-
-        // GET: EnglishTests/Create
-        public ActionResult Create()
-        {
-            ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
-            return PartialView("_CreatePartial");
-        }
-
-        // POST: EnglishTests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,CabinCrewID,Type,Grade,CategoryID,Date")] EnglishTest englishTest, string CCName)
-        {
-            ModelState.Remove("ID");
-            ModelState.Remove("CabinCrewID");
-
-            if (ModelState.IsValid)
-            {
-                // Cabin Crew
-                var cabinCrew =await  _dbManager.DbSet<CabinCrew>().FirstOrDefaultAsync(o => o.Name.ToLower().Equals(CCName.Trim().ToLower()));
-                var category = await _dbManager.Categories.FirstOrDefaultAsync(o => o.ID.Equals(englishTest.CategoryID));
-
-                if (cabinCrew != null)
-                {
-                    englishTest.CabinCrewID = cabinCrew.ID;
-                    englishTest.CabinCrew = cabinCrew;
-                    englishTest.Category = category;
-
-                    await _dbManager.Add(englishTest);
-                    await _dbManager.SaveChangesAsync();
-                    return RedirectToAction("Index");
-                }
-
-            }
-
-            var cabinCrewList = _dbManager.DbSet<CabinCrew>().OrderBy(o => o.Name).ToList();
-            ViewBag.CabinCrewID = new SelectList(cabinCrewList, "ID", "Name");
-            ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
-            return View(englishTest);
-        }
-
-        // GET: EnglishTests/Edit/5
-        public async Task<PartialViewResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                // return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EnglishTest englishTest = await _dbManager.GetEntityAsync<EnglishTest>(id);
-            if (englishTest == null)
-            {
-                // return HttpNotFound();
-            }
-
-            ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
-
-            return PartialView("_EditPartial", englishTest);
-        }
-
-        // POST: EnglishTests/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,CabinCrewID,Type,Grade,CategoryID,Date")] EnglishTest englishTest)
-        {
-            if (ModelState.IsValid)
-            {
-                await _dbManager.Update(englishTest);
-                await _dbManager.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CategoryID = new SelectList(_dbManager.Categories.Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
-
-            return View(englishTest);
-        }
-
-        // GET: EnglishTests/Delete/5
-        public async Task<ActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            else
-            {
-                await _dbManager.Remove<EnglishTest>(id);
-                await _dbManager.SaveChangesAsync();
-
-                return new HttpStatusCodeResult(HttpStatusCode.Accepted);
-            }
-        }
-
-        // POST: EnglishTests/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> DeleteConfirmed(string id)
-        //{
-        //    EnglishTest englishTest = await _dbManager.FindAsync<EnglishTest>(id);
-        //    await _dbManager.Remove(englishTest);
-        //    await _dbManager.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
-
-        // GET: EnglishTests/Upload
-        public ActionResult Upload()
-        {
-            // Dropdownlist for EnglishTestCategory
-            ViewBag.EnglishTestCategoryList = new SelectList(_dbManager.Categories.Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
-
-            return PartialView("_UploadPartial");
-        }
-
-        // POST: EnglishTests/Upload
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Upload(HttpPostedFileBase upload, string categoryID, DateTime date)
-        {
-            // EXCEL upload
-            if (upload != null && upload.ContentLength > 0)
-            {
-                // Check file type
-                if (ExcelHelper.CheckIsExcel(upload))
-                {
-                    // uploadRecordID
-                    var uploadRecordID = Guid.NewGuid().ToString();
-
-                    // Get category name
-
-
-                    // Save to TABLE UploadRecord
-                    await _dbManager.Add<UploadRecord>(new UploadRecord()
-                    {
-                        ID = uploadRecordID,
-                        CategoryID = categoryID,
-                        DateTime = DateTime.UtcNow,
-                        ApplicationUserID = User.Identity.GetUserId(),
-                        IsWithdrawn = false,
-
-                    });
-
-                    var englishTestsUpload = ExcelHelper.GenerateListEnglishTestFromExcel(upload.InputStream, date, categoryID, uploadRecordID);
-
-                    if (englishTestsUpload.Any<EnglishTest>())
-                    {
-                        _dbManager.AddRange(englishTestsUpload);
-                    }
-
-                    var result = await _dbManager.GetContext().SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false);
-
-                    return RedirectToAction("Index");
-                }
-            }
-            return View("Index");
         }
 
         // POST: EnglishTests/DownloadTemplate
@@ -421,7 +252,7 @@ namespace CTM.Areas.Search.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "English Test Template.xlsx");
         }
 
-        private ActionResult ExportToFile(string filename, bool isLatest, List<EnglishTestViewModels.DisplayEnglishTestsViewModel> list)
+        private ActionResult ExportToFile(string filename, bool isLatest, List<SearchResult> list)
         {
             // header
             List<string> hearderList = isLatest
@@ -435,8 +266,8 @@ namespace CTM.Areas.Search.Controllers
             {
                 foreach (var var in list.GroupBy(o => o.CabinCrewName))
                 {
-                    var testAnn = var.FirstOrDefault(o => o.Type == EnglishTestType.CabinAnnoucement) ?? new EnglishTestViewModels.DisplayEnglishTestsViewModel();
-                    var testOrl = var.FirstOrDefault(o => o.Type == EnglishTestType.SpokenSkill) ?? new EnglishTestViewModels.DisplayEnglishTestsViewModel();
+                    var testAnn = var.FirstOrDefault(o => o.Type == EnglishTestType.CabinAnnoucement) ?? new SearchResult();
+                    var testOrl = var.FirstOrDefault(o => o.Type == EnglishTestType.SpokenSkill) ?? new SearchResult();
 
                     object[] obj = new object[]
                   {

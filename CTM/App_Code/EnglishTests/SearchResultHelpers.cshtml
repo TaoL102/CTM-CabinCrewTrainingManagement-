@@ -1,10 +1,10 @@
-﻿@inherits CTM.App_Code.HelperPage<IEnumerable<CTM.Areas.Search.Models.EnglishTestViewModels.DisplayEnglishTestsViewModel>>
+﻿@inherits CTM.App_Code.HelperPage<IEnumerable<CTM.Areas.Search.ViewModels.EnglishTests.SearchResult>>
 @using System.Reflection
 @using System.Web.Mvc
 @using System.Web.Mvc.Ajax
 @using System.Web.Mvc.Html
 @using System.Web.Routing
-@using CTM.Areas.Search.Models
+@using CTM.Areas.Search.ViewModels.EnglishTests
 @using CTMLib.Extensions
 @using CTMLib.Helpers
 
@@ -27,7 +27,7 @@ Dictionary<int, object> tdContentDic = new Dictionary<int, object>()
 <!-- #endregion -->
 <!-- #region Result_Table_Row -->
 
-@helper Result_Table_Row(EnglishTestViewModels.DisplayEnglishTestsViewModel item)
+@helper Result_Table_Row(SearchResult item)
 {
 
 // Contents
@@ -47,7 +47,7 @@ Dictionary<int, object> tdContentDic = new Dictionary<int, object>()
 
         @* Edit & Delete buttons *@
         <td>
-            @using (Ajax.BeginForm("Edit", "EnglishTests", new { area = "Search", id = item.ID }, new AjaxOptions
+            @using (Ajax.BeginForm("Edit", "EnglishTests", new { area = "ManageData", id = item.ID }, new AjaxOptions
             {
                 HttpMethod = "GET",
                 InsertionMode = InsertionMode.Replace,
@@ -69,7 +69,7 @@ Dictionary<int, object> tdContentDic = new Dictionary<int, object>()
                         {
                     { "href" , "#message_box_modal"},
                     { "data-rowid",item.ID},
-                    { "data-url",Url.Action("Delete", "EnglishTests", new { area = "Search", id = item.ID })},
+                    { "data-url",Url.Action("Delete", "EnglishTests", new { area = "ManageData", id = item.ID })},
                     { "class"," btn_del "+ConstantHelper.CssColorFontDanger}
                         };
 

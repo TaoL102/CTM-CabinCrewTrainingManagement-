@@ -13,7 +13,7 @@ using EntityFramework.BulkInsert.Extensions;
 
 namespace CTM.Managers
 {
-    public class DbManager<T> where T : class
+    public class DbManager
     {
         private readonly CTMDbContext _db = new CTMDbContext();
 
@@ -47,14 +47,14 @@ namespace CTM.Managers
             get { return DbSet<Log>(); }
         }
 
-        public async Task<TElement> Add<TElement>(TElement entity) where TElement : class
+        public async Task<T> Add<T>(T entity) where T : class
         {
             DbSet<Log>().Add(GenerateChangeLog(entity, null, EntityState.Added));
 
-            return DbSet<TElement>().Add(entity);
+            return DbSet<T>().Add(entity);
         }
 
-        public void AddRange<TElement>(List<TElement> entities)
+        public void AddRange<T>(List<T> entities)
         {
             //Log
             entities.ForEach(o =>
@@ -66,20 +66,20 @@ namespace CTM.Managers
             _db.BulkInsert(entities);
         }
 
-     public async Task Remove<TElement>(string id) where TElement : class
+     public async Task Remove<T>(string id) where T : class
         {
             // Log
-            var dbEntity = await GetEntityAsync<TElement>(id);
+            var dbEntity = await GetEntityAsync<T>(id);
             DbSet<Log>().Add(GenerateChangeLog(dbEntity, null, EntityState.Deleted));
 
-            DbSet<TElement>().Remove(dbEntity);
+            DbSet<T>().Remove(dbEntity);
         }
 
-        public async Task Update<TElement>(TElement entity) where TElement : class
+        public async Task Update<T>(T entity) where T : class
         {
             var curEntity = entity;
             var oriEntity = await GetEntityAsync(curEntity);
-            var navProp = ModelHelper<TElement>.GetNavProperties();
+            var navProp = ModelHelper<T>.GetNavProperties();
             navProp.ForEach(o =>
             {
                 var value = oriEntity.GetType().GetProperty(o).GetValue(oriEntity);
@@ -88,17 +88,17 @@ namespace CTM.Managers
 
             DbSet<Log>().Add(GenerateChangeLog(curEntity, oriEntity, EntityState.Modified));
 
-            DbSet<TElement>().AddOrUpdate(curEntity);
+            DbSet<T>().AddOrUpdate(curEntity);
         }
 
-        public async Task<TElement> FindAsync<TElement>(params object[] keyValues) where TElement : class
+        public async Task<T> FindAsync<T>(params object[] keyValues) where T : class
         {
-            return await DbSet<TElement>().FirstAsync();
+            return await DbSet<T>().FirstAsync();
         }
 
-        public DbRawSqlQuery<TElement> SqlQuery<TElement>(string sql, params object[] parameters)
+        public DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parameters)
         {
-            return _db.Database.SqlQuery<TElement>(sql, parameters);
+            return _db.Database.SqlQuery<T>(sql, parameters);
         }
 
         public CTMDbContext GetContext()
@@ -106,9 +106,9 @@ namespace CTM.Managers
             return _db;
         }
 
-        public IQueryable<TElement> DbSet<TElement>(bool isLazyLoading=false) where TElement : class
+        public IQueryable<T> DbSet<T>(bool isLazyLoading=false) where T : class
         {
-            var query = Queryable.AsQueryable<TElement>(_db.Set<TElement>());
+            var query = Queryable.AsQueryable<T>(_db.Set<T>());
 
             if (isLazyLoading)
             {
@@ -116,17 +116,17 @@ namespace CTM.Managers
             }
 
             // Include navigation properties
-            var navigationProperties = ModelHelper<TElement>.GetNavProperties();
+            var navigationProperties = ModelHelper<T>.GetNavProperties();
 
-            query = navigationProperties.Aggregate<string, IQueryable<TElement>>
+            query = navigationProperties.Aggregate<string, IQueryable<T>>
      (query, (current, expression) => current.Include(expression));
 
             return query;
         }
 
-        public DbSet<TElement> DbSet<TElement>() where TElement : class
+        public DbSet<T> DbSet<T>() where T : class
         {
-            return _db.Set<TElement>();
+            return _db.Set<T>();
         }
 
         public async Task<int> SaveChangesAsync()
@@ -135,32 +135,32 @@ namespace CTM.Managers
             return await _db.SaveChangesAsync();
         }
 
-        public async Task<TElement> GetEntityAsync<TElement>(params object[] keyValues) where TElement : class
+        public async Task<T> GetEntityAsync<T>(params object[] keyValues) where T : class
         {
-            var query = Queryable.AsQueryable<TElement>(_db.Set<TElement>());
+            var query = Queryable.AsQueryable<T>(_db.Set<T>());
 
             // Where Id
-            var idLamdaExprs = ModelHelper<TElement>.GetIdWhereClauseLamdaExpressions(keyValues);
-            query = idLamdaExprs.Aggregate<Expression<Func<TElement, bool>>, IQueryable<TElement>>
+            var idLamdaExprs = ModelHelper<T>.GetIdWhereClauseLamdaExpressions(keyValues);
+            query = idLamdaExprs.Aggregate<Expression<Func<T, bool>>, IQueryable<T>>
         (query, (current, expression) => current.Where(expression));
 
             // Include navigation properties
-            var navigationProperties = ModelHelper<TElement>.GetNavProperties();
+            var navigationProperties = ModelHelper<T>.GetNavProperties();
 
-            query = navigationProperties.Aggregate<string, IQueryable<TElement>>
+            query = navigationProperties.Aggregate<string, IQueryable<T>>
      (query, (current, expression) => current.Include(expression));
 
             var dbEntity = await query.SingleOrDefaultAsync();
             return dbEntity;
         }
 
-        public async Task<TElement> GetEntityAsync<TElement>(TElement entity, bool isLazyLoading = false) where TElement : class
+        public async Task<T> GetEntityAsync<T>(T entity, bool isLazyLoading = false) where T : class
         {
-            var query = Queryable.AsQueryable<TElement>(_db.Set<TElement>());
+            var query = Queryable.AsQueryable<T>(_db.Set<T>());
 
             // Where Id
-            var idLamdaExprs = ModelHelper<TElement>.GetIdWhereClauseLamdaExpressions(entity);
-            query = idLamdaExprs.Aggregate<Expression<Func<TElement, bool>>, IQueryable<TElement>>
+            var idLamdaExprs = ModelHelper<T>.GetIdWhereClauseLamdaExpressions(entity);
+            query = idLamdaExprs.Aggregate<Expression<Func<T, bool>>, IQueryable<T>>
         (query, (current, expression) => current.Where(expression));
 
             if (isLazyLoading)
@@ -169,9 +169,9 @@ namespace CTM.Managers
             }
 
             // Include navigation properties
-            var navigationProperties = ModelHelper<TElement>.GetNavProperties();
+            var navigationProperties = ModelHelper<T>.GetNavProperties();
 
-            query = navigationProperties.Aggregate<string, IQueryable<TElement>>
+            query = navigationProperties.Aggregate<string, IQueryable<T>>
      (query, (current, expression) => current.Include(expression));
 
             var dbEntity = await query.SingleOrDefaultAsync();
@@ -184,11 +184,11 @@ namespace CTM.Managers
         #region Private Methods
 
 
-        private  Log GenerateChangeLog<TElement>(TElement curEntity, TElement oriEntity, EntityState entityState) where TElement : class
+        private  Log GenerateChangeLog<T>(T curEntity, T oriEntity, EntityState entityState) where T : class
         {
 
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
-            string tableName = ModelHelper<TElement>.GetModelName();
+            string tableName = ModelHelper<T>.GetModelName();
             string description = null;
             LogEventType eventType = LogEventType.Add;
 

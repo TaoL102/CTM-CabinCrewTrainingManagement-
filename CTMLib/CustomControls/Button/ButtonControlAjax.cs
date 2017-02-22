@@ -3,15 +3,15 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using CTMLib.Extensions;
 
-namespace CTMLib.CustomControls
+namespace CTMLib.CustomControls.Button
 {
-    public class ButtonControlAjax : ButtonControl
+    public class ButtonControlAjax : ButtonControlBase
     {
         private readonly AjaxHelper _ajaxHelper;
         private readonly string _actionName;
         private readonly string _controllerName;
-        private string loadingElementId;
-        private string updateTargetId;
+        private string _loadingElementId;
+        private string _updateTargetId;
 
         public ButtonControlAjax(AjaxHelper ajaxHelper, string actionName, string controllerName)
         {
@@ -27,40 +27,40 @@ namespace CTMLib.CustomControls
             {
                 HttpMethod = "POST",
                 InsertionMode = InsertionMode.Replace,
-                UpdateTargetId = updateTargetId,
-                LoadingElementId = loadingElementId
+                UpdateTargetId = _updateTargetId,
+                LoadingElementId = _loadingElementId
             };
 
 
-            if (_isLinkBtn)
+            if (IsLinkBtn)
             {
 
                 string innerHtmlOrText = string.Empty;
-                if (!string.IsNullOrEmpty(_materialIconName))
+                if (!string.IsNullOrEmpty(MaterialIcon))
                 {
-                    innerHtmlOrText = string.Format(base.RenderMaterialIcon(_materialIconName));
+                    innerHtmlOrText = string.Format(base.RenderMaterialIcon(MaterialIcon));
                 }
                 else
                 {
-                    innerHtmlOrText = _btnText ?? string.Empty;
+                    innerHtmlOrText = Text ?? string.Empty;
                 }
 
                 // Reference:http://stackoverflow.com/questions/12008899/create-ajax-actionlink-with-html-elements-in-the-link-text
                 var replacedText = Guid.NewGuid().ToString();
-                var actionLink = _ajaxHelper.ActionLink(replacedText, _actionName, _controllerName, _routeValues,
-                    ajaxOptions, _htmlAttributes);
+                var actionLink = _ajaxHelper.ActionLink(replacedText, _actionName, _controllerName, RouteValues,
+                    ajaxOptions, HtmlAttributes);
                 return actionLink.ToString().Replace(replacedText, innerHtmlOrText);
             }
             else
             {
-                var form = _ajaxHelper.BeginForm(_actionName, _controllerName, _routeValues, ajaxOptions,
-                    _htmlAttributes);
-                var attributes = HtmlHelperExtension.ConvertHtmlAttributesToIDictionary(_htmlAttributes);
+                var form = _ajaxHelper.BeginForm(_actionName, _controllerName, RouteValues, ajaxOptions,
+                    HtmlAttributes);
+                var attributes = HtmlHelperExtension.ConvertHtmlAttributesToIDictionary(HtmlAttributes);
                 // attributes.Add("id", id);
                 var button = MvcHtmlString.Create(
-                    new ButtonControl().BtnText(_btnText)
-                        .MaterialIcon(_materialIconName)
-                        .Attributes(_htmlAttributes).ToHtmlString());
+                    new ButtonControl().SetText(Text)
+                        .SetMaterialIcon(MaterialIcon)
+                        .SetAttributes(HtmlAttributes).ToHtmlString());
 
 
                 return form.ToString() + button.ToHtmlString() + "</form>";
@@ -68,10 +68,10 @@ namespace CTMLib.CustomControls
 
                 // Create tag builder
                 TagBuilder builder;
-                if (_isLinkBtn)
+                if (IsLinkBtn)
                 {
                     builder = new TagBuilder("a");
-                    _isSubmit = false;
+                    IsSubmitBtn = false;
                 }
                 else
                 {
@@ -79,32 +79,32 @@ namespace CTMLib.CustomControls
                 }
 
                 // attributes
-                if (_htmlAttributes.ContainsKey("id"))
+                if (HtmlAttributes.ContainsKey("id"))
                 {
-                    if (_htmlAttributes["id"] != null)
+                    if (HtmlAttributes["id"] != null)
                     {
-                        builder.GenerateId(_htmlAttributes["id"].ToString());
+                        builder.GenerateId(HtmlAttributes["id"].ToString());
                     }
-                    _htmlAttributes.Remove("id");
+                    HtmlAttributes.Remove("id");
                 }
-                if (!string.IsNullOrEmpty(_btnText))
+                if (!string.IsNullOrEmpty(Text))
                 {
-                    _htmlAttributes.Add("value", _btnText);
+                    HtmlAttributes.Add("value", Text);
                 }
-                if (_isSubmit)
+                if (IsSubmitBtn)
                 {
-                    _htmlAttributes.Add("type", "submit");
+                    HtmlAttributes.Add("type", "submit");
                 }
-                builder.MergeAttributes(_htmlAttributes);
+                builder.MergeAttributes(HtmlAttributes);
 
                 // Material Icon
-                if (!string.IsNullOrEmpty(_materialIconName))
+                if (!string.IsNullOrEmpty(MaterialIcon))
                 {
-                    builder.InnerHtml = base.RenderMaterialIcon(_materialIconName);
+                    builder.InnerHtml = base.RenderMaterialIcon(MaterialIcon);
                 }
                 // Style
                 builder.AddCssClass("btn");
-                builder.AddCssClass("btn-" + _buttonStyle.ToString().ToLower());
+                builder.AddCssClass("btn-" + BackgroundColor.ToString().ToLower());
 
                 return builder.ToString();
             }

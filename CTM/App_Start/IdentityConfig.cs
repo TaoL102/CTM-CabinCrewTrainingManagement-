@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using CTM.Areas.ManageAccount.Models;
-using CTM.Database;
+using CTM.Codes.Database;
 using CTMLib.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

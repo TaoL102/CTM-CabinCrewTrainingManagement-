@@ -10,6 +10,7 @@ namespace CTMLib.CustomControls
 {
     public interface ICustomControlOptions : IHtmlString
     {
+        string Id { get; set; }
         Dictionary<string, object> HtmlAttributes { get; set; }
         RouteValueDictionary RouteValues { get; set; }
     }
@@ -29,4 +30,26 @@ namespace CTMLib.CustomControls
         bool HasCloseBtn { get; set; }
     }
 
+    public interface IModalOptions : ICustomControlOptions
+    {
+        string BodyInnerHtml { get; set; }
+        string BodyId { get; set; }
+        string FooterInnerHtml { get; set; }
+    }
+
+    public interface IAjaxOptions : ICustomControlOptions
+    {
+        string UpdateTargetId { get; set; }
+        string LoadingElementId { get; set; }
+        string OnSuccessFun { get; set; }
+        bool IsPost { get; set; }
+    }
+
+    public interface ITextBoxOptions : ICustomControlOptions
+    {
+        string LabelText { get; set; }
+        string Placeholder { get; set; }
+        string GoogleIcon { get; set; }
+        string GlyphIcon { get; set; }
+    }
 }

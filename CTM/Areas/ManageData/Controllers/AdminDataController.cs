@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using CTM.Managers;
+using CTM.Codes.Database;
 using CTMLib.Models;
 
 namespace CTM.Areas.ManageData.Controllers

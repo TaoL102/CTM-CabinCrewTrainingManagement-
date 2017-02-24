@@ -28,7 +28,6 @@ namespace CTM.Areas.Search.ViewModels.EnglishTests
         public string Grade { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
         [Display(Name = "Date", ResourceType = typeof(ConstModels))]
         public DateTime? Date { get; set; }
 

@@ -6,12 +6,11 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using CTM.Database;
 using CTMLib.Helpers;
 using CTMLib.Models;
 using EntityFramework.BulkInsert.Extensions;
 
-namespace CTM.Managers
+namespace CTM.Codes.Database
 {
     public class DbManager
     {

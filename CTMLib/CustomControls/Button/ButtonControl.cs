@@ -9,6 +9,7 @@ namespace CTMLib.CustomControls.Button
         {
             // Create tag builder
             TagBuilder builder;
+
             if (IsLinkBtn)
             {
                 builder = new TagBuilder("a");
@@ -19,30 +20,24 @@ namespace CTMLib.CustomControls.Button
                 builder = new TagBuilder("button");
             }
 
-            // attributes
-            if (HtmlAttributes.ContainsKey("id"))
-            {
-                if (HtmlAttributes["id"] != null)
-                {
-                    builder.GenerateId(HtmlAttributes["id"].ToString());
-                }
-                HtmlAttributes.Remove("id");
-            }
-            if (!string.IsNullOrEmpty(Text))
-            {
-                HtmlAttributes.Add("value", Text);
-            }
-            if (IsSubmitBtn)
-            {
-                HtmlAttributes.Add("type", "submit");
-            }
-            builder.MergeAttributes(HtmlAttributes);
+
+            // Id
+            builder.GenerateId(Id);
+
+            // Text
+            HtmlAttributes.Add("value",Text);
+
+            // IsSubmit
+            HtmlAttributes.Add("type", IsSubmitBtn?"submit":"button");
 
             // Material Icon
             if (!string.IsNullOrEmpty(MaterialIcon))
             {
                 builder.InnerHtml = RenderMaterialIcon(MaterialIcon);
             }
+
+            // Merge Attributes
+            builder.MergeAttributes(HtmlAttributes);
 
             // Style: SetColor & SetSize
             builder.AddCssClass(CssHelper<ButtonControl>.ControlTypeAbbr);

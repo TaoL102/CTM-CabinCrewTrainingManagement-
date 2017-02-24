@@ -2,16 +2,20 @@
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using CTMLib.Extensions;
+using CTMLib.Helpers;
 
 namespace CTMLib.CustomControls.Button
 {
-    public class ButtonControlAjax : ButtonControlBase
+    public class ButtonControlAjax : ButtonControlBase, IAjaxOptions
     {
         private readonly AjaxHelper _ajaxHelper;
         private readonly string _actionName;
         private readonly string _controllerName;
-        private string _loadingElementId;
-        private string _updateTargetId;
+
+        public string UpdateTargetId { get; set; }
+        public string LoadingElementId { get; set; }
+        public string OnSuccessFun { get; set; }
+        public bool IsPost { get; set; }
 
         public ButtonControlAjax(AjaxHelper ajaxHelper, string actionName, string controllerName)
         {
@@ -22,15 +26,26 @@ namespace CTMLib.CustomControls.Button
 
         protected override string Render()
         {
-            // ajax options
+            // Data
             var ajaxOptions = new AjaxOptions
             {
-                HttpMethod = "POST",
+                HttpMethod = (IsPost?"POST":"GET"),
                 InsertionMode = InsertionMode.Replace,
-                UpdateTargetId = _updateTargetId,
-                LoadingElementId = _loadingElementId
+                UpdateTargetId = UpdateTargetId,
+                LoadingElementId = LoadingElementId,
+                OnSuccess = OnSuccessFun
             };
 
+            // Id
+            if (Id!=null)
+            {
+                HtmlAttributes.Add("id", Id);
+            }
+
+            // Style
+            HtmlAttributes =HtmlHelperExtension.AddCssClass(HtmlAttributes, CssHelper<ButtonControlAjax>.ControlTypeAbbr);
+            HtmlAttributes = HtmlHelperExtension.AddCssClass(HtmlAttributes, CssHelper<ButtonControlAjax>.ConvertToCss(BackgroundColor));
+            HtmlAttributes = HtmlHelperExtension.AddCssClass(HtmlAttributes, CssHelper<ButtonControlAjax>.ConvertToCss(Size));
 
             if (IsLinkBtn)
             {
@@ -56,58 +71,21 @@ namespace CTMLib.CustomControls.Button
                 var form = _ajaxHelper.BeginForm(_actionName, _controllerName, RouteValues, ajaxOptions,
                     HtmlAttributes);
                 var attributes = HtmlHelperExtension.ConvertHtmlAttributesToIDictionary(HtmlAttributes);
-                // attributes.Add("id", id);
-                var button = MvcHtmlString.Create(
+               
+                var button =
                     new ButtonControl().SetText(Text)
                         .SetMaterialIcon(MaterialIcon)
-                        .SetAttributes(HtmlAttributes).ToHtmlString());
+                        .SetAttributes(attributes)
+                        .SetRouteValues(RouteValues)
+                        .IsSubmitBtn(true);
+                _ajaxHelper.ViewContext.Writer.Write(button);
+                form.EndForm();
 
+                var htmlStr = form.ToString().Replace("System.Web.Mvc.Html.MvcForm","");
 
-                return form.ToString() + button.ToHtmlString() + "</form>";
-
-
-                // Create tag builder
-                TagBuilder builder;
-                if (IsLinkBtn)
-                {
-                    builder = new TagBuilder("a");
-                    IsSubmitBtn = false;
-                }
-                else
-                {
-                    builder = new TagBuilder("button");
-                }
-
-                // attributes
-                if (HtmlAttributes.ContainsKey("id"))
-                {
-                    if (HtmlAttributes["id"] != null)
-                    {
-                        builder.GenerateId(HtmlAttributes["id"].ToString());
-                    }
-                    HtmlAttributes.Remove("id");
-                }
-                if (!string.IsNullOrEmpty(Text))
-                {
-                    HtmlAttributes.Add("value", Text);
-                }
-                if (IsSubmitBtn)
-                {
-                    HtmlAttributes.Add("type", "submit");
-                }
-                builder.MergeAttributes(HtmlAttributes);
-
-                // Material Icon
-                if (!string.IsNullOrEmpty(MaterialIcon))
-                {
-                    builder.InnerHtml = base.RenderMaterialIcon(MaterialIcon);
-                }
-                // Style
-                builder.AddCssClass("btn");
-                builder.AddCssClass("btn-" + BackgroundColor.ToString().ToLower());
-
-                return builder.ToString();
+                return htmlStr;
             }
         }
+
     }
 }

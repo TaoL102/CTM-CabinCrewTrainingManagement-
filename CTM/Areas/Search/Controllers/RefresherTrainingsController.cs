@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
 using CTM.Areas.Search.ViewModels.RefresherTrainings;
-using CTM.Database;
+using CTM.Codes.Database;
 using CTMLib.Helpers;
 using CTMLib.Models;
 using Microsoft.AspNet.Identity;

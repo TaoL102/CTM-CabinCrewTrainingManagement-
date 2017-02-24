@@ -1,4 +1,6 @@
-﻿@using CTMLib.Extensions
+﻿@using CTM.Codes.CustomControls.Shared
+@using CTMLib.CustomControls
+@using CTMLib.Extensions
 @using CTMLib.Resources
 <!DOCTYPE html>
 <html>
@@ -14,146 +16,110 @@
 </head>
 <body>
 
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-        <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
-            <div class="mdl-layout__header-row">
-                <span class="android-title mdl-layout-title">
-                    <a href=@Url.Action("Index","Home",new { area = "Home" })>
-                        <img class="android-logo-image" src="~/Images/logo_westair.gif">
-                    </a> 
-                </span>
-                <!-- Add spacer, to align navigation to the right in desktop -->
-                <div class="android-header-spacer mdl-layout-spacer"></div>
-                @*<div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
-                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
-                        <i class="material-icons">search</i>
-                    </label>
-                    <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" id="search-field">
-                    </div>
-                </div>*@
-                
-                @* ACCOUNT  *@
-                @Html.Partial("_LoginPartial")
-              
-
-                <!-- Navigation -->
-                <div class="android-navigation-container">
-                    <nav class="android-navigation mdl-navigation">
-                        @Html.ActionLink("英语","Index","EnglishTests", new {area="Search"},new {@class="mdl-navigation__link mdl-typography--text-uppercase"})
-
-
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#DangerousGoodsTraining">危险品</a>
-                        @Html.ActionLink("复训", "Index", "RefresherTrainings", new { area = "Search" }, new { @class = "mdl-navigation__link mdl-typography--text-uppercase" })
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#Promotion">晋级</a>
-
-                    </nav>
-                </div>
-                <span class="android-mobile-title mdl-layout-title">
-                    <img class="android-logo-image" src="~/Images/logo_westair.gif">
-                </span>
-
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new {area = "Home"})">
+                    @*<img alt="Brand" src="~/Images/logo_westair.gif" style="height: 30px;">*@
+                    CTM
+                </a>
             </div>
-        </div>
 
-        <div class="android-drawer mdl-layout__drawer">
-            <span class="mdl-layout-title">
-                <img class="android-logo-image" src="~/Images/logo_westair.gif">
-            </span>
-            <nav class="mdl-navigation">
-                @Html.ActionLink("英语", "Index", "EnglishTests", new { area = "Search" }, new { @class = "mdl-navigation__link mdl-typography--text-uppercase" })
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
 
+                </ul>
 
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("英语", "Index", "EnglishTests", new { area = "Search" }, null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("复训", "Index", "RefresherTrainings", new { area = "Search" }, null)
+                    </li>
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+        <!--Progress bar-->
+        <div id="loader" class="progress" style="display:none">
+            <div class="progress-bar active " role="progressbar" aria-valuenow="100"
+                 aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                <span class="sr-only">100% Complete</span>
+            </div>
+        </div><!--/.Progree bar-->
+    </nav>
+    <div style="margin-top: 130px;background-color:#F9F9F9 ">
 
-                @*<a class="mdl-navigation__link mdl-typography--text-uppercase" href="#EnglishTest">英语</a>*@
-                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#DangerousGoodsTraining">危险品</a>
-                @Html.ActionLink("复训", "Index", "RefresherTrainings", new { area = "Search" }, new { @class = "mdl-navigation__link mdl-typography--text-uppercase" })
-                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#Promotion">晋级</a>
-
-
-            </nav>
-        </div>
-        <!-- MDL Progress Bar with Indeterminate Progress -->
-        <div id="loader">
-            <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-        </div>
-        <div class="mdl-layout__content">
-        
+        <div class="container" >
             @RenderBody()
         </div>
+
     </div>
-    
+
+
     @* -- Loader Start -- *@
 
-@*<svg id="loader" class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-    <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-</svg>*@
+    @*<svg id="loader" class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>*@
 
 
-@* -- Loader End -- *@
-    
-<!-- #region Message_box_modal -->
-    <!-- Modal Structure -->
-    <div id="message_box_modal" class="modal message_box_modal">
-        <div class="modal-content">
-            <h4>@ConstViews.INFO_Confirm</h4>
-            <p>@ConstViews.INFO_Confirm_String</p>
-        </div>
-        <div class="modal-footer">
-            <a class=" modal-action modal-close waves-effect waves-green btn-flat">@ConstViews.BTN_No</a>
+    @* -- Loader End -- *@
 
-            <a  class=" modal-action modal-close waves-effect waves-green btn-flat btn-yes">@ConstViews.BTN_Yes</a>
-        </div>
-    </div>
-<!-- #endregion -->
-    
-<!-- #region mid_size_modal -->
-<!-- Modal Structure -->
-<div id="mid_size_modal" class="modal  mid_size_modal">
-    <div class="modal-content">
-        @*<h4>Modal Header</h4>*@
-        <div id="mid_size_modal_content"></div>
-    </div>
-   @* <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-    </div>*@
-</div>
+    <!-- #region Message_box_modal -->
+
+    @{
+        var body = "<h4>" + ConstViews.INFO_Confirm + "</h4><p>" + ConstViews.INFO_Confirm_String + "</p>";
+        var footer = "<a>" + ConstViews.BTN_No + "</a>" +
+                     "<a class='btn-yes'>" + ConstViews.BTN_Yes + "</a>";
+
+    }
+
+    @Html.MsgModal()
 
     <!-- #endregion -->
-    
-    
-<!-- #region Alert -->
-@*<div id="alert">
+    <!-- #region mid_size_modal -->
 
+    @Html.DisplayModal()
 
-</div>*@
-@Html.Alert(text:"").SetAttributes( htmlAttributes: new { id = "alert" })
+    <!-- #endregion -->
+    <!-- #region Alert -->
 
-<!-- #endregion -->
-    
-@Scripts.Render("~/bundles/bundleJquery")
-@Scripts.Render("~/bundles/bundleJqueryval")
-@Scripts.Render("~/bundles/bundleBootstrap")
-@Scripts.Render("~/bundles/bundleCustomizedJS")
-@RenderSection("scripts", required: false)
+    @Html.Alert(text: "").SetAttributes(htmlAttributes: new { id = "alert" })
+
+    <!-- #endregion -->
+
+    @Scripts.Render("~/bundles/bundleJquery")
+    @Scripts.Render("~/bundles/bundleJqueryval")
+    @Scripts.Render("~/bundles/bundleBootstrap")
+    @Scripts.Render("~/bundles/bundleCustomizedJS")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
 
 
 <script>
-    // Methods 
+    // Methods
     // Event handler when mid size modal is opened.
     function openMidSizeModal() {
         // Open
-        $("#mid_size_modal").modal('open');
-
+        $("#mid_size_modal").modal();
         openModal("mid_size_modal", true);
     };
 
 
     $(function () {
-        
+
 
 
         //Get all cabin crew names for autocomplete
@@ -171,21 +137,13 @@
             console("ajax failed");
         });
 
+        // Del btn click event
+        $('#message_box_modal').on("show.bs.modal", function (e) {
+            var $invoker = $(e.relatedTarget);
+            console.log($invoker);
+            $('#message_box_modal').find('.btn-yes').attr('data-url', $invoker.data('url')).attr('data-rowid', $invoker.data('rowid'));
 
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal({
-
-            ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-
-                // Set the data-url for yes btn based on thr trigger button
-                console.log(modal, trigger);
-                $('.message_box_modal').find('.btn-yes').attr('data-url', trigger.data('url')).attr('data-rowid', trigger.data('rowid'));
-            },
-            complete: function() {
-
-            } // Callback for Modal close
         });
-
 
 
         // Modal del confirm button click event
@@ -201,7 +159,7 @@
                     // Del the row if qurested
 
                     console.log(data_rowid);
-                    if (data_rowid !=="undefined") {
+                    if (data_rowid !== "undefined") {
                         // If row id is defined,delete the row
                         console.log($("#" + data_rowid));
                         $("#" + data_rowid).css("display", "none");
@@ -236,7 +194,7 @@
             console("ajax failed");
         });
 
-        // AJAX Global Settings   
+        // AJAX Global Settings
         $(document).ajaxStart(function () {
             $("#loader").css("display", "block");
         });
@@ -245,18 +203,18 @@
             $("#loader").css("display", "none");
         });
 
-        $(document).ajaxSuccess(function () { 
-            $("#alert").fadeOut().empty();         
+        $(document).ajaxSuccess(function () {
+            $("#alert").fadeOut().empty();
         });
 
 
-        $(document).ajaxError(function (event,jqxhr, settings) {
+        $(document).ajaxError(function (event, jqxhr, settings) {
 
             console.log(jqxhr);
             console.log(settings);
             // If server effor:
             if (jqxhr.status === 500) {
-                showAlert(jqxhr.responseText,"danger");
+                showAlert(jqxhr.responseText, "danger");
             } else {
                 showAlert(jqxhr.statusText);
             }

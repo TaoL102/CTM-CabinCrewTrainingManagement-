@@ -196,6 +196,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 仅显示最新成绩 .
+        /// </summary>
+        public static string IsLatestResultOnly {
+            get {
+                return ResourceManager.GetString("IsLatestResultOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 是否已离职.
         /// </summary>
         public static string IsResigned {

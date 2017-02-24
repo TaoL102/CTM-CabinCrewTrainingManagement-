@@ -5,6 +5,7 @@
 @using System.Web.Mvc.Html
 @using System.Web.Routing
 @using CTM.Areas.Search.ViewModels.EnglishTests
+@using CTM.Codes.CustomControls.EnglishTests
 @using CTMLib.Extensions
 @using CTMLib.Helpers
 
@@ -47,34 +48,8 @@ Dictionary<int, object> tdContentDic = new Dictionary<int, object>()
 
         @* Edit & Delete buttons *@
         <td>
-            @using (Ajax.BeginForm("Edit", "EnglishTests", new { area = "ManageData", id = item.ID }, new AjaxOptions
-            {
-                HttpMethod = "GET",
-                InsertionMode = InsertionMode.Replace,
-                UpdateTargetId = "mid_size_modal_content",
-                LoadingElementId = "loader",
-                OnSuccess = "openMidSizeModal",
-
-            }
-))
-            {
-                @SharedHelpers.Button_Icon("Modify", null, "mode_edit", new { @class = ConstantHelper.CssColorFontInfo }, true, false)
-            }
-
-
-            @{
-                Dictionary<string, object>
-                    htmlAttributesDic = new Dictionary<string, object>
-                        ()
-                        {
-                    { "href" , "#message_box_modal"},
-                    { "data-rowid",item.ID},
-                    { "data-url",Url.Action("Delete", "EnglishTests", new { area = "ManageData", id = item.ID })},
-                    { "class"," btn_del "+ConstantHelper.CssColorFontDanger}
-                        };
-
-                @SharedHelpers.Button_Icon("delete", null, "delete", htmlAttributesDic, false, true)
-            }
+            @Ajax.Button_Edit(item.ID)
+            @Html.Button_Delete(item.ID)
 
         </td>
     </tr>

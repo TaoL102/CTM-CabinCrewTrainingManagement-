@@ -1,6 +1,6 @@
 ﻿using System;
 using CTM.Areas.ManageAccount.Models;
-using CTM.Database;
+using CTM.Codes.Database;
 using CTMLib.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

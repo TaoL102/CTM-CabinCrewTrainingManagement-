@@ -81,14 +81,9 @@ var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, Constant
 }
 <!-- #endregion -->
 <!-- #region Ajax_Button_Icon -->
-@helper Ajax_Button_Icon(string actionName, string controllerName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes, string btnText, string id, string materialIconName, string updateTargetId, string loadingElementId, bool isLinkBtn = false)
+@helper Ajax_Button_Icon(string actionName, string controllerName, object routeValues, IDictionary<string, object> htmlAttributes, string btnText, string id, string materialIconName, string updateTargetId, string loadingElementId, string onSuccessFun = null, bool isLinkBtn = false)
 {
-// Add default button css class
-var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnIcon);
-
-    //  @Ajax.Button(actionName, controllerName, routeValues, htmlSetAttributesDic, btnText, null, materialIconName, updateTargetId, loadingElementId, isLinkBtn)
-    @Ajax.Button(actionName,controllerName,updateTargetId,loadingElementId).SetText(btnText).SetMaterialIcon(materialIconName).IsLinkBtn(isLinkBtn).SetAttributes(htmlAttributesDic).SetRouteValues(routeValues)
-    ;
+    @Ajax.Button(actionName,controllerName,updateTargetId,loadingElementId).SetText(btnText).SetMaterialIcon(materialIconName).IsLinkBtn(isLinkBtn).SetAttributes(htmlAttributes).SetRouteValues(routeValues).SetOnSuccessFun(onSuccessFun)
 }
 <!-- #endregion -->
 
@@ -140,7 +135,7 @@ var htmlAttributesUnClickablePage = HtmlHelperExtension.AddCssClass(null, Consta
 
     <ul class="pagination">
         <li>
-            @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = prePage }),prePage<=0? htmlAttributesUnClickablePage:null, null, null, "chevron_left", updateTargetId, loadingElementId, true)
+            @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = prePage }),prePage<=0? htmlAttributesUnClickablePage:null, null, null, "chevron_left", updateTargetId, loadingElementId, null,true)
         </li>
         @foreach (string t in pageArray)
         {
@@ -158,11 +153,11 @@ var htmlAttributesUnClickablePage = HtmlHelperExtension.AddCssClass(null, Consta
             }
 
             <li>
-                @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = page }), htmlAttributes, page, null, null, updateTargetId, loadingElementId, true)
+                @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = page }), htmlAttributes, page, null, null, updateTargetId, loadingElementId,null, true)
             </li>
         }
         <li>
-            @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = nextPage }),trueCurrentPage>=lastPage? htmlAttributesUnClickablePage:null, null, null, "chevron_right", updateTargetId, loadingElementId, true)
+            @Ajax_Button_Icon(actionName, controllerName, HtmlHelperExtension.AddRouteValue(routeValues, new { page = nextPage }),trueCurrentPage>=lastPage? htmlAttributesUnClickablePage:null, null, null, "chevron_right", updateTargetId, loadingElementId,null, true)
         </li>
 
     </ul>

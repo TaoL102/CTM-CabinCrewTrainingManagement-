@@ -5,39 +5,44 @@
 @if (Request.IsAuthenticated)
 {
     @* Message *@
-    <div class="android-search-box ">
-        <label class="mdl-button mdl-js-button mdl-button--icon" id="">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">message</i>
-        </label>
-
-    </div>
+        </a>
+    </li>
 
     @* Account *@
-    <div class="android-search-box ">
-        <label class="mdl-button mdl-js-button mdl-button--icon" id="more-button">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">account_circle</i>
-        </label>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
-            @Html.ActionLink("个人账户设置", "Index", "Manage", new { area = "ManageAccount" }, htmlAttributes: new { title = "Manage",@class="mdl-menu__item" })
-            @Html.ActionLink("后台数据管理", "Index", "AdminData", new { area = "ManageData" }, htmlAttributes: new { title = "Admin Data", @class = "mdl-menu__item" })
-            <li class="mdl-menu__item">用户权限管理</li>
-            <a class = "mdl-menu__item" href="javascript:document.getElementById('logoutForm').submit()">取消登录</a>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                @Html.ActionLink("个人账户设置", "Index", "Manage", new {area = "ManageAccount"}, htmlAttributes: new {title = "Manage"})
+            </li>
+            <li>
+                @Html.ActionLink("后台数据管理", "Index", "AdminData", new { area = "ManageData" }, htmlAttributes: new { title = "Admin Data"})
+            </li>
+            <li>
+                <a href="#">用户权限管理</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">取消登录</a>
+            </li>
         </ul>
-    </div>
+    </li>
 
-    using (Html.BeginForm("LogOff", "Account", new { area = "ManageAccount" }, FormMethod.Post, new { id = "logoutForm"}))
+    using (Html.BeginForm("LogOff", "Account", new { area = "ManageAccount" }, FormMethod.Post, new { id = "logoutForm" }))
     {
-    @Html.AntiForgeryToken()
-
-
+        @Html.AntiForgeryToken()
     }
 }
 else
 {
-    <div class="android-search-box ">
-    @* <li>@Html.ActionLink("注册", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
-    <li>@Html.ActionLink("登录", "Login", "Account", new { area = "ManageAccount" }, htmlAttributes: new { id = "loginLink" })</li>
-</div>
+    <li>
+        @Html.ActionLink("登录", "Login", "Account", new {area = "ManageAccount"}, htmlAttributes: new {id = "loginLink"})
+    </li>
 }
 
 

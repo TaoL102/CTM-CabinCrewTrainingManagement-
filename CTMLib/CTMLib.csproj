@@ -108,6 +108,12 @@
     <Compile Include="CustomControls\Button\ButtonControlAjax.cs" />
     <Compile Include="CustomControls\Button\ButtonControlBase.cs" />
     <Compile Include="CustomControls\CustomControlBase.cs" />
+    <Compile Include="CustomControls\Div\DivControl.cs" />
+    <Compile Include="CustomControls\Modal\ModalControl.cs" />
+    <Compile Include="CustomControls\Table\HeaderControl.cs" />
+    <Compile Include="CustomControls\Table\RowControl.cs" />
+    <Compile Include="CustomControls\Table\TableControl.cs" />
+    <Compile Include="CustomControls\TextBox\TextBoxControl.cs" />
     <Compile Include="Extensions\CustomControlExtension.cs" />
     <Compile Include="CustomControls\Button\IButtonControlBase.cs" />
     <Compile Include="CustomControls\CssOptions.cs" />

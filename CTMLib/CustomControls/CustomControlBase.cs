@@ -12,6 +12,7 @@ namespace CTMLib.CustomControls
    {
         public Dictionary<string, object> HtmlAttributes { get; set; }
         public RouteValueDictionary RouteValues { get; set; }
+        public string Id { get; set; }
 
         public override string ToString()
         {
@@ -24,8 +25,7 @@ namespace CTMLib.CustomControls
         }
 
         protected abstract string Render();
-
-    }
+   }
 
 
 }

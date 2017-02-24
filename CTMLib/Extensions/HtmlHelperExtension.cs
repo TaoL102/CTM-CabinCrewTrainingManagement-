@@ -8,6 +8,8 @@ using System.Web.Routing;
 using CTMLib.CustomControls;
 using CTMLib.CustomControls.Alert;
 using CTMLib.CustomControls.Button;
+using CTMLib.CustomControls.Modal;
+using WebGrease.Css.Extensions;
 
 namespace CTMLib.Extensions
 {
@@ -19,6 +21,10 @@ namespace CTMLib.Extensions
     {
         public static Dictionary<string, object> ConvertHtmlAttributesToIDictionary(object htmlAttributes)
         {
+            if (htmlAttributes==null)
+            {
+                return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+            }
             var objects = htmlAttributes as Dictionary<string, object>;
             Dictionary<string, object> htmlAttributesDic =
                 objects != null
@@ -37,8 +43,6 @@ namespace CTMLib.Extensions
             return  new RouteValueDictionary(routeValues); ;
         }
 
-
-
         private static string GetEnumPropertyValue(Enum enumValue)
         {
             try
@@ -54,16 +58,7 @@ namespace CTMLib.Extensions
 
         public static Dictionary<string, object> AddCssClass(object htmlAttributes, string cssClass)
         {
-            var htmlAttributesDic = ConvertHtmlAttributesToIDictionary(htmlAttributes);
-            if (htmlAttributesDic.ContainsKey("class"))
-            {
-                htmlAttributesDic["class"] += " " + cssClass + " ";
-            }
-            else
-            {
-                htmlAttributesDic.Add("class", cssClass);
-            }
-            return htmlAttributesDic;
+            return AddAttToDic(htmlAttributes, "class", cssClass);
         }
 
         public static RouteValueDictionary AddRouteValue(object originalRouteValues, object addedRouteValues)
@@ -82,51 +77,34 @@ namespace CTMLib.Extensions
             return rdic;
         }
 
-        private static string CreateMaterialIcon(string materialIconName)
+        public static Dictionary<string, object> MergeAttribute(object htmlAttributes,string key, string value)
         {
-            var builderI = new TagBuilder("i");
-            builderI.AddCssClass("material-icons");
-            builderI.InnerHtml = materialIconName;
-            return builderI.ToString();
+            return AddAttToDic(htmlAttributes, key, value);
         }
 
-        private static MvcHtmlString CreateAButton( string value, string id, string materialIconName, object htmlAttributes, bool isSubmit = false, bool isLinkBtn = false)
+        public static Dictionary<string, object> MergeAttributes(object oriHtmlAttributes, object curHtmlAttributes)
         {
-            // Create tag builder
-            TagBuilder builder;
-            if (isLinkBtn)
+            var curDic = ConvertHtmlAttributesToIDictionary(curHtmlAttributes);
+            var oriDic = ConvertHtmlAttributesToIDictionary(oriHtmlAttributes);
+            curDic.ForEach(o=>
             {
-                builder = new TagBuilder("a");
-                isSubmit = false;
+                oriDic=AddAttToDic(oriDic, o.Key, o.Value.ToString());
+            });
+            return oriDic;
+        }
+
+        private static Dictionary<string, object> AddAttToDic(object htmlAttributes, string key, string value)
+        {
+            var htmlAttributesDic = ConvertHtmlAttributesToIDictionary(htmlAttributes);
+            if (htmlAttributesDic.ContainsKey(key))
+            {
+                htmlAttributesDic[key] += " " + value + " ";
             }
             else
             {
-                builder = new TagBuilder("button");
+                htmlAttributesDic.Add(key, value);
             }
-
-
-            // Create valid id
-            if (!string.IsNullOrEmpty(id))
-            {
-                builder.GenerateId(id);
-            }
-
-            // Add attributes
-            builder.MergeAttributes(ConvertHtmlAttributesToIDictionary(htmlAttributes));
-
-            builder.MergeAttribute("value", value);
-            if (!string.IsNullOrEmpty(materialIconName))
-            {
-                builder.InnerHtml = CreateMaterialIcon(materialIconName);
-
-            }
-            if (isSubmit)
-            {
-                builder.MergeAttribute("type", "submit");
-            }
-
-            // Render tag
-            return MvcHtmlString.Create(builder.ToString());
+            return htmlAttributesDic;
         }
 
         public static MvcHtmlString DisplayValueFor<TModel,TValue>(this HtmlHelper<TModel> html,
@@ -202,52 +180,9 @@ namespace CTMLib.Extensions
         }
 
 
-        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName, string updateTargetId, string loadingElementId)
+        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName, string updateTargetId, string loadingElementId=null,string onSuccessFun=null)
         {
-            return new ButtonControlAjax(helper, actionName, controllerName);
-            //// ajax options
-            //var ajaxOptions = new AjaxOptions
-            //{
-            //    HttpMethod = "POST",
-            //    InsertionMode = InsertionMode.Replace,
-            //    UpdateTargetId = updateTargetId,
-            //    LoadingElementId = loadingElementId
-            //};
-
-
-            //if (isLinkBtn)
-            //{
-
-            //    string innerHtmlOrText = string.Empty;
-            //    if (!string.IsNullOrEmpty(materialIconName))
-            //    {
-            //        innerHtmlOrText = string.Format( CreateMaterialIcon(materialIconName));
-            //    }
-            //    else
-            //    {
-            //        innerHtmlOrText = btnText ?? string.Empty;
-            //    }
-
-            //    // Reference:http://stackoverflow.com/questions/12008899/create-ajax-actionlink-with-html-elements-in-the-link-text
-            //    var replacedText = Guid.NewGuid().ToString();
-            //    var actionLink =helper.ActionLink(replacedText, actionName, controllerName, routeValues,ajaxOptions, htmlAttributes);
-            //    return MvcHtmlString.Create(actionLink.ToString().Replace(replacedText, innerHtmlOrText));
-            //}
-            //else
-            //{
-            //   var form= helper.BeginForm( actionName,  controllerName, routeValues,ajaxOptions,htmlAttributes);
-            //    var attributes = HtmlHelperExtension.ConvertHtmlAttributesToIDictionary(htmlAttributes);
-            //    attributes.Add("id", id);
-            //    var button= MvcHtmlString.Create(
-            //        new ButtonControlOptions().Text(btnText)
-            //            .MaterialIcon(materialIconName)
-            //            .SetAttributes(htmlAttributes).ToHtmlString());
-
-
-            //    return MvcHtmlString.Create(form.ToString()+button.ToHtmlString()+"</form>");
-        //}
-
-
+            return new ButtonControlAjax(helper, actionName, controllerName).SetLoadingElementId(loadingElementId).SetUpdateTargetId(updateTargetId).SetOnSuccessFun(onSuccessFun);
         }
         public static AlertControl Alert(this HtmlHelper html, string text)
         {
@@ -260,6 +195,12 @@ namespace CTMLib.Extensions
 
             return new AlertControl(text);
         }
+
+        public static ModalControl Modal(this HtmlHelper helper, string id, string title)
+        {
+            return new ModalControl( id,  title);
+        }
+
     }
 
 }

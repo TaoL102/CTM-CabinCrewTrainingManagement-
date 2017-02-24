@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
-using CTM.Database;
+using CTM.Codes.Database;
 using CTMLib.Helpers;
 using CTMLib.Models;
 using Newtonsoft.Json;

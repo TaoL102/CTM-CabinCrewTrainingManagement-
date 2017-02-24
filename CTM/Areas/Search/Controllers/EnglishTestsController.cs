@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using CTM.Areas.Search.ViewModels.EnglishTests;
+using CTM.Codes.Database;
 using CTM.Controllers;
-using CTM.Managers;
 using CTMLib.Helpers;
 using CTMLib.Models;
 using static System.String;
@@ -27,32 +27,34 @@ namespace CTM.Areas.Search.Controllers
         {
             // Dropdownlist for EnglishTestCategory
             ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
-            return View();
+            ViewModels.EnglishTests.Search searchViewModel=new ViewModels.EnglishTests.Search();
+            searchViewModel.CateforyList= new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
+            return View(searchViewModel);
         }
 
         // GET: EnglishTests
-        public async Task<ActionResult> Search(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page, bool IsLatest = false)
+        public async Task<ActionResult> Search(ViewModels.EnglishTests.Search searchViewModel)
         {
 
             // Get list
             object list ;
             int totalPage;
-            if (IsLatest)
+            if (searchViewModel.IsLatest)
             {
-                list = GetResultIsLatestByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page);
-                totalPage = GetTotalNumberByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page,true);
+                list = GetResultIsLatestByFilter(searchViewModel);
+                totalPage = GetTotalNumberByFilter(searchViewModel);
 
             }
             else
             {
 
-                    list = GetResultByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page);
-                    totalPage = GetTotalNumberByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page);
+                    list = GetResultByFilter(searchViewModel);
+                    totalPage = GetTotalNumberByFilter(searchViewModel);
 
             }
 
 
-            if (!IsNullOrEmpty(UploadRecordID))
+            if (!IsNullOrEmpty(searchViewModel.UploadRecordID))
             {
                 return PartialView("_SearchResultPartial", list);
             }
@@ -61,15 +63,15 @@ namespace CTM.Areas.Search.Controllers
             {
 
                 // Return some parameters for pagination 
-                ViewBag.Page = page??1;
-                ViewBag.CCName = CCName;
-                ViewBag.CategoryID = CategoryID;
-                ViewBag.FromDate = FromDate;
-                ViewBag.ToDate = ToDate;
-                ViewBag.IsLatest = IsLatest;
+                ViewBag.Page = searchViewModel.Page ??1;
+                ViewBag.CCName = searchViewModel.CCName;
+                ViewBag.CategoryID = searchViewModel.CategoryID;
+                ViewBag.FromDate = searchViewModel.FromDate;
+                ViewBag.ToDate = searchViewModel.ToDate;
+                ViewBag.IsLatest = searchViewModel.IsLatest;
                 ViewBag.TotalPage = totalPage;
 
-                if (IsLatest)
+                if (searchViewModel.IsLatest)
                 {
                     return PartialView("_SearchResultIsLatestPartial", list);
                 }
@@ -80,37 +82,34 @@ namespace CTM.Areas.Search.Controllers
         }
 
 
-        private string GenerateSqlStringByFilter(string CCName, string CategoryID, string FromDate, string ToDate,
-            string UploadRecordID, int? page, bool IsLatest = false, bool IsToalNumber = false)
+        private string GenerateSqlStringByFilter(ViewModels.EnglishTests.Search searchViewModel, bool IsToalNumber = false)
         {
              parameterValues = new List<object>();
              parameterNames = new List<string>();
 
             // Name filter
-            if (!IsNullOrEmpty(CCName))
+            if (!IsNullOrEmpty(searchViewModel.CCName))
             {
-                parameterValues.Add(new SqlParameter("Name", CCName));
+                parameterValues.Add(new SqlParameter("Name", searchViewModel.CCName));
                 parameterNames.Add(ConstantHelper.TableNameCabinCrews + ".[Name]=@Name");
             }
 
             // Category filter
-            if (!IsNullOrEmpty(CategoryID))
+            if (!IsNullOrEmpty(searchViewModel.CategoryID))
             {
                 parameterNames.Add("CategoryID=@CategoryID");
-                parameterValues.Add(new SqlParameter("CategoryID", CategoryID));
+                parameterValues.Add(new SqlParameter("CategoryID", searchViewModel.CategoryID));
             }
 
             // Date filter
-            if (!IsNullOrEmpty(FromDate) && !IsNullOrEmpty(ToDate))
+            if (searchViewModel.FromDate!=null && searchViewModel.ToDate!=null)
             {
                 try
                 {
                     // Convert time
-                    DateTime fromDate = DateTime.Parse(FromDate).Date;
-                    DateTime toDate = DateTime.Parse(ToDate).Date;
                     parameterNames.Add("Date BETWEEN @FromDate AND @ToDate");
-                    parameterValues.Add(new SqlParameter("FromDate", fromDate.ToShortDateString()));
-                    parameterValues.Add(new SqlParameter("ToDate", toDate.ToShortDateString()));
+                    parameterValues.Add(new SqlParameter("FromDate", DateTime.Parse(searchViewModel.FromDate.ToString()).ToShortDateString()));
+                    parameterValues.Add(new SqlParameter("ToDate", DateTime.Parse(searchViewModel.ToDate.ToString()).ToShortDateString()));
                 }
                 catch (Exception)
                 {
@@ -121,7 +120,7 @@ namespace CTM.Areas.Search.Controllers
 
             // Pagination
             int pageSize = ConstantHelper.PaginationPageSize;
-            int fromRowNum = ((page ?? 1) - 1) * pageSize;
+            int fromRowNum = ((searchViewModel.Page ?? 1) - 1) * pageSize;
             parameterValues.Add(new SqlParameter("FromRowNum", fromRowNum));
             parameterValues.Add(new SqlParameter("PageSize", pageSize));
             string paginationClause = " OFFSET @FromRowNum ROWS FETCH NEXT @PageSize ROWS ONLY ";
@@ -137,12 +136,12 @@ namespace CTM.Areas.Search.Controllers
 
             // Build SQL
 
-            if (IsLatest)
+            if (searchViewModel.IsLatest)
             {
                 ViewBag.IsLatest = true;
                 // Build sql
                 StringBuilder sb = new StringBuilder();
-                if (!IsNullOrEmpty(CCName))
+                if (!IsNullOrEmpty(searchViewModel.CCName))
                 {
 
                     sb.Append(" AND ").Append(ConstantHelper.TableNameCabinCrews + ".[Name]=@Name ");
@@ -166,10 +165,10 @@ namespace CTM.Areas.Search.Controllers
                 sqlString = SqlQueryHelper.GetSqlEnglishTest(sb.ToString(), paginationClause, orderByClause, null);
                 sqlStringTotal = SqlQueryHelper.GetSqlEnglishTestTotal(sb.ToString(), orderByClause);
             }
-            if (!IsNullOrEmpty(UploadRecordID))
+            if (!IsNullOrEmpty(searchViewModel.UploadRecordID))
             {
                 StringBuilder sb = new StringBuilder();
-                parameterValues.Add(new SqlParameter("UploadRecordID", UploadRecordID));
+                parameterValues.Add(new SqlParameter("UploadRecordID", searchViewModel.UploadRecordID));
                 sb.Append(" WHERE ").Append(ConstantHelper.TableNameEnglishTests + ".[UploadRecordID]=@UploadRecordID ");
 
 
@@ -185,11 +184,10 @@ namespace CTM.Areas.Search.Controllers
 
 
 
-        public int GetTotalNumberByFilter(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page, bool IsLatest = false)
+        public int GetTotalNumberByFilter(ViewModels.EnglishTests.Search searchViewModel)
         {
            // db.Database.Log = message => System.IO.File.AppendAllText(@"d:\SQLtrace.txt", message);
-            var sqlString = GenerateSqlStringByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page,
-                IsLatest, true);
+            var sqlString = GenerateSqlStringByFilter(searchViewModel, true);
 
             // get total number 
             try
@@ -210,10 +208,10 @@ namespace CTM.Areas.Search.Controllers
         }
 
 
-        public List<SearchResult> GetResultByFilter(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page)
+        public List<SearchResult> GetResultByFilter(ViewModels.EnglishTests.Search searchViewModel)
         {
            //  db.Database.Log = message => System.IO.File.AppendAllText(@"d:\SQLtrace.txt", message);
-            var sqlString = GenerateSqlStringByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page,
+            var sqlString = GenerateSqlStringByFilter(searchViewModel,
                 false);
 
             // get data from database
@@ -223,10 +221,10 @@ namespace CTM.Areas.Search.Controllers
 
         }
 
-        public List<SearchResultIsLatest> GetResultIsLatestByFilter(string CCName, string CategoryID, string FromDate, string ToDate, string UploadRecordID, int? page)
+        public List<SearchResultIsLatest> GetResultIsLatestByFilter(ViewModels.EnglishTests.Search searchViewModel)
         {
             //  db.Database.Log = message => System.IO.File.AppendAllText(@"d:\SQLtrace.txt", message);
-            var sqlString = GenerateSqlStringByFilter(CCName, CategoryID, FromDate, ToDate, UploadRecordID, page,
+            var sqlString = GenerateSqlStringByFilter(searchViewModel,
                 true);
 
             // get data from database

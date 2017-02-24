@@ -1,7 +1,7 @@
 ﻿using CTMLib.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace CTM.Database
+namespace CTM.Codes.Database
 {
     public class CTMDbContext : IdentityDbContext<ApplicationUser>
     {

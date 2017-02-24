@@ -162,6 +162,9 @@
   <data name="Grade" xml:space="preserve">
     <value>成绩</value>
   </data>
+  <data name="IsLatestResultOnly" xml:space="preserve">
+    <value>仅显示最新成绩 </value>
+  </data>
   <data name="IsResigned" xml:space="preserve">
     <value>是否已离职</value>
   </data>

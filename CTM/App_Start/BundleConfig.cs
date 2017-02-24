@@ -31,10 +31,10 @@ namespace CTM
             bundles.Add(new ScriptBundle("~/bundles/bundleCustomizedJS").Include(
                       "~/Scripts/jquery.dropdown.js",
                        //"~/Scripts/jquery.tagsinput.js",
-                       "~/Scripts/material.min.js",
+                       //"~/Scripts/material.min.js",
                       //"~/Scripts/nouislider.min.js",
                       //"~/Scripts/material-kit.js",
-                      "~/Scripts/materialize.min.js",
+                      //"~/Scripts/materialize.min.js",
                       "~/Scripts/sitemethod.js",
                       "~/Scripts/site.js"));
 
@@ -46,8 +46,8 @@ namespace CTM
 
             var bundle = new StyleBundle("~/bundles/bundleCustomizedCSS");
         
-            bundle.Include("~/Content/material.css", new CssRewriteUrlTransform());
-            bundle.Include("~/Content/materialize.css", new CssRewriteUrlTransform());
+            //bundle.Include("~/Content/material.css", new CssRewriteUrlTransform());
+            //bundle.Include("~/Content/materialize.css", new CssRewriteUrlTransform());
             bundle.Include("~/Content/site.css", new CssRewriteUrlTransform());
 
             bundle.Orderer = new NonOrderingBundleOrderer();

@@ -24,7 +24,7 @@ function registerPlugins() {
 function openModal(modalId, isRegisterPlugins) {
     modalId = "#" + modalId;
     // Open
-    $(modalId).modal('open');
+    $(modalId).modal();
 
     if (isRegisterPlugins) {
         // Register the form in modal to unobtrusive js, so that local validation would not fail

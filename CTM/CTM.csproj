@@ -236,13 +236,20 @@
     <Compile Include="Areas\ManageAccount\Models\AccountViewModels.cs" />
     <Compile Include="Areas\ManageData\Controllers\EnglishTestsController.cs" />
     <Compile Include="Areas\ManageData\Controllers\RefresherTrainingsController.cs" />
+    <Compile Include="Areas\Search\ViewModels\EnglishTests\Search.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResult.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResultIsLatest.cs" />
-    <Compile Include="Database\CTMDbContext.cs" />
+    <Compile Include="Codes\CustomControls\EnglishTests\ButtonExtension.cs" />
+    <Compile Include="Codes\CustomControls\EnglishTests\FormExtension.cs" />
+    <Compile Include="Codes\CustomControls\EnglishTests\TableExtension.cs" />
+    <Compile Include="Codes\CustomControls\Shared\LayoutExtension.cs" />
+    <Compile Include="Codes\CustomControls\Shared\SharedExtension.cs" />
+    <Compile Include="Codes\Database\CTMDbContext.cs" />
     <Compile Include="Attributes\IsNameAttribute.cs" />
     <Compile Include="Attributes\SystemErrorHandleAttribute.cs" />
+    <Compile Include="Codes\Helpers\ConstantHelper.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Database\DbManager.cs" />
+    <Compile Include="Codes\Database\DbManager.cs" />
     <Compile Include="Migrations\201702120209221_Init.cs" />
     <Compile Include="Migrations\201702120209221_Init.Designer.cs">
       <DependentUpon>201702120209221_Init.cs</DependentUpon>
@@ -275,7 +282,9 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\material-kit.css" />
     <Content Include="Content\material.css" />
@@ -331,7 +340,6 @@
     <Content Include="Areas\Search\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\material.min.css.map" />
     <Content Include="Areas\ManageAccount\Views\_ViewStart.cshtml" />
     <Content Include="Areas\ManageData\Views\_ViewStart.cshtml" />
@@ -495,6 +503,7 @@
     <Folder Include="Areas\ManageUserRoles\Models\" />
     <Folder Include="Areas\ManageUserRoles\Views\Shared\" />
     <Folder Include="Areas\Search\Views\Shared\" />
+    <Folder Include="Database\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CTMLib.Helpers;
 
 namespace CTMLib.CustomControls.Alert
 {
@@ -22,29 +23,37 @@ namespace CTMLib.CustomControls.Alert
         #endregion
 
 
-        #region Private Methods
-
+        #region Overriden Methods
         protected override string Render()
         {
-            
-            var wrapper = new TagBuilder("div");
-            wrapper.AddCssClass("alert");
-            wrapper.MergeAttribute("role","alert");
-            if (Color != ColorOptions.Default)
-                wrapper.AddCssClass("alert-"+ Color.ToString().ToLower());
 
+            var wrapper = new TagBuilder("div");
+            // Id
+            wrapper.GenerateId(Id);
+
+            // Class
+            wrapper.AddCssClass("alert");
+            wrapper.MergeAttribute("role", "alert");
+            wrapper.AddCssClass(CssHelper<AlertControl>.ConvertToCss(Color));
+
+            // Inner Html
             wrapper.InnerHtml = _textOrHtml;
 
-            //Add close button
+            // Close button
             if (HasCloseBtn)
+            {
                 wrapper.InnerHtml += RenderCloseButton();
+            }
 
+            // HTML Attributes
             wrapper.MergeAttributes(HtmlAttributes != null ? HtmlHelper.AnonymousObjectToHtmlAttributes(HtmlAttributes) : null);
-
-            
 
             return wrapper.ToString();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static TagBuilder RenderCloseButton()
         {
@@ -55,7 +64,6 @@ namespace CTMLib.CustomControls.Alert
             closeButton.InnerHtml = "×";
             return closeButton;
         }
-
 
         #endregion
     }

@@ -19,8 +19,8 @@
         public static string CssColorFontInfo = "font-info";
         public static string CssColorFontDanger = "font-danger";
 
-        public static string CssBtnDefault = " btn btn-simple ";
-        public static string CssBtnIcon = " mdl-button mdl-js-button mdl-button--icon ";
+        public static string CssBtnDefault = "";
+        public static string CssBtnIcon = "";
 
         public static string CssTextBoxAutoComplete = "validate autocomplete";
 

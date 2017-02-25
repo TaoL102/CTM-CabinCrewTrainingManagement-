@@ -1,0 +1,30 @@
+﻿@using CTMLib.Resources
+@model CTMLib.Models.EnglishTest
+
+@{
+
+}
+
+
+    @using (Ajax.BeginForm(new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnFailure ="",
+        OnSuccess = "CloseModal",
+    }))
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>@ConstViews.INFO_Delete</h4>
+            @Html.HiddenFor(model => model.ID)
+            <p>@Model</p>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="@ConstViews.INFO_Delete" class="btn btn-default" />
+                </div>
+            </div>     
+        </div>
+
+    }
+

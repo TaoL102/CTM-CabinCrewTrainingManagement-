@@ -41,7 +41,7 @@ namespace CTM.Codes.CustomControls.EnglishTests
                     helper.DisplayValueFor(o=>item.CategoryName).ToString(),
                     helper.DisplayValueFor(o=>item.Date).ToString(),
                     ajaxHelper.Button_Edit(item.ID).ToHtmlString(),
-                    helper.Button_Delete(item.ID).ToHtmlString(),
+                    ajaxHelper.Button_Delete(item.ID).ToHtmlString(),
                 });
             }
 

@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using CTM.Codes.Database;
+using CTM.Controllers;
 using CTMLib.Models;
 
 namespace CTM.Areas.ManageData.Controllers
 {
-    public class AdminDataController : Controller
+    public class AdminDataController : BaseController
     {
         private readonly DbManager _dbManager= new DbManager();
 

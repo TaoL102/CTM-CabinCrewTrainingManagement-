@@ -10,6 +10,7 @@ using CTM.Codes.Helpers;
 using CTMLib.CustomControls;
 using CTMLib.CustomControls.Button;
 using CTMLib.Extensions;
+using CTMLib.Models;
 
 namespace CTM.Codes.CustomControls.EnglishTests
 {
@@ -23,28 +24,20 @@ namespace CTM.Codes.CustomControls.EnglishTests
         private static readonly string AreaNameAdminData = ConstantHelper.AreaNameAdminData;
         private static readonly string AreaNameSearch = ConstantHelper.AreaNameSearch;
 
-        public static ButtonControl Button_Delete(this HtmlHelper<IEnumerable<SearchResult>> helper, string rowId)
+        public static ButtonControlAjax Button_Delete(this AjaxHelper<IEnumerable<SearchResult>> helper, string rowId)
         {
             // Data
-            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var dataUrl = urlHelper.Action(ActionNameDelete, ControllerName, new { area = AreaNameAdminData, id = rowId });
-            var htmlAttributesDic = new Dictionary<string, object>()
-            {
-                {"href", "#message_box_modal"},
-                {"data-toggle", "modal"},
-                {"data-rowid", rowId},
-                {"data-url", dataUrl},
-                {"class", " btn_del "}
-            };
+            var routeValues = new { area = "ManageData", id = rowId };
 
             // Set data
-            var obj = helper.Button()
-                .SetAttributes(htmlAttributesDic);
+            var obj = helper.Button(ActionNameDelete, ControllerName, "msg_modal_content")
+                .SetRouteValues(routeValues)
+                .SetOnSuccessFun("openMsgModal");
 
             // Set style
             obj = obj.SetMaterialIcon("delete")
-                .IsLinkBtn(true)
-                .SetColor(ColorOptions.Danger);
+                .SetColor(ColorOptions.Danger)
+                .IsLinkBtn(true);
 
             return obj;
         }
@@ -61,8 +54,8 @@ namespace CTM.Codes.CustomControls.EnglishTests
 
             // Set style
             obj = obj.SetMaterialIcon("mode_edit")
-                .SetColor(ColorOptions.Primary).
-                IsLinkBtn(true);
+                .SetColor(ColorOptions.Danger)
+                .IsLinkBtn(true);
 
             return obj;
         }

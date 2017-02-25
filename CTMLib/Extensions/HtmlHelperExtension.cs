@@ -21,7 +21,7 @@ namespace CTMLib.Extensions
     {
         public static Dictionary<string, object> ConvertHtmlAttributesToIDictionary(object htmlAttributes)
         {
-            if (htmlAttributes==null)
+            if (htmlAttributes == null)
             {
                 return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             }
@@ -38,9 +38,9 @@ namespace CTMLib.Extensions
             var dictionary = routeValues as RouteValueDictionary;
             if (dictionary != null)
             {
-               return dictionary;
+                return dictionary;
             }
-            return  new RouteValueDictionary(routeValues); ;
+            return new RouteValueDictionary(routeValues); ;
         }
 
         private static string GetEnumPropertyValue(Enum enumValue)
@@ -49,11 +49,11 @@ namespace CTMLib.Extensions
             {
                 return Resources.ConstModels.ResourceManager.GetString(enumValue.ToString());
             }
-             catch (Exception e)
+            catch (Exception e)
             {
                 return enumValue.ToString();
             }
-                
+
         }
 
         public static Dictionary<string, object> AddCssClass(object htmlAttributes, string cssClass)
@@ -66,18 +66,18 @@ namespace CTMLib.Extensions
             var originalRouteValuesDic = ConvertRouteValuesToIDictionary(originalRouteValues);
             var addedRouteValuesDic = ConvertRouteValuesToIDictionary(addedRouteValues);
 
-            var dic=Enumerable.Concat<KeyValuePair<string, object>>(originalRouteValuesDic, addedRouteValuesDic).GroupBy(o => o.Key).ToDictionary(o => o.Key, v => v.First().Value);
+            var dic = Enumerable.Concat<KeyValuePair<string, object>>(originalRouteValuesDic, addedRouteValuesDic).GroupBy(o => o.Key).ToDictionary(o => o.Key, v => v.First().Value);
 
-            var rdic=new RouteValueDictionary();
+            var rdic = new RouteValueDictionary();
             foreach (var VARIABLE in dic)
             {
-                rdic.Add(VARIABLE.Key,VARIABLE.Value);
+                rdic.Add(VARIABLE.Key, VARIABLE.Value);
             }
 
             return rdic;
         }
 
-        public static Dictionary<string, object> MergeAttribute(object htmlAttributes,string key, string value)
+        public static Dictionary<string, object> MergeAttribute(object htmlAttributes, string key, string value)
         {
             return AddAttToDic(htmlAttributes, key, value);
         }
@@ -86,9 +86,9 @@ namespace CTMLib.Extensions
         {
             var curDic = ConvertHtmlAttributesToIDictionary(curHtmlAttributes);
             var oriDic = ConvertHtmlAttributesToIDictionary(oriHtmlAttributes);
-            curDic.ForEach(o=>
+            curDic.ForEach(o =>
             {
-                oriDic=AddAttToDic(oriDic, o.Key, o.Value.ToString());
+                oriDic = AddAttToDic(oriDic, o.Key, o.Value.ToString());
             });
             return oriDic;
         }
@@ -107,15 +107,26 @@ namespace CTMLib.Extensions
             return htmlAttributesDic;
         }
 
-        public static MvcHtmlString DisplayValueFor<TModel,TValue>(this HtmlHelper<TModel> html,
+        public static bool IsActiveLink(this HtmlHelper helper, string area, string controller, string action)
+        {
+            var curController = helper.ViewContext.RouteData.Values["controller"].ToString();
+            var curAction = helper.ViewContext.RouteData.Values["action"].ToString();
+            var curArea = helper.ViewContext.RouteData.DataTokens["area"].ToString();
+
+            var isActiveLink = curArea == area && curController == controller && curAction == action;
+
+            return isActiveLink;
+        }
+
+        public static MvcHtmlString DisplayValueFor<TModel, TValue>(this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> expression)
         {
             var value = ModelMetadata.FromLambdaExpression(expression, html.ViewData).Model;
             if (value is Enum)
             {
-                return MvcHtmlString.Create(GetEnumPropertyValue( value as Enum));
+                return MvcHtmlString.Create(GetEnumPropertyValue(value as Enum));
             }
-            return value!=null? html.DisplayFor(expression):MvcHtmlString.Empty;
+            return value != null ? html.DisplayFor(expression) : MvcHtmlString.Empty;
         }
 
 
@@ -153,7 +164,7 @@ namespace CTMLib.Extensions
                 var colBuilder = new TagBuilder("td");
 
                 // Put content in td
-                colBuilder.InnerHtml=tdContentDic[i].ToString();
+                colBuilder.InnerHtml = tdContentDic[i].ToString();
 
                 // If td has html attributes, merge attributes
                 if (tdHtmlAttributesDic != null)
@@ -180,7 +191,7 @@ namespace CTMLib.Extensions
         }
 
 
-        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName, string updateTargetId, string loadingElementId=null,string onSuccessFun=null)
+        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName, string updateTargetId, string loadingElementId = null, string onSuccessFun = null)
         {
             return new ButtonControlAjax(helper, actionName, controllerName).SetLoadingElementId(loadingElementId).SetUpdateTargetId(updateTargetId).SetOnSuccessFun(onSuccessFun);
         }
@@ -189,7 +200,7 @@ namespace CTMLib.Extensions
             return new AlertControl(text);
         }
 
-        public static AlertControl AlertFor<TModel, TTextProperty, TStyleProperty>(this HtmlHelper<TModel> html,Expression<Func<TModel, TTextProperty>> textExpression)
+        public static AlertControl AlertFor<TModel, TTextProperty, TStyleProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TTextProperty>> textExpression)
         {
             var text = (string)ModelMetadata.FromLambdaExpression(textExpression, html.ViewData).Model;
 
@@ -198,7 +209,7 @@ namespace CTMLib.Extensions
 
         public static ModalControl Modal(this HtmlHelper helper, string id, string title)
         {
-            return new ModalControl( id,  title);
+            return new ModalControl(id, title);
         }
 
     }

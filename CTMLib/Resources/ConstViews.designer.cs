@@ -133,6 +133,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 删除.
+        /// </summary>
+        public static string INFO_Delete {
+            get {
+                return ResourceManager.GetString("INFO_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 未查询到任何记录.
         /// </summary>
         public static string INFO_RecordsNotFound {

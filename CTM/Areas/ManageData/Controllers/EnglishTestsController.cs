@@ -97,17 +97,17 @@ namespace CTM.Areas.ManageData.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,ID,Type,Grade,CategoryID,Date")] EnglishTest englishTest)
+        public async Task<ActionResult> Edit([Bind(Include = "ID,CabinCrewID,Type,Grade,CategoryID,Date")] EnglishTest englishTest)
         {
             if (ModelState.IsValid)
             {
                 await _dbManager.Update(englishTest);
                 await _dbManager.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.Accepted);
             }
             ViewBag.CategoryID = new SelectList(_dbManager.Categories.Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
 
-            return View(englishTest);
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
 
         // GET: EnglishTests/Delete/5
@@ -115,17 +115,33 @@ namespace CTM.Areas.ManageData.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                // return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else
+            EnglishTest englishTest = await _dbManager.GetEntityAsync<EnglishTest>(id);
+            if (englishTest == null)
+            {
+                // return HttpNotFound();
+            }
+
+            return PartialView("_DeletePartial", englishTest);
+        }
+
+        // POST: EnglishTests/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            try
             {
                 await _dbManager.Remove<EnglishTest>(id);
                 await _dbManager.SaveChangesAsync();
-
                 return new HttpStatusCodeResult(HttpStatusCode.Accepted);
             }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
-
 
         // GET: EnglishTests/Upload
         public ActionResult Upload()

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace CTM.Attributes
+namespace CTM.Codes.Attributes
 {
     public class SystemErrorHandleAttribute : HandleErrorAttribute
     {

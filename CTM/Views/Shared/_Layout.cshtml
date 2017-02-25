@@ -2,6 +2,7 @@
 @using CTMLib.CustomControls
 @using CTMLib.Extensions
 @using CTMLib.Resources
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,15 +36,14 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
 
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        @Html.ActionLink("英语", "Index", "EnglishTests", new { area = "Search" }, null)
+                    <li class="@(Html.IsActiveLink("Search","EnglishTests","Index")?"active":"")">
+                        @Html.ActionLink("英语", "Index", "EnglishTests", new {area = "Search"}, null)
                     </li>
-                    <li>
+                    <li class="@(Html.IsActiveLink("Search","RefresherTrainings","Index")?"active":"")">
                         @Html.ActionLink("复训", "Index", "RefresherTrainings", new { area = "Search" }, null)
                     </li>
                     @Html.Partial("_LoginPartial")
@@ -65,7 +65,24 @@
         </div>
 
     </div>
-
+<div class="footer" style="background-color: grey; height: 60px">
+    @{
+        var curCulture = Request.Cookies["culture"]?.Value.ToString();
+        string culture = "en-NZ";
+        string displayText = "EN";
+        string returnUrl = Request.Url.AbsoluteUri;
+        bool isCurEnglish = curCulture?.Substring(0,2).ToLower() == "en";
+        if (isCurEnglish)
+        {
+            culture = "zh-CN";
+            displayText = "中";
+        }
+    }
+    @using (Html.BeginForm("ChangeLanguage", "Account", new { area= "ManageAccount", culture, returnUrl }, FormMethod.Post))
+    {
+        @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
+    }
+</div>
 
     @* -- Loader Start -- *@
 
@@ -78,13 +95,6 @@
 
     <!-- #region Message_box_modal -->
 
-    @{
-        var body = "<h4>" + ConstViews.INFO_Confirm + "</h4><p>" + ConstViews.INFO_Confirm_String + "</p>";
-        var footer = "<a>" + ConstViews.BTN_No + "</a>" +
-                     "<a class='btn-yes'>" + ConstViews.BTN_Yes + "</a>";
-
-    }
-
     @Html.MsgModal()
 
     <!-- #endregion -->
@@ -95,7 +105,7 @@
     <!-- #endregion -->
     <!-- #region Alert -->
 
-    @Html.Alert(text: "").SetAttributes(htmlAttributes: new { id = "alert" })
+    @Html.Alert(text: "").SetId("alert")
 
     <!-- #endregion -->
 
@@ -116,7 +126,14 @@
         $("#mid_size_modal").modal();
         openModal("mid_size_modal", true);
     };
-
+    function openMsgModal() {
+        // Open
+        $("#msg_modal").modal();
+    };
+    function CloseModal() {
+        // Close
+        $(".modal").modal("hide");
+    };
 
     $(function () {
 

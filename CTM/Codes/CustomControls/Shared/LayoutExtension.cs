@@ -21,8 +21,10 @@ namespace CTM.Codes.CustomControls.Shared
         }
         public static ModalControl MsgModal(this HtmlHelper helper)
         {
-            var obj = helper.Modal("message_box_modal", "Confirm")
-                .SetSize(SizeOptions.Small);
+            var div = new DivControl().SetId("msg_modal_content");
+            var obj = helper.Modal("msg_modal", "Confirm")
+                .SetSize(SizeOptions.Small)
+                .SetBodyHtml("msg_modal_content", div.ToHtmlString());
             return obj;
         }
     }

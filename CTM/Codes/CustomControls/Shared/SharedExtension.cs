@@ -18,7 +18,7 @@ namespace CTM.Codes.CustomControls.Shared
             var input = helper.EditorFor(expression, new { htmlAttributes = new { @class = "form-control" } });
             var validationMsg = helper.ValidationMessageFor(expression, "", new { @class = "text-danger" });
 
-            var div2 = new DivControl(input + validationMsg.ToHtmlString()).AddCssClass("col-md-10");
+            var div2 = new DivControl(input + validationMsg.ToHtmlString());
             var div1 = new DivControl(label + div2.ToHtmlString()).AddCssClass("form-group");
 
             return MvcHtmlString.Create(div1.ToHtmlString());
@@ -29,7 +29,7 @@ namespace CTM.Codes.CustomControls.Shared
             var input = helper.EditorFor(expression, new { htmlAttributes = new { @class = "form-control",type="date" } });
             var validationMsg = helper.ValidationMessageFor(expression, "", new { @class = "text-danger" });
 
-            var div2 = new DivControl(input + validationMsg.ToHtmlString()).AddCssClass("col-md-10");
+            var div2 = new DivControl(input + validationMsg.ToHtmlString());
             var div1 = new DivControl(label + div2.ToHtmlString()).AddCssClass("form-group");
 
             return MvcHtmlString.Create(div1.ToHtmlString());
@@ -50,7 +50,7 @@ namespace CTM.Codes.CustomControls.Shared
             var input = helper.DropDownListFor(expression,selectList,"", new {  @class = "form-control"  });
             var validationMsg = helper.ValidationMessageFor(expression, "", new { @class = "text-danger" });
 
-            var div2 = new DivControl(input + validationMsg.ToHtmlString()).AddCssClass("col-md-10");
+            var div2 = new DivControl(input + validationMsg.ToHtmlString());
             var div1 = new DivControl(label + div2.ToHtmlString()).AddCssClass("form-group");
 
             return MvcHtmlString.Create(div1.ToHtmlString());

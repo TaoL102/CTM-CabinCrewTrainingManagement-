@@ -245,8 +245,8 @@
     <Compile Include="Codes\CustomControls\Shared\LayoutExtension.cs" />
     <Compile Include="Codes\CustomControls\Shared\SharedExtension.cs" />
     <Compile Include="Codes\Database\CTMDbContext.cs" />
-    <Compile Include="Attributes\IsNameAttribute.cs" />
-    <Compile Include="Attributes\SystemErrorHandleAttribute.cs" />
+    <Compile Include="Codes\Attributes\IsNameAttribute.cs" />
+    <Compile Include="Codes\Attributes\SystemErrorHandleAttribute.cs" />
     <Compile Include="Codes\Helpers\ConstantHelper.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Codes\Database\DbManager.cs" />
@@ -379,7 +379,6 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Areas\Search\Views\EnglishTests\_SearchResultIsLatestPartial.cshtml" />
     <Content Include="App_Code\EnglishTests\SearchResultIsLatestHelpers.cshtml" />
-    <Content Include="App_Code\EnglishTests\SearchResultHelpers.cshtml" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -464,6 +463,7 @@
     <Content Include="Areas\ManageData\Views\RefresherTrainings\Details.cshtml" />
     <Content Include="Areas\ManageData\Views\RefresherTrainings\Edit.cshtml" />
     <Content Include="Areas\ManageData\Views\RefresherTrainings\Upload.cshtml" />
+    <Content Include="Areas\ManageData\Views\EnglishTests\_DeletePartial.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

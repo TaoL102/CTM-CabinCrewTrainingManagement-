@@ -141,18 +141,38 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\ConstModels.Designer.cs">
+    <Compile Include="Resources\ConstControllers.zh-CN.Designer.cs">
+      <DependentUpon>ConstControllers.zh-CN.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ConstModels.Designer.cs">
       <DependentUpon>ConstModels.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ConstModels.zh-CN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConstModels.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ConstSettings.Designer.cs">
       <DependentUpon>ConstSettings.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\ConstViews.designer.cs">
+    <Compile Include="Resources\ConstSettings.zh-CN.Designer.cs">
+      <DependentUpon>ConstSettings.zh-CN.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ConstViews.Designer.cs">
       <DependentUpon>ConstViews.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ConstViews.zh-CN.Designer.cs">
+      <DependentUpon>ConstViews.zh-CN.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -167,17 +187,33 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ConstControllers.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ConstControllers.zh-CN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConstControllers.zh-CN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ConstModels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ConstModels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ConstModels.zh-CN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConstModels.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ConstSettings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ConstSettings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ConstSettings.zh-CN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConstSettings.zh-CN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ConstViews.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConstViews.designer.cs</LastGenOutput>
+      <LastGenOutput>ConstViews.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ConstViews.zh-CN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConstViews.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

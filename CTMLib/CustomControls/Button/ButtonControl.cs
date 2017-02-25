@@ -25,7 +25,7 @@ namespace CTMLib.CustomControls.Button
             builder.GenerateId(Id);
 
             // Text
-            HtmlAttributes.Add("value",Text);
+            builder.SetInnerText(Text);
 
             // IsSubmit
             HtmlAttributes.Add("type", IsSubmitBtn?"submit":"button");

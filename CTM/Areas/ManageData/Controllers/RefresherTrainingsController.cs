@@ -12,13 +12,14 @@ using System.Web;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
 using CTM.Codes.Database;
+using CTM.Controllers;
 using CTMLib.Helpers;
 using CTMLib.Models;
 using Microsoft.AspNet.Identity;
 
 namespace CTM.Areas.ManageData.Controllers
 {
-    public class RefresherTrainingsController : Controller
+    public class RefresherTrainingsController : BaseController
     {
         private CTMDbContext db = new CTMDbContext();
         private static CultureInfo culture = new CultureInfo("zh-CN");

@@ -118,84 +118,84 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CabinAnnoucement" xml:space="preserve">
-    <value>Cabin Announcement</value>
+    <value>广播词</value>
   </data>
   <data name="CabinCrew" xml:space="preserve">
-    <value>Cabin Crew</value>
+    <value>乘务员</value>
   </data>
   <data name="CabinCrewID" xml:space="preserve">
-    <value>CabinCrew ID</value>
+    <value>乘务员ID</value>
   </data>
   <data name="CabinCrewName" xml:space="preserve">
-    <value>Name</value>
+    <value>姓名</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>Category</value>
+    <value>类型</value>
   </data>
   <data name="CategoryID" xml:space="preserve">
-    <value>Category ID</value>
+    <value>分类ID</value>
   </data>
   <data name="DangerousGoodsTrainingAdmin" xml:space="preserve">
-    <value>Dangerous Goods Training Administrator</value>
+    <value>危险品培训管理员</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>日期</value>
   </data>
   <data name="DateTime" xml:space="preserve">
-    <value>Date</value>
+    <value>日期</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>描述</value>
   </data>
   <data name="EnglishTestAdmin" xml:space="preserve">
-    <value>English Test Administrator</value>
+    <value>英语培训管理员</value>
   </data>
   <data name="EnglishTestType" xml:space="preserve">
-    <value>English Test Type</value>
+    <value>考核项目</value>
   </data>
   <data name="ExpiryDate" xml:space="preserve">
-    <value>Expiry Date</value>
+    <value>失效日期</value>
   </data>
   <data name="FromDate" xml:space="preserve">
-    <value>From</value>
+    <value>开始日期</value>
   </data>
   <data name="Grade" xml:space="preserve">
-    <value>Grade</value>
+    <value>成绩</value>
   </data>
   <data name="IsLatestResultOnly" xml:space="preserve">
-    <value>Display the latest results only</value>
+    <value>仅显示最新成绩 </value>
   </data>
   <data name="IsResigned" xml:space="preserve">
-    <value>Is resigned</value>
+    <value>是否已离职</value>
   </data>
   <data name="IsWithdrawn" xml:space="preserve">
-    <value>Is withdrawn</value>
+    <value>是否已撤销</value>
   </data>
   <data name="OrdinaryUser" xml:space="preserve">
-    <value>User</value>
+    <value>普通用户</value>
   </data>
   <data name="PromotionAdmin" xml:space="preserve">
-    <value>Promotion Administrator</value>
+    <value>晋级管理员</value>
   </data>
   <data name="RefresherTrainingAdmin" xml:space="preserve">
-    <value>Refresher Training Administrator</value>
+    <value>复训管理员</value>
   </data>
   <data name="Remark" xml:space="preserve">
-    <value>Remark</value>
+    <value>备注</value>
   </data>
   <data name="SpokenSkill" xml:space="preserve">
-    <value>Spoken English</value>
+    <value>口语</value>
   </data>
   <data name="SubCategory" xml:space="preserve">
-    <value>Sub Category</value>
-  </data>
-  <data name="Super Category" xml:space="preserve">
-    <value>Super Category</value>
+    <value>子类型</value>
   </data>
   <data name="SuperAdmin" xml:space="preserve">
-    <value>Super Administrator</value>
+    <value>超级管理员</value>
+  </data>
+  <data name="SuperCategory" xml:space="preserve">
+    <value>分类</value>
   </data>
   <data name="ToDate" xml:space="preserve">
-    <value>To</value>
+    <value>结束日期</value>
   </data>
 </root>

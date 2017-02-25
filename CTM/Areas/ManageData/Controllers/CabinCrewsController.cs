@@ -9,13 +9,14 @@ using System.Web;
 using System.Web.Mvc;
 using CTM.Areas.ManageAccount.Models;
 using CTM.Codes.Database;
+using CTM.Controllers;
 using CTMLib.Helpers;
 using CTMLib.Models;
 using Newtonsoft.Json;
 
 namespace CTM.Areas.ManageData.Controllers
 {
-    public class CabinCrewsController : Controller
+    public class CabinCrewsController : BaseController
     {
         private CTMDbContext db = new CTMDbContext();
 

@@ -61,7 +61,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 广播词.
+        ///   Looks up a localized string similar to Cabin Announcement.
         /// </summary>
         public static string CabinAnnoucement {
             get {
@@ -70,7 +70,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 乘务员.
+        ///   Looks up a localized string similar to Cabin Crew.
         /// </summary>
         public static string CabinCrew {
             get {
@@ -79,7 +79,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 乘务员ID.
+        ///   Looks up a localized string similar to CabinCrew ID.
         /// </summary>
         public static string CabinCrewID {
             get {
@@ -88,7 +88,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 姓名.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string CabinCrewName {
             get {
@@ -97,7 +97,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 类型.
+        ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string Category {
             get {
@@ -106,7 +106,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 分类ID.
+        ///   Looks up a localized string similar to Category ID.
         /// </summary>
         public static string CategoryID {
             get {
@@ -115,7 +115,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 危险品培训管理员.
+        ///   Looks up a localized string similar to Dangerous Goods Training Administrator.
         /// </summary>
         public static string DangerousGoodsTrainingAdmin {
             get {
@@ -124,7 +124,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 日期.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
             get {
@@ -133,7 +133,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 日期.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string DateTime {
             get {
@@ -142,7 +142,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 描述.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
             get {
@@ -151,7 +151,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 英语培训管理员.
+        ///   Looks up a localized string similar to English Test Administrator.
         /// </summary>
         public static string EnglishTestAdmin {
             get {
@@ -160,7 +160,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 考核项目.
+        ///   Looks up a localized string similar to English Test Type.
         /// </summary>
         public static string EnglishTestType {
             get {
@@ -169,7 +169,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 失效日期.
+        ///   Looks up a localized string similar to Expiry Date.
         /// </summary>
         public static string ExpiryDate {
             get {
@@ -178,7 +178,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 开始日期.
+        ///   Looks up a localized string similar to From.
         /// </summary>
         public static string FromDate {
             get {
@@ -187,7 +187,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 成绩.
+        ///   Looks up a localized string similar to Grade.
         /// </summary>
         public static string Grade {
             get {
@@ -196,7 +196,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 仅显示最新成绩 .
+        ///   Looks up a localized string similar to Display the latest results only.
         /// </summary>
         public static string IsLatestResultOnly {
             get {
@@ -205,7 +205,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 是否已离职.
+        ///   Looks up a localized string similar to Is resigned.
         /// </summary>
         public static string IsResigned {
             get {
@@ -214,7 +214,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 是否已撤销.
+        ///   Looks up a localized string similar to Is withdrawn.
         /// </summary>
         public static string IsWithdrawn {
             get {
@@ -223,7 +223,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 普通用户.
+        ///   Looks up a localized string similar to User.
         /// </summary>
         public static string OrdinaryUser {
             get {
@@ -232,7 +232,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 晋级管理员.
+        ///   Looks up a localized string similar to Promotion Administrator.
         /// </summary>
         public static string PromotionAdmin {
             get {
@@ -241,7 +241,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 复训管理员.
+        ///   Looks up a localized string similar to Refresher Training Administrator.
         /// </summary>
         public static string RefresherTrainingAdmin {
             get {
@@ -250,7 +250,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 备注.
+        ///   Looks up a localized string similar to Remark.
         /// </summary>
         public static string Remark {
             get {
@@ -259,7 +259,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 口语.
+        ///   Looks up a localized string similar to Spoken English.
         /// </summary>
         public static string SpokenSkill {
             get {
@@ -268,7 +268,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 子类型.
+        ///   Looks up a localized string similar to Sub Category.
         /// </summary>
         public static string SubCategory {
             get {
@@ -277,7 +277,16 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 超级管理员.
+        ///   Looks up a localized string similar to Super Category.
+        /// </summary>
+        public static string Super_Category {
+            get {
+                return ResourceManager.GetString("Super Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Administrator.
         /// </summary>
         public static string SuperAdmin {
             get {
@@ -286,16 +295,7 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 分类.
-        /// </summary>
-        public static string SuperCategory {
-            get {
-                return ResourceManager.GetString("SuperCategory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 结束日期.
+        ///   Looks up a localized string similar to To.
         /// </summary>
         public static string ToDate {
             get {

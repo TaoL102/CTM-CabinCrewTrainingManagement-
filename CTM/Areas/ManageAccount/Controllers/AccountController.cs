@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -402,7 +405,24 @@ namespace CTM.Areas.ManageAccount.Controllers
         {
             return View();
         }
+        public ActionResult ChangeLanguage(string culture, string returnUrl)
+        {
+            // Save culture in a cookie
+            HttpCookie cookie = Request.Cookies["culture"];
+            if (cookie != null)
+                cookie.Value = culture;   // update cookie value
+            else
+            {
+                cookie = new HttpCookie("culture")
+                {
+                    Value = culture,
+                    Expires = DateTime.Now.AddYears(1)
+                };
+            }
+            Response.Cookies.Add(cookie);
 
+            return Redirect(returnUrl);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

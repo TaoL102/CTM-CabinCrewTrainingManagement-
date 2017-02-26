@@ -20,7 +20,7 @@
                         @Html.TextBox("CCName", null, new { @class = "validate autocomplete form-control", id = "CCName"})
                        @*<label for="CCName">姓名</label>*@
                    
-                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.CabinCrew.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
             

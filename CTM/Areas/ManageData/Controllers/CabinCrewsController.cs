@@ -140,10 +140,10 @@ namespace CTM.Areas.ManageData.Controllers
             if (upload != null && upload.ContentLength > 0)
             {
                 // Check file type
-                if ( ExcelHelper.CheckIsExcel(upload))
+                if (ExcelHelper.CheckIsExcel(upload))
                 {
 
-                    var cabinCrewsInUpload=ExcelHelper.GenerateListCabinCrewFromExcel(upload.InputStream);
+                    var cabinCrewsInUpload = ExcelHelper.GenerateListCabinCrewFromExcel(upload.InputStream);
 
                     // Check if cabin crew exists in current database
                     // If true, update it
@@ -161,7 +161,7 @@ namespace CTM.Areas.ManageData.Controllers
                             var ccInDb = await db.CabinCrews.FindAsync(c.ID);
                             var ccInUpload = cabinCrewsInUpload.Where(o => o.ID.Equals(c.ID)).FirstOrDefault();
                             if (!ccInDb.Equals(ccInUpload))
-                           {
+                            {
                                 ccInDb.Name = ccInUpload.Name;
                                 ccInDb.IsResigned = false;
                             }
@@ -193,23 +193,30 @@ namespace CTM.Areas.ManageData.Controllers
         }
 
 
-        public async Task< ActionResult> GetCabinCrewNames()
+        public  JsonResult GetCabinCrewNames(string name)
         {
-            var list =await db.CabinCrews.Where(o=>o.IsResigned.Equals(false)).ToListAsync();
-            var keyValues = new Dictionary<string, string>
-               {
-                   
-               };
-            foreach (var var in list)
+
+            CultureInfo culture = new CultureInfo("zh-CN");
+            var strComparer = StringComparer.Create(culture, true);
+
+            var list =
+                db.CabinCrews
+                    .Where(o => o.Name.Contains(name) && o.IsResigned.Equals(false))
+                    .Select(o => o.Name)
+                    .AsEnumerable();
+
+            if (string.IsNullOrEmpty(name))
             {
-                keyValues.Add(
-                  var.Name, null
-                    );
+                return Json(list, JsonRequestBehavior.AllowGet);
             }
-            
-            return Json(JsonConvert.SerializeObject(keyValues));
+
+            var listArray = list.ToArray();
+
+            Array.Sort(listArray, strComparer);
+
+            return Json(listArray?.Take(10), JsonRequestBehavior.AllowGet);
         }
-        
+
 
 
         protected override void Dispose(bool disposing)

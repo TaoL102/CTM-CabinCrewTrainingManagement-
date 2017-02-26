@@ -149,5 +149,14 @@ namespace CTMLib.Resources {
                 return ResourceManager.GetString("INFO_RecordsNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 该姓名不存在.
+        /// </summary>
+        public static string INFOR_CabinCrewNotFound {
+            get {
+                return ResourceManager.GetString("INFOR_CabinCrewNotFound", resourceCulture);
+            }
+        }
     }
 }

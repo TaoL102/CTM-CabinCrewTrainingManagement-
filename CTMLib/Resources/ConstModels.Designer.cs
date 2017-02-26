@@ -151,6 +151,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English Test.
+        /// </summary>
+        public static string EnglishTest {
+            get {
+                return ResourceManager.GetString("EnglishTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English Test Administrator.
         /// </summary>
         public static string EnglishTestAdmin {
@@ -241,6 +250,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresher Training.
+        /// </summary>
+        public static string RefresherTraining {
+            get {
+                return ResourceManager.GetString("RefresherTraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresher Training Administrator.
         /// </summary>
         public static string RefresherTrainingAdmin {
@@ -277,20 +295,20 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Super Category.
-        /// </summary>
-        public static string Super_Category {
-            get {
-                return ResourceManager.GetString("Super Category", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Super Administrator.
         /// </summary>
         public static string SuperAdmin {
             get {
                 return ResourceManager.GetString("SuperAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Category.
+        /// </summary>
+        public static string SuperCategory {
+            get {
+                return ResourceManager.GetString("SuperCategory", resourceCulture);
             }
         }
         

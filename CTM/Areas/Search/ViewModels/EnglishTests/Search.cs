@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CTM.Codes.Attributes;
 
 namespace CTM.Areas.Search.ViewModels.EnglishTests
 {
@@ -16,7 +17,7 @@ namespace CTM.Areas.Search.ViewModels.EnglishTests
 
     public class Search
     {
-
+        [IsCabinCrew]
         [Display(Name = "CabinCrewName", ResourceType = typeof(ConstModels))]
         public string CCName { get; set; }
 

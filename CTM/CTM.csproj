@@ -230,6 +230,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\API\APIAreaRegistration.cs" />
+    <Compile Include="Areas\API\Controllers\QueryController.cs" />
+    <Compile Include="Areas\API\Controllers\ValidateController.cs" />
     <Compile Include="Areas\ManageAccount\ManageAccountAreaRegistration.cs" />
     <Compile Include="Areas\ManageAccount\Controllers\AccountController.cs" />
     <Compile Include="Areas\ManageAccount\Controllers\ManageController.cs" />
@@ -239,6 +242,7 @@
     <Compile Include="Areas\Search\ViewModels\EnglishTests\Search.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResult.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResultIsLatest.cs" />
+    <Compile Include="Codes\Attributes\IsCabinCrewAttribute.cs" />
     <Compile Include="Codes\CustomControls\EnglishTests\ButtonExtension.cs" />
     <Compile Include="Codes\CustomControls\EnglishTests\FormExtension.cs" />
     <Compile Include="Codes\CustomControls\EnglishTests\TableExtension.cs" />
@@ -286,12 +290,6 @@
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\material-kit.css" />
-    <Content Include="Content\material.css" />
-    <Content Include="Content\material.min.css" />
-    <Content Include="Content\materialize.css" />
-    <Content Include="Content\materialize.min.css" />
-    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -340,7 +338,6 @@
     <Content Include="Areas\Search\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\material.min.css.map" />
     <Content Include="Areas\ManageAccount\Views\_ViewStart.cshtml" />
     <Content Include="Areas\ManageData\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Home\Views\_ViewStart.cshtml" />
@@ -357,6 +354,7 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.dropdown.js" />
     <Content Include="Scripts\jquery.tagsinput.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -464,10 +462,13 @@
     <Content Include="Areas\ManageData\Views\RefresherTrainings\Edit.cshtml" />
     <Content Include="Areas\ManageData\Views\RefresherTrainings\Upload.cshtml" />
     <Content Include="Areas\ManageData\Views\EnglishTests\_DeletePartial.cshtml" />
+    <Content Include="Areas\API\Views\web.config" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Content\bootstrap\autocomplete.less" />
+    <Content Include="Content\bootstrap\datepicker.less" />
     <None Include="Properties\PublishProfiles\WestAirCTM.pubxml" />
     <Content Include="Scripts\sitemethod.js.map" />
     <None Include="Scripts\_references.js" />
@@ -494,6 +495,10 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\API\Models\" />
+    <Folder Include="Areas\API\Views\Query\" />
+    <Folder Include="Areas\API\Views\Shared\" />
+    <Folder Include="Areas\API\Views\Validate\" />
     <Folder Include="Areas\Home\Models\" />
     <Folder Include="Areas\Home\Views\Shared\" />
     <Folder Include="Areas\ManageAccount\Views\Shared\" />

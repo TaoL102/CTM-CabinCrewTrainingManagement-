@@ -1,42 +1,5 @@
-﻿/**
- * Copyright 2015 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-body {
-
-    /*font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;*/
-}
-
-
+﻿
 /*#region ALL */
-
-a {
-    color: black;
-}
-
-.mdl-layout__content {
-    /*padding-top: 30px;
-    padding-left: 10%;
-    padding-right: 10%;*/
-    z-index: unset;
-}
-
-.mdl-data-table {
-    width: 100%;
-    white-space: normal;
-}
 
 .label-warning {
     background-color: #ff9800;
@@ -67,23 +30,6 @@ a {
     vertical-align: baseline;
 }
 
-
-.autocomplete-content {
-    position: absolute;
-}
-
-form {
-    height: 100%;
-    display: inline;
-}
-
-.disabled {
-    pointer-events: none;
-}
-
-.mdl-data-table td, th {
-    text-align: center;
-}
 
 .font-primary {
     color:#00bcd4 !important
@@ -254,16 +200,6 @@ form {
 
 /* -- Loader End-- */
 
-/*  --  MDL loader start --*/
-#loader {
-    display: none;
-}
-
-.mdl-progress {
-    width: 100%;
-}
-/* -- MDL loader end --*/
-
 /*#endregion */
 
 
@@ -323,174 +259,7 @@ form {
 
 /*#endregion */
 
-
-/*#region Home page */
-
-
-.home-englishtest-section {
-    position: relative;
-    padding-top: 60px;
-    padding-bottom: 80px;
-    background-color: #f3f3f3;
-}
-
-.home-dangerousgoodstraining-section {
-    position: relative;
-    padding-top: 60px;
-    padding-bottom: 80px;
-   
-}
-
-.home-refreshertraining-section {
-    position: relative;
-    padding-top: 60px;
-    padding-bottom: 80px;
-    background-color: #f3f3f3;
-}
-
-.home-promotion-section {
-    position: relative;
-    padding-top: 60px;
-    padding-bottom: 80px;
-   
-}
-
-
-
-/*#endregion */
-
-
-/*#region English Test page */
-
-
-.englishtest-query-mdl-grid {
-    max-width: 70%;
-    margin-top: 10%;
-
-}
-
-.englishtest-query-sub-mdl-grid {
-    width: inherit;
-}
-
-.englishtest-query-mdl-grid > form {
-   width: 100%;
-}
-
-.englishtest-query-mdl-card {
-    width: 100%;
-    padding: 20px;
-    overflow: unset;
-    margin-bottom: 40px;
-}
-
-    .englishtest-query-mdl-card > .mdl-card__title {
-        color: #fff;
-        height: 176px;
-        background-image: url('../Images/login_card_bg.jpg');
-    }
-
-    .englishtest-query-mdl-card > .mdl-card__menu {
-        color: #fff;
-    }
-
-    .englishtest-query-mdl-card > .mdl-card__supporting-text {
-        width: 100%;
-    }
-
-
-/*#endregion */
-
-
-
-/*#region Admin data */
-
-
-.admin-data-card-square.mdl-card {
-    width: 320px;
-    height: 320px;
-}
-
-.admin-data-card-square > .mdl-card__title {
-    color: #fff;
-    background: url('../Images/bg_dog.png') bottom right 15% no-repeat orange;
-}
-
-
-/*#endregion */
-
-
-/*#region _Shared_layout*/
-
-.message_box_modal {
-    width: 300px;
-    height: 185px;
-    bottom: 10%;
-}
-
-@media only screen and (max-width: 400px) {
-    .message_box_modal {
-        width: 80%;
-    }
-}
-
-.message_box_modal h4 {
-    font-size: 1.5em;
-}
-
-
-.mid_size_modal {
-    width: 500px;
-    top: 5%;
-    bottom: 5%;
-    height: 90%;
-    max-height: 90%;
-}
-
-@media only screen and (max-width: 500px) {
-    .mid_size_modal {
-        width: 80%;
-    }
-}
-
-.mid_size_modal h4 {
-    font-size: 1.5em;
-}
-
-
-/*#endregion*/
-
-
-/*#region Floating btn */
-
-.btn_li_transparent {
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: transparent;
-    color: white;
-}
-
-    .btn_li_transparent:focus {
-
-        background-color: unset;
-    }
-/*#endregion */
-
-
-/*#region alert */
-
-#alert {
-       position: fixed;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    z-index: 3;
-    border-radius: 0;
-    padding: 10px;
-    display: none;
-}
+/*#region AutoComplete */
 
 
 /*#endregion */

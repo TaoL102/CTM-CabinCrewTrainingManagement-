@@ -13,6 +13,7 @@ namespace CTM
         {
             bundles.Add(new ScriptBundle("~/bundles/bundleJquery").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui.js",
                         "~/Scripts/jquery.unobtrusive*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bundleJqueryval").Include(
@@ -29,9 +30,10 @@ namespace CTM
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/bundleCustomizedJS").Include(
+             
                       "~/Scripts/jquery.dropdown.js",
-                       //"~/Scripts/jquery.tagsinput.js",
-                       //"~/Scripts/material.min.js",
+                      //"~/Scripts/jquery.tagsinput.js",
+                      //"~/Scripts/material.min.js",
                       //"~/Scripts/nouislider.min.js",
                       //"~/Scripts/material-kit.js",
                       //"~/Scripts/materialize.min.js",

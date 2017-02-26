@@ -147,6 +147,9 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="EnglishTest" xml:space="preserve">
+    <value>English Test</value>
+  </data>
   <data name="EnglishTestAdmin" xml:space="preserve">
     <value>English Test Administrator</value>
   </data>
@@ -177,6 +180,9 @@
   <data name="PromotionAdmin" xml:space="preserve">
     <value>Promotion Administrator</value>
   </data>
+  <data name="RefresherTraining" xml:space="preserve">
+    <value>Refresher Training</value>
+  </data>
   <data name="RefresherTrainingAdmin" xml:space="preserve">
     <value>Refresher Training Administrator</value>
   </data>
@@ -189,11 +195,11 @@
   <data name="SubCategory" xml:space="preserve">
     <value>Sub Category</value>
   </data>
-  <data name="Super Category" xml:space="preserve">
-    <value>Super Category</value>
-  </data>
   <data name="SuperAdmin" xml:space="preserve">
     <value>Super Administrator</value>
+  </data>
+  <data name="SuperCategory" xml:space="preserve">
+    <value>Super Category</value>
   </data>
   <data name="ToDate" xml:space="preserve">
     <value>To</value>

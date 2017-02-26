@@ -135,6 +135,9 @@
   <data name="EnglishTest_ValidResultOnly" xml:space="preserve">
     <value>仅显示有效成绩 （忽略考核类型和时间区间）</value>
   </data>
+  <data name="INFOR_CabinCrewNotFound" xml:space="preserve">
+    <value>该姓名不存在</value>
+  </data>
   <data name="INFO_Confirm" xml:space="preserve">
     <value>确认</value>
   </data>

@@ -147,6 +147,9 @@
   <data name="Description" xml:space="preserve">
     <value>描述</value>
   </data>
+  <data name="EnglishTest" xml:space="preserve">
+    <value>英语</value>
+  </data>
   <data name="EnglishTestAdmin" xml:space="preserve">
     <value>英语培训管理员</value>
   </data>

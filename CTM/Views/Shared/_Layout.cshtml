@@ -35,16 +35,14 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-
-                </ul>
+                <ul class="nav navbar-nav"></ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="@(Html.IsActiveLink("Search","EnglishTests","Index")?"active":"")">
-                        @Html.ActionLink("英语", "Index", "EnglishTests", new {area = "Search"}, null)
+                        @Html.ActionLink(ConstModels.EnglishTest, "Index", "EnglishTests", new { area = "Search" }, null)
                     </li>
                     <li class="@(Html.IsActiveLink("Search","RefresherTrainings","Index")?"active":"")">
-                        @Html.ActionLink("复训", "Index", "RefresherTrainings", new { area = "Search" }, null)
+                        @Html.ActionLink(ConstModels.RefresherTraining, "Index", "RefresherTrainings", new { area = "Search" }, null)
                     </li>
                     @Html.Partial("_LoginPartial")
                 </ul>
@@ -60,29 +58,29 @@
     </nav>
     <div style="margin-top: 130px;background-color:#F9F9F9 ">
 
-        <div class="container" >
+        <div class="container">
             @RenderBody()
         </div>
 
     </div>
-<div class="footer" style="background-color: grey; height: 60px">
-    @{
-        var curCulture = Request.Cookies["culture"]?.Value.ToString();
-        string culture = "en-NZ";
-        string displayText = "EN";
-        string returnUrl = Request.Url.AbsoluteUri;
-        bool isCurEnglish = curCulture?.Substring(0,2).ToLower() == "en";
-        if (isCurEnglish)
-        {
-            culture = "zh-CN";
-            displayText = "中";
+    <div class="footer" style="background-color: grey; height: 60px">
+        @{
+            var curCulture = Request.Cookies["culture"]?.Value.ToString();
+            string culture = "en-NZ";
+            string displayText = "EN";
+            string returnUrl = Request.Url.AbsoluteUri;
+            bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
+            if (isCurEnglish)
+            {
+                culture = "zh-CN";
+                displayText = "中";
+            }
         }
-    }
-    @using (Html.BeginForm("ChangeLanguage", "Account", new { area= "ManageAccount", culture, returnUrl }, FormMethod.Post))
-    {
-        @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
-    }
-</div>
+        @using (Html.BeginForm("ChangeLanguage", "Account", new { area = "ManageAccount", culture, returnUrl }, FormMethod.Post))
+        {
+            @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
+        }
+    </div>
 
     @* -- Loader Start -- *@
 
@@ -136,22 +134,14 @@
     };
 
     $(function () {
-
-
-
-        //Get all cabin crew names for autocomplete
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("GetCabinCrewNames","CabinCrews", new { area = "ManageData" })"
-        }).done(function (data) {
-
-            var returnData = jQuery.parseJSON(data);
-
-            $('#mid_size_modal form input.autocomplete').autocomplete({
-                data: returnData
-            });
-        }).fail(function () {
-            console("ajax failed");
+        // Register
+        $(".datepicker").datepicker(
+        {
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
         });
 
         // Del btn click event
@@ -195,21 +185,107 @@
             });
 
 
-        //Get all cabin crew names
 
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("GetCabinCrewNames","CabinCrews", new { area = "ManageData" })"
-        }).done(function (data) {
+        // Autocomplete
+        // Reference: https://jqueryui.com/autocomplete/
+        var cache = {};
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
 
-            var returnData = jQuery.parseJSON(data);
+        $("#CCName")
+            // don't navigate away from the field on tab when selecting an item
+      .on("keydown", function (event) {
+          if (event.keyCode === $.ui.keyCode.TAB &&
+              $(this).autocomplete("instance").menu.active) {
+              event.preventDefault();
+          }
+      })
+            .focusout(function () {
 
-            $('input.autocomplete').autocomplete({
-                data: returnData
+                $.ajax({
+                    url: "@Url.Action("IsValidCabinCrew", "Validate", new { area = "API" })",
+                    data: { names: $(this).val() },
+                success: function (data, status, xhr) {
+                    console.log("isvalid" + data);
+                },
+                error: function () {
+                   
+                }
             });
-        }).fail(function () {
-            console("ajax failed");
-        });
+            })
+        
+            .autocomplete({
+                delay: 1000,
+                source: function (request, response) {
+                    var query = extractLast( request.term );
+                    // Search cache first
+                    if (query in cache) {
+                        response(cache[query]);
+                        return;
+                    }
+
+                    // Then ajax
+                    $.ajax({
+                        url: "@Url.Action("GetCabinCrewNames","Query", new { area = "API" })",
+                        data: { name: query },
+                        dataType: "json",
+                        success: function (data, status, xhr) {
+                            cache[query] = data;
+                            response(data);
+                        },
+                        error: function () {
+                            response([]);
+                        }
+                    });
+                },
+                classes: {
+                    "ui-autocomplete": "form-autocompelete-menu"
+                },
+
+                search: function (event, ui) {
+                    console.log($(event.delegateTarget));
+                    // custom minLength
+                    var term = extractLast(this.value);
+                    if (term.length < 1) {
+                        return false;                     
+                    }
+                    if (!$(event.delegateTarget).val().match(/[\u3400-\u9FBF]/)) {
+                        event.preventDefault();
+                        return false;
+                    }
+                },
+
+                minLength: 1,
+                focus: function() {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function( event, ui ) {
+                    var terms = split( this.value );
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push( ui.item.value );
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push( "" );
+                    this.value = terms.join( ", " );
+                    return false;
+                }
+
+            }
+            )
+            .data("ui-autocomplete")
+        ._renderItem = function (ul, item) {
+            return $("<div>")
+              .attr("data-value", item.value)
+              .append(item.label)
+              .appendTo(ul);
+        };
+
 
         // AJAX Global Settings
         $(document).ajaxStart(function () {

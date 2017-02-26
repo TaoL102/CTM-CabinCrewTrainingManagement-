@@ -15,10 +15,10 @@ namespace CTM.Codes.CustomControls.Shared
         public static MvcHtmlString TextBoxGroupFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression)
         {
             var label = helper.LabelFor(expression, htmlAttributes: new { @class = "control-label col-md-2" });
-            var input = helper.EditorFor(expression, new { htmlAttributes = new { @class = "form-control" } });
+            var input = helper.EditorFor(expression, new { htmlAttributes = new { @class = "form-control "} });
             var validationMsg = helper.ValidationMessageFor(expression, "", new { @class = "text-danger" });
 
-            var div2 = new DivControl(input + validationMsg.ToHtmlString());
+            var div2 = new DivControl(input + validationMsg.ToHtmlString()).AddCssClass("ui-front");
             var div1 = new DivControl(label + div2.ToHtmlString()).AddCssClass("form-group");
 
             return MvcHtmlString.Create(div1.ToHtmlString());
@@ -26,7 +26,7 @@ namespace CTM.Codes.CustomControls.Shared
         public static MvcHtmlString DateTimeGroupFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression)
         {
             var label = helper.LabelFor(expression, htmlAttributes: new { @class = "control-label col-md-2" });
-            var input = helper.EditorFor(expression, new { htmlAttributes = new { @class = "form-control",type="date" } });
+            var input = helper.EditorFor(expression, new { htmlAttributes = new { @class = "form-control datepicker" ,type="text"} });
             var validationMsg = helper.ValidationMessageFor(expression, "", new { @class = "text-danger" });
 
             var div2 = new DivControl(input + validationMsg.ToHtmlString());

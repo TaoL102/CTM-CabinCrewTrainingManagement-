@@ -13,11 +13,9 @@ namespace CTM
         {
             bundles.Add(new ScriptBundle("~/bundles/bundleJquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-ui.js",
+                         "~/Scripts/jquery.validate*", 
+                         "~/Scripts/jquery-ui.js", 
                         "~/Scripts/jquery.unobtrusive*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bundleJqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -26,17 +24,10 @@ namespace CTM
 
             bundles.Add(new ScriptBundle("~/bundles/bundleBootstrap").Include(
                        "~/Scripts/bootstrap.js"
-                      //  "~/Scripts/respond.js"
                       ));
 
-            bundles.Add(new ScriptBundle("~/bundles/bundleCustomizedJS").Include(
-             
+            bundles.Add(new ScriptBundle("~/bundles/bundleCustomizedJS").Include(           
                       "~/Scripts/jquery.dropdown.js",
-                      //"~/Scripts/jquery.tagsinput.js",
-                      //"~/Scripts/material.min.js",
-                      //"~/Scripts/nouislider.min.js",
-                      //"~/Scripts/material-kit.js",
-                      //"~/Scripts/materialize.min.js",
                       "~/Scripts/sitemethod.js",
                       "~/Scripts/site.js"));
 
@@ -52,9 +43,9 @@ namespace CTM
             //bundle.Include("~/Content/materialize.css", new CssRewriteUrlTransform());
             bundle.Include("~/Content/site.css", new CssRewriteUrlTransform());
 
-            bundle.Orderer = new NonOrderingBundleOrderer();
-            bundles.Add(bundle);
-            // Code removed for clarity.
+            //bundle.Orderer = new NonOrderingBundleOrderer();
+            //bundles.Add(bundle);
+            //// Code removed for clarity.
             BundleTable.EnableOptimizations = false;
         }
     }

@@ -115,6 +115,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 该姓名不存在.
+        /// </summary>
+        public static string ERROR_CabinCrewNotFound {
+            get {
+                return ResourceManager.GetString("ERROR_CabinCrewNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 确认.
         /// </summary>
         public static string INFO_Confirm {
@@ -147,15 +156,6 @@ namespace CTMLib.Resources {
         public static string INFO_RecordsNotFound {
             get {
                 return ResourceManager.GetString("INFO_RecordsNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 该姓名不存在.
-        /// </summary>
-        public static string INFOR_CabinCrewNotFound {
-            get {
-                return ResourceManager.GetString("INFOR_CabinCrewNotFound", resourceCulture);
             }
         }
     }

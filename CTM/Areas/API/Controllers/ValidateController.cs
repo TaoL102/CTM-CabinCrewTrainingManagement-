@@ -18,6 +18,9 @@ namespace CTM.Areas.API.Controllers
 
         public  bool IsValidCabinCrew(string names)
         {
+            if (String.IsNullOrEmpty(names))
+            return true;
+
             List<string> errorNamesList=new List<string>();
             // Split
             char[] chars = new char[] {',','，',';'};

@@ -35,6 +35,9 @@ namespace CTM.Areas.Search.Controllers
         // GET: EnglishTests
         public async Task<ActionResult> Search(ViewModels.EnglishTests.Search searchViewModel)
         {
+            // Save to local file
+            var path = AppDomain.CurrentDomain.BaseDirectory + @"\Log\SQLtrace.txt";
+            _dbManager.GetContext().Database.Log = message => System.IO.File.AppendAllText(path, message);
 
             // Get list
             object list ;
@@ -86,12 +89,28 @@ namespace CTM.Areas.Search.Controllers
         {
              parameterValues = new List<object>();
              parameterNames = new List<string>();
+            string nameParamsStr = null;
 
             // Name filter
             if (!IsNullOrEmpty(searchViewModel.CCName))
             {
-                parameterValues.Add(new SqlParameter("Name", searchViewModel.CCName));
-                parameterNames.Add(ConstantHelper.TableNameCabinCrews + ".[Name]=@Name");
+                // Split
+                char[] chars = new char[] { ',', '，', ';' };
+                string[] namesArray = searchViewModel.CCName.Replace(" ", "").Split(chars, StringSplitOptions.RemoveEmptyEntries);
+                string[] namesArrayParam=new string[namesArray.Length];
+                int i = 1;
+                foreach (string name in namesArray)
+                {
+                    // IN clause
+                    namesArrayParam[i-1]="@Name" + i ;
+
+                    // parameter
+                    parameterValues.Add(new SqlParameter("Name"+i, name));
+
+                    i++;
+                }
+                nameParamsStr = String.Join(",", namesArrayParam);
+                parameterNames.Add(ConstantHelper.TableNameCabinCrews + $".[Name] IN ({nameParamsStr})");
             }
 
             // Category filter
@@ -143,8 +162,7 @@ namespace CTM.Areas.Search.Controllers
                 StringBuilder sb = new StringBuilder();
                 if (!IsNullOrEmpty(searchViewModel.CCName))
                 {
-
-                    sb.Append(" AND ").Append(ConstantHelper.TableNameCabinCrews + ".[Name]=@Name ");
+                    sb.Append(" AND ").Append(ConstantHelper.TableNameCabinCrews + $".[Name] IN ({nameParamsStr}) ");
                 }
 
                 sqlString = SqlQueryHelper.GetSqlEnglishTestIsLatest(sb.ToString(), paginationClause);
@@ -186,7 +204,6 @@ namespace CTM.Areas.Search.Controllers
 
         public int GetTotalNumberByFilter(ViewModels.EnglishTests.Search searchViewModel)
         {
-           // db.Database.Log = message => System.IO.File.AppendAllText(@"d:\SQLtrace.txt", message);
             var sqlString = GenerateSqlStringByFilter(searchViewModel, true);
 
             // get total number 
@@ -223,9 +240,8 @@ namespace CTM.Areas.Search.Controllers
 
         public List<SearchResultIsLatest> GetResultIsLatestByFilter(ViewModels.EnglishTests.Search searchViewModel)
         {
-            //  db.Database.Log = message => System.IO.File.AppendAllText(@"d:\SQLtrace.txt", message);
             var sqlString = GenerateSqlStringByFilter(searchViewModel,
-                true);
+                false);
 
             // get data from database
 

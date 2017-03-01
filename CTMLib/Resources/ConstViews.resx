@@ -150,4 +150,13 @@
   <data name="INFO_RecordsNotFound" xml:space="preserve">
     <value>未查询到任何记录</value>
   </data>
+  <data name="BTN_Add" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="BTN_Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="BTN_Upload" xml:space="preserve">
+    <value>上传</value>
+  </data>
 </root>

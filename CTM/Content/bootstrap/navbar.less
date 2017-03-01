@@ -12,7 +12,7 @@
   position: relative;
   min-height: @navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
   margin-bottom: @navbar-margin-bottom;
-  border: 1px solid transparent;
+  border: /*1px solid transparent*/0;
 
   // Prevent floats from breaking the navbar
   &:extend(.clearfix all);
@@ -328,6 +328,10 @@
 .navbar-nav > li > .dropdown-menu {
   margin-top: 0;
   .border-top-radius(0);
+  
+  padding:0;
+  border-radius:0;
+  background-color:@navbar-default-bg;
 }
 // Menu position and menu caret support for dropups via extra dropup class
 .navbar-fixed-bottom .navbar-nav > li > .dropdown-menu {

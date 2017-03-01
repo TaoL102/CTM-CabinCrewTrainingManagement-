@@ -23,16 +23,19 @@ namespace CTM.Codes.CustomControls.EnglishTests
         private static readonly string ControllerName = ConstantHelper.ControllerNameEnglishTest;
         private static readonly string AreaNameAdminData = ConstantHelper.AreaNameAdminData;
         private static readonly string AreaNameSearch = ConstantHelper.AreaNameSearch;
+        private static readonly string LoaderId = ConstantHelper.LoaderId;
 
         public static ButtonControlAjax Button_Delete(this AjaxHelper<IEnumerable<SearchResult>> helper, string rowId)
         {
             // Data
-            var routeValues = new { area = "ManageData", id = rowId };
+            var routeValues = new { id = rowId };
 
             // Set data
-            var obj = helper.Button(ActionNameDelete, ControllerName, "msg_modal_content")
+            var obj = helper.Button(ActionNameDelete, ControllerName, AreaNameAdminData)
+                .SetUpdateTargetId("msg_modal_content")
                 .SetRouteValues(routeValues)
-                .SetOnSuccessFun("openMsgModal");
+                .SetOnSuccessFun("openMsgModal")
+                .SetLoadingElementId(LoaderId);
 
             // Set style
             obj = obj.SetMaterialIcon("delete")
@@ -45,16 +48,18 @@ namespace CTM.Codes.CustomControls.EnglishTests
         public static ButtonControlAjax Button_Edit(this AjaxHelper<IEnumerable<SearchResult>> helper, string rowId)
         {
             // Data
-            var routeValues = new { area = "ManageData", id = rowId };
+            var routeValues = new { id = rowId };
 
             // Set data
-            var obj = helper.Button(ActionNameEdit, ControllerName, "mid_size_modal_content")
+            var obj = helper.Button(ActionNameEdit, ControllerName, AreaNameAdminData)
+                .SetUpdateTargetId("mid_size_modal_content")
                 .SetRouteValues(routeValues)
-                .SetOnSuccessFun("openMidSizeModal");
+                .SetOnSuccessFun("openMidSizeModal")
+                 .SetLoadingElementId(LoaderId);
 
             // Set style
             obj = obj.SetMaterialIcon("mode_edit")
-                .SetColor(ColorOptions.Danger)
+                .SetColor(ColorOptions.Info)
                 .IsLinkBtn(true);
 
             return obj;

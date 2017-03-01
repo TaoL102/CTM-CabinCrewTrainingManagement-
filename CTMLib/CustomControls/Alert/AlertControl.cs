@@ -7,11 +7,11 @@ using CTMLib.Helpers;
 namespace CTMLib.CustomControls.Alert
 {
 
-    public class AlertControl : CustomControlBase, IDialogueOptions
+    public class AlertControl : CustomControlBase, IDialogueOptions,IColorOptions
     {
         private readonly string _textOrHtml;
         public bool HasCloseBtn { get; set; }
-        public ColorOptions Color { get; set; }
+        public ColorOptions BackgroundColor { get; set; }
 
         #region Constructor
 
@@ -34,7 +34,7 @@ namespace CTMLib.CustomControls.Alert
             // Class
             wrapper.AddCssClass("alert");
             wrapper.MergeAttribute("role", "alert");
-            wrapper.AddCssClass(CssHelper<AlertControl>.ConvertToCss(Color));
+            wrapper.AddCssClass(CssHelper<AlertControl>.ConvertToCss(BackgroundColor));
 
             // Inner Html
             wrapper.InnerHtml = _textOrHtml;
@@ -64,6 +64,7 @@ namespace CTMLib.CustomControls.Alert
             closeButton.InnerHtml = "×";
             return closeButton;
         }
+
 
         #endregion
     }

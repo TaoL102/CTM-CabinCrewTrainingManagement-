@@ -9,6 +9,8 @@ using CTMLib.CustomControls;
 using CTMLib.CustomControls.Alert;
 using CTMLib.CustomControls.Button;
 using CTMLib.CustomControls.Modal;
+using CTMLib.CustomControls.Pagination;
+using CTMLib.Models;
 using WebGrease.Css.Extensions;
 
 namespace CTMLib.Extensions
@@ -61,6 +63,16 @@ namespace CTMLib.Extensions
             return AddAttToDic(htmlAttributes, "class", cssClass);
         }
 
+        public static Dictionary<string, object> RemoveCssClass(object htmlAttributes, string cssClass)
+        {
+            return RemoveAttInDic(htmlAttributes, "class", cssClass);
+        }
+
+        public static Dictionary<string, object> RemoveAllCssClass(object htmlAttributes)
+        {
+            return RemoveAttInDic(htmlAttributes, "class");
+        }
+
         public static RouteValueDictionary AddRouteValue(object originalRouteValues, object addedRouteValues)
         {
             var originalRouteValuesDic = ConvertRouteValuesToIDictionary(originalRouteValues);
@@ -103,6 +115,23 @@ namespace CTMLib.Extensions
             else
             {
                 htmlAttributesDic.Add(key, value);
+            }
+            return htmlAttributesDic;
+        }
+
+        private static Dictionary<string, object> RemoveAttInDic(object htmlAttributes, string key, string value=null)
+        {
+            var htmlAttributesDic = ConvertHtmlAttributesToIDictionary(htmlAttributes);
+            if (htmlAttributesDic.ContainsKey(key))
+            {
+                if (value==null)
+                {
+                    htmlAttributesDic[key] = "";
+                }
+                else
+                {
+                    htmlAttributesDic[key] = htmlAttributesDic[key].ToString().Replace(value, "");
+                }
             }
             return htmlAttributesDic;
         }
@@ -191,9 +220,9 @@ namespace CTMLib.Extensions
         }
 
 
-        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName, string updateTargetId, string loadingElementId = null, string onSuccessFun = null)
+        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName,string areaName)
         {
-            return new ButtonControlAjax(helper, actionName, controllerName).SetLoadingElementId(loadingElementId).SetUpdateTargetId(updateTargetId).SetOnSuccessFun(onSuccessFun);
+            return new ButtonControlAjax(helper, actionName, controllerName,areaName);
         }
         public static AlertControl Alert(this HtmlHelper html, string text)
         {
@@ -211,7 +240,10 @@ namespace CTMLib.Extensions
         {
             return new ModalControl(id, title);
         }
-
+        public static PaginationControlAjax Pagination(this AjaxHelper helper, string actionName, string controllerName, string areaName, Pager pager)
+        {
+            return new PaginationControlAjax(helper,  actionName,  controllerName,  areaName,  pager);
+        }
     }
 
 }

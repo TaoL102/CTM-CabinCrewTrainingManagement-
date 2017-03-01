@@ -40,12 +40,12 @@ namespace CTM.Codes.CustomControls.EnglishTests
                     helper.DisplayValueFor(o=>item.Grade).ToString() ,
                     helper.DisplayValueFor(o=>item.CategoryName).ToString(),
                     helper.DisplayValueFor(o=>item.Date).ToString(),
-                    ajaxHelper.Button_Edit(item.ID).ToHtmlString(),
-                    ajaxHelper.Button_Delete(item.ID).ToHtmlString(),
+                    ajaxHelper.Button_Edit(item.ID).AddCssClass("btn-round").ToHtmlString(),
+                    ajaxHelper.Button_Delete(item.ID).AddCssClass("btn-round").ToHtmlString(),
                 });
             }
 
-            return new TableControl(header, rowsWithId);
+            return new TableControl(header, rowsWithId).SetAttributes(new {@class= "table-bordered" });
         }
 
         public static TableControl Table_SearchResult_IsLatest(this HtmlHelper<IEnumerable<SearchResultIsLatest>> helper,

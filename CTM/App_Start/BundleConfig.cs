@@ -37,15 +37,9 @@ namespace CTM
 
                 );
 
-            var bundle = new StyleBundle("~/bundles/bundleCustomizedCSS");
-        
-            //bundle.Include("~/Content/material.css", new CssRewriteUrlTransform());
-            //bundle.Include("~/Content/materialize.css", new CssRewriteUrlTransform());
-            bundle.Include("~/Content/site.css", new CssRewriteUrlTransform());
+            bundles.Add(new StyleBundle("~/bundles/bundleCustomizedCSS")
+                .Include("~/Content/site.css")); 
 
-            //bundle.Orderer = new NonOrderingBundleOrderer();
-            //bundles.Add(bundle);
-            //// Code removed for clarity.
             BundleTable.EnableOptimizations = false;
         }
     }

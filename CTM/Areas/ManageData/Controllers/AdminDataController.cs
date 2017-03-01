@@ -17,9 +17,6 @@ namespace CTM.Areas.ManageData.Controllers
             return View();
         }
 
-        public async Task<ActionResult> Log()
-        {
-            return View(await _dbManager.Logs.ToListAsync());
-        }
+
     }
 }

@@ -1,4 +1,8 @@
 ﻿
+@using CTM.Codes.CustomControls.Shared
+@using CTMLib.CustomControls
+@using CTMLib.Extensions
+@using CTMLib.Resources
 @model CTM.Areas.ManageAccount.Models.LoginViewModel
 @{
     ViewBag.Title = "Log in";
@@ -9,62 +13,92 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ConstSettings.WebAppName</title>
     @Styles.Render("~/bundles/bundleCss")
     @Styles.Render("~/bundles/bundleCustomizedCSS")
     @Scripts.Render("~/bundles/bundleModernizr")
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
 </head>
-<body style="background-image:url('http://fullhdpictures.com/wp-content/uploads/2016/03/Blur-Backgrounds.jpg')">
-    <div class="login-page-mdl-grid mdl-grid">
+<body style="background-color: #F9F9F9; ">
 
-
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-            {
-                <div class="login-card-wide mdl-card mdl-shadow--2dp">
-
-                    @Html.AntiForgeryToken()
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">西部航空乘务培训管理系统</h2>
-                    </div>
-                    <div class="mdl-card__supporting-text">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control",@Value="test@test.com" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @Value = "TESTtest123!" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.RememberMe)
-                                    @Html.LabelFor(m => m.RememberMe)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border ">
-                        <div class="form-control">
-                            <input type="submit" value="测试账号登陆" class="btn btn-default " />
-                        </div>
-                    </div>
-
-
-                </div>
-            }
-
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+        
+            <a class="navbar-brand" >
+                @*<img alt="Brand" src="~/Images/logo_westair.gif" style="height: 30px;">*@
+                CTM
+            </a>
         </div>
 
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+    <!--Progress bar-->
+    <div id="loader" class="progress" style="display:none">
+        <div class="progress-bar active " role="progressbar" aria-valuenow="100"
+             aria-valuemin="0" aria-valuemax="100" style="width:100%">
+            <span class="sr-only">100% Complete</span>
+        </div>
+    </div><!--/.Progree bar-->
+</nav>
+    <div class="container" style="margin-top: 130px; ">
+        <div class="row" style="    padding: 70px 0;">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2" ></div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.TextBoxGroupFor(o => o.Email,null,new {@Value="test@test.com"})
+                    @Html.PasswordGroupFor(o => o.Password,null, new { @Value = "TESTtest123!" })
+                    @Html.CheckBoxGroupFor(o => o.RememberMe)
+                    @Html.Button().SetText("Log in").IsSubmitBtn(true).SetColor(ColorOptions.Info)
+                }
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2"></div>
+        </div>
+       
+    </div>
+<div class="footer" style="    background-color: grey;
+    height: 60px;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    right: 0;">
+    @{
+        var curCulture = Request.Cookies["culture"]?.Value.ToString();
+        string culture = "en-NZ";
+        string displayText = "EN";
+        string returnUrl = Request.Url.AbsoluteUri;
+        bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
+        if (isCurEnglish)
+        {
+            culture = "zh-CN";
+            displayText = "中";
+        }
+    }
+    @using (Html.BeginForm("ChangeLanguage", "Account", new { area = "ManageAccount", culture, returnUrl }, FormMethod.Post))
+    {
+        @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
+    }
+</div>
+
+
+@Scripts.Render("~/bundles/bundleJquery")
+@Scripts.Render("~/bundles/bundleBootstrap")
+@Scripts.Render("~/bundles/bundleCustomizedJS")
+</body>
+</html>
 
 
     @*<div class="row">
@@ -92,13 +126,3 @@
             </div>
         </div>*@
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
-
-    @Scripts.Render("~/bundles/bundleJquery")
-    @Scripts.Render("~/bundles/bundleBootstrap")
-    @Scripts.Render("~/bundles/bundleCustomizedJS")
-
-</body>
-</html>

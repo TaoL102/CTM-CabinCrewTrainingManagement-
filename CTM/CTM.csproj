@@ -238,6 +238,7 @@
     <Compile Include="Areas\ManageAccount\Controllers\ManageController.cs" />
     <Compile Include="Areas\ManageAccount\Models\AccountViewModels.cs" />
     <Compile Include="Areas\ManageData\Controllers\EnglishTestsController.cs" />
+    <Compile Include="Areas\ManageData\Controllers\LogsController.cs" />
     <Compile Include="Areas\ManageData\Controllers\RefresherTrainingsController.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\Search.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResult.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Codes\Attributes\IsCabinCrewAttribute.cs" />
     <Compile Include="Codes\CustomControls\EnglishTests\ButtonExtension.cs" />
     <Compile Include="Codes\CustomControls\EnglishTests\FormExtension.cs" />
+    <Compile Include="Codes\CustomControls\EnglishTests\PaginationExtension.cs" />
     <Compile Include="Codes\CustomControls\EnglishTests\TableExtension.cs" />
     <Compile Include="Codes\CustomControls\Shared\LayoutExtension.cs" />
     <Compile Include="Codes\CustomControls\Shared\SharedExtension.cs" />
@@ -452,7 +454,6 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
-    <Content Include="Areas\ManageData\Views\AdminData\Log.cshtml" />
     <Content Include="Areas\ManageData\Views\EnglishTests\_CreatePartial.cshtml" />
     <Content Include="Areas\ManageData\Views\EnglishTests\_EditPartial.cshtml" />
     <Content Include="Areas\ManageData\Views\EnglishTests\_UploadPartial.cshtml" />
@@ -463,6 +464,7 @@
     <Content Include="Areas\ManageData\Views\RefresherTrainings\Upload.cshtml" />
     <Content Include="Areas\ManageData\Views\EnglishTests\_DeletePartial.cshtml" />
     <Content Include="Areas\API\Views\web.config" />
+    <Content Include="Areas\ManageData\Views\Logs\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -509,6 +511,7 @@
     <Folder Include="Areas\ManageUserRoles\Views\Shared\" />
     <Folder Include="Areas\Search\Views\Shared\" />
     <Folder Include="Database\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

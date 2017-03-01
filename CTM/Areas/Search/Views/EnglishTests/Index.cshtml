@@ -5,30 +5,27 @@
     ViewBag.Title = "Index";
 }
 
+<div class="module" >
+    <div class="container">
+        <div class="row">
+            <h1>@ConstModels.EnglishTest</h1>
+        </div>
 
-<div >
-    <div>
-        <h1>@ConstModels.EnglishTest</h1>
+        <div class="row">
+            <!-- #region Search_Div -->
+
+            @using (Ajax.Form_Search()) { }
+
+            <!-- #endregion -->
+
+
+        </div>
     </div>
-
-    <div class="">
-        <!-- #region Search_Div -->
-
-        @using (Ajax.Form_Search()) { }
-
-        <!-- #endregion -->
-        <!-- #region Search_Result -->
-
-        <div id="search_result_table" ></div>
-        <!-- #endregion -->
+</div>
+<!-- #region Search_Result -->
+<div class="module" style="background-color: white">
+    <div class="container" id="search_result_table">
 
     </div>
 </div>
-<!-- #region  Manage data partial view -->
-
-<div class="" >
-    @Html.Partial("_ManageDataPartial")
-</div>
-
 <!-- #endregion -->
-

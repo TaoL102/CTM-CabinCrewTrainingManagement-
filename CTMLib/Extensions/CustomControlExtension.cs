@@ -29,6 +29,18 @@ namespace CTMLib.Extensions
             return obj;
         }
 
+        public static T RemoveCssClass<T>(this T obj, string cssClass) where T : ICustomControlOptions
+        {
+            obj.HtmlAttributes = HtmlHelperExtension.RemoveCssClass(obj.HtmlAttributes,cssClass);
+            return obj;
+        }
+
+        public static T RemoveAllCssClass<T>(this T obj) where T : ICustomControlOptions
+        {
+            obj.HtmlAttributes = HtmlHelperExtension.RemoveAllCssClass(obj.HtmlAttributes);
+            return obj;
+        }
+
         public static T MergeAttribute<T>(this T obj, string key,string value) where T : ICustomControlOptions
         {
             obj.HtmlAttributes = HtmlHelperExtension.MergeAttribute(obj.HtmlAttributes, key,value);
@@ -38,6 +50,15 @@ namespace CTMLib.Extensions
         {
             obj.HtmlAttributes = HtmlHelperExtension.MergeAttributes(obj.HtmlAttributes, htmlAttributes);
             return obj;
+        }
+
+
+
+        public static T Hide<T>(this T obj) where T : ICustomControlOptions
+        {
+            obj.HtmlAttributes = HtmlHelperExtension.MergeAttributes(obj.HtmlAttributes, new {style="display:none"});
+            return obj;
+
         }
 
         #endregion

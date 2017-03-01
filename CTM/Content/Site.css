@@ -62,208 +62,76 @@
 
 /*#endregion */
 
-/*#region Pagination */
-
-/*#endregion */
-/*#region Loader */
-.spinner {
-    -webkit-animation: rotator 1.4s linear infinite;
-    animation: rotator 1.4s linear infinite;
-    position: fixed;
-    z-index: 2000;
-    height: 2em;
-    width: 2em;
-    overflow: visible;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    display: none;
+/*#region Module */
+.module {
+    padding-top: 40px ;
+    padding-bottom: 40px;
+    background-color: #F9F9F9;
 }
-
-
-
-@-webkit-keyframes rotator {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(270deg);
-        transform: rotate(270deg);
-    }
-}
-
-@keyframes rotator {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(270deg);
-        transform: rotate(270deg);
-    }
-}
-
-.path {
-    stroke-dasharray: 187;
-    stroke-dashoffset: 0;
-    -webkit-transform-origin: center;
-    transform-origin: center;
-    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
-    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
-}
-
-@-webkit-keyframes colors {
-    0% {
-        stroke: #4285F4;
-    }
-
-    25% {
-        stroke: #DE3E35;
-    }
-
-    50% {
-        stroke: #F7C223;
-    }
-
-    75% {
-        stroke: #1B9A59;
-    }
-
-    100% {
-        stroke: #4285F4;
-    }
-}
-
-@keyframes colors {
-    0% {
-        stroke: #4285F4;
-    }
-
-    25% {
-        stroke: #DE3E35;
-    }
-
-    50% {
-        stroke: #F7C223;
-    }
-
-    75% {
-        stroke: #1B9A59;
-    }
-
-    100% {
-        stroke: #4285F4;
-    }
-}
-
-@-webkit-keyframes dash {
-    0% {
-        stroke-dashoffset: 187;
-    }
-
-    50% {
-        stroke-dashoffset: 46.75;
-        -webkit-transform: rotate(135deg);
-        transform: rotate(135deg);
-    }
-
-    100% {
-        stroke-dashoffset: 187;
-        -webkit-transform: rotate(450deg);
-        transform: rotate(450deg);
-    }
-}
-
-@keyframes dash {
-    0% {
-        stroke-dashoffset: 187;
-    }
-
-    50% {
-        stroke-dashoffset: 46.75;
-        -webkit-transform: rotate(135deg);
-        transform: rotate(135deg);
-    }
-
-    100% {
-        stroke-dashoffset: 187;
-        -webkit-transform: rotate(450deg);
-        transform: rotate(450deg);
-    }
-}
-
-
-/* -- Loader End-- */
 
 /*#endregion */
 
 
-/*#region Login */
+/*#region Checkbox */
+.material-switch {
+    display: inline;
+    margin-left: 10px;
+}
 
+.material-switch > input[type="checkbox"] {
+    display: none;   
+}
 
-.login-page-mdl-grid {
-   
-    max-width: 600px;
-    min-width: 350px;
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative; 
+    width: 40px;  
+}
 
+.material-switch > label::before {
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    /*
-  Nope =(
-  margin-left: -25%;
-  margin-top: -25%;
-  */
-    /* 
-  Yep!
-  */
-    transform: translate(-50%, -50%);
-    /*
-  Not even necessary really. 
-  e.g. Height could be left out!
-  */
-    width: 40%;
-    /*height: 50%;*/
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit;
+    left: 20px;
 }
 
-.login-page-mdl-grid > form{
+/*#endregion */ 
 
-    width: 100%
+/*#region RoundIconBtn */
+
+.btn-round {
+    border-radius: 50%;
+    height: 42px;
+    width: 42px;
+    padding: 5px;
 }
 
-.login-card-wide.mdl-card {
-    width: unset;
-   
-}
-
-.login-card-wide  > .mdl-card__title {
-    color: #fff;
-    height: 176px;
-    background-image: url('../Images/login_card_bg.jpg') ;
-}
-
-.login-card-wide > .mdl-card__menu {
-    color: #fff;
-}
-
-.login-card-wide > .mdl-card__supporting-text {
-
-    width: 100%;
-}
-
-
-/*#endregion */
-
-/*#region AutoComplete */
-
-
-/*#endregion */
-
-
-
-
+/*#endregion */ 

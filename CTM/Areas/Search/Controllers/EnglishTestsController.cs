@@ -41,18 +41,18 @@ namespace CTM.Areas.Search.Controllers
 
             // Get list
             object list ;
-            int totalPage;
+            int totalNum;
             if (searchViewModel.IsLatest)
             {
                 list = GetResultIsLatestByFilter(searchViewModel);
-                totalPage = GetTotalNumberByFilter(searchViewModel);
+                totalNum = GetTotalNumberByFilter(searchViewModel);
 
             }
             else
             {
 
                     list = GetResultByFilter(searchViewModel);
-                    totalPage = GetTotalNumberByFilter(searchViewModel);
+                    totalNum = GetTotalNumberByFilter(searchViewModel);
 
             }
 
@@ -64,15 +64,8 @@ namespace CTM.Areas.Search.Controllers
 
             if (Request.IsAjaxRequest())
             {
-
-                // Return some parameters for pagination 
-                ViewBag.Page = searchViewModel.Page ??1;
-                ViewBag.CCName = searchViewModel.CCName;
-                ViewBag.CategoryID = searchViewModel.CategoryID;
-                ViewBag.FromDate = searchViewModel.FromDate;
-                ViewBag.ToDate = searchViewModel.ToDate;
-                ViewBag.IsLatest = searchViewModel.IsLatest;
-                ViewBag.TotalPage = totalPage;
+                ViewBag.Pager=  new Pager(totalNum, searchViewModel.Page,ConstantHelper.PaginationPageSize);
+                ViewBag.SearchResultViewModel = searchViewModel;
 
                 if (searchViewModel.IsLatest)
                 {
@@ -211,9 +204,7 @@ namespace CTM.Areas.Search.Controllers
             {
 
                     var totalNum = _dbManager.SqlQuery<int>(sqlString, parameterValues.ToArray()).First();
-                    var totalPage = (totalNum+ ConstantHelper.PaginationPageSize-1) / ConstantHelper.PaginationPageSize;
-
-                    return totalPage;
+                    return totalNum;
 
             }
             catch (Exception e)

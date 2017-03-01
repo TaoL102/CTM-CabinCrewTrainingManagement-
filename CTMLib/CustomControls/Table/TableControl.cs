@@ -60,7 +60,8 @@ namespace CTMLib.CustomControls.Table
 
             // Container
             var container = new DivControl(table.ToString())
-                .AddCssClass("table-responsive");
+                .AddCssClass("table-responsive")
+                .MergeAttributes(HtmlAttributes);
 
             return container.ToHtmlString();
         }

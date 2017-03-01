@@ -1,4 +1,6 @@
-﻿@using CTM.Codes.CustomControls.EnglishTests
+﻿@using CTM.Areas.Search.ViewModels.EnglishTests
+@using CTM.Codes.CustomControls.EnglishTests
+@using CTMLib.Models
 @using CTMLib.Resources
 @model IEnumerable<CTM.Areas.Search.ViewModels.EnglishTests.SearchResultIsLatest>
 
@@ -7,25 +9,15 @@
 {
 
     <!-- #region Pagination -->
-    var routeValues =
-     new
-     {
-         CCName =ViewBag.CCName,
-         CategoryID = ViewBag.CategoryID,
-         FromDate = ViewBag.FromDate,
-         ToDate = ViewBag.ToDate,
-         IsLatest = ViewBag.IsLatest,
-         Area = "Search",
-     };
-
-    @SharedHelpers.Pagination("Search", "EnglishTests", "search_result_table", "loader",routeValues,ViewBag.Page,ViewBag.TotalPage)
+    Pager pager = ViewBag.Pager;
+    Search searchViewModel = ViewBag.SearchResultViewModel;
+    @Ajax.Pagination(searchViewModel, pager)
 
     <!-- #endregion -->
 
     @Html.Table_SearchResult_IsLatest(Model)
 
  
-        @SharedHelpers.Pagination("Search", "EnglishTests", "search_result_table", "loader", routeValues, ViewBag.Page, ViewBag.TotalPage)
 
 }
 else

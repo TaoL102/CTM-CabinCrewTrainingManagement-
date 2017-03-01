@@ -61,6 +61,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 新增.
+        /// </summary>
+        public static string BTN_Add {
+            get {
+                return ResourceManager.GetString("BTN_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 当前页.
         /// </summary>
         public static string BTN_CurrentPage {
@@ -93,6 +102,24 @@ namespace CTMLib.Resources {
         public static string BTN_Previews {
             get {
                 return ResourceManager.GetString("BTN_Previews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 搜索.
+        /// </summary>
+        public static string BTN_Search {
+            get {
+                return ResourceManager.GetString("BTN_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 上传.
+        /// </summary>
+        public static string BTN_Upload {
+            get {
+                return ResourceManager.GetString("BTN_Upload", resourceCulture);
             }
         }
         

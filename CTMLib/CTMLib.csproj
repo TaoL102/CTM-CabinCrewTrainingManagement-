@@ -107,9 +107,12 @@
     <Compile Include="CustomControls\Button\ButtonControl.cs" />
     <Compile Include="CustomControls\Button\ButtonControlAjax.cs" />
     <Compile Include="CustomControls\Button\ButtonControlBase.cs" />
+    <Compile Include="CustomControls\CheckBox\CheckBoxControl.cs" />
     <Compile Include="CustomControls\CustomControlBase.cs" />
     <Compile Include="CustomControls\Div\DivControl.cs" />
+    <Compile Include="CustomControls\Label\LabelControl.cs" />
     <Compile Include="CustomControls\Modal\ModalControl.cs" />
+    <Compile Include="CustomControls\Pagination\PaginationControlAjax.cs" />
     <Compile Include="CustomControls\Table\HeaderControl.cs" />
     <Compile Include="CustomControls\Table\RowControl.cs" />
     <Compile Include="CustomControls\Table\TableControl.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\RefresherTraining.cs" />
     <Compile Include="Models\UploadRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

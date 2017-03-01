@@ -7,37 +7,13 @@
 
         <li class="waves-effect waves-light">
        @*     <a href="@Url.Action( "Upload", "EnglishTests", new { area = "Search" })"><i class="material-icons">file_upload</i></a>*@
-            @using (Ajax.BeginForm("Upload", "EnglishTests", new { area = "ManageData" }, new AjaxOptions
-            {
-                HttpMethod = "GET",
-                InsertionMode = InsertionMode.Replace,
-                UpdateTargetId = "mid_size_modal_content",
-                LoadingElementId = "loader",
-                OnSuccess = "openMidSizeModal"
-            }
-))
-            {
-                <button type="submit" class="btn_li_transparent"><i class="material-icons">file_upload</i></button>
 
-            }
          </li>
         
         
         <li class="waves-effect waves-light">
             @*     <a href="@Url.Action( "Upload", "EnglishTests", new { area = "Search" })"><i class="material-icons">file_upload</i></a>*@
-            @using (Ajax.BeginForm("Create", "EnglishTests", new { area = "ManageData" }, new AjaxOptions
-            {
-                HttpMethod = "GET",
-                InsertionMode = InsertionMode.Replace,
-                UpdateTargetId = "mid_size_modal_content",
-                LoadingElementId = "loader",
-                OnSuccess = "openMidSizeModal"
-            }
-))
-            {
-                <button type="submit" class="btn_li_transparent"><i class="material-icons">add</i></button>
 
-            }
         </li>
 
     </ul>

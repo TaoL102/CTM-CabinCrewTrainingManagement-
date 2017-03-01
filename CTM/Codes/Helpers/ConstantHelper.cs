@@ -13,6 +13,7 @@
         #endregion
 
         #region CSS
+        public static string LoaderId = "loader";
 
         #endregion
 

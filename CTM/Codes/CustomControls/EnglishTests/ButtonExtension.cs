@@ -34,7 +34,7 @@ namespace CTM.Codes.CustomControls.EnglishTests
             var obj = helper.Button(ActionNameDelete, ControllerName, AreaNameAdminData)
                 .SetUpdateTargetId("msg_modal_content")
                 .SetRouteValues(routeValues)
-                .SetOnSuccessFun("openMsgModal")
+                .SetOnSuccessFun("openModal('msg_modal')")
                 .SetLoadingElementId(LoaderId);
 
             // Set style
@@ -54,7 +54,7 @@ namespace CTM.Codes.CustomControls.EnglishTests
             var obj = helper.Button(ActionNameEdit, ControllerName, AreaNameAdminData)
                 .SetUpdateTargetId("mid_size_modal_content")
                 .SetRouteValues(routeValues)
-                .SetOnSuccessFun("openMidSizeModal")
+                .SetOnSuccessFun("openModal('mid_size_modal',true)")
                  .SetLoadingElementId(LoaderId);
 
             // Set style

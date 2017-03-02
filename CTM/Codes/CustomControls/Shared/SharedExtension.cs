@@ -32,6 +32,15 @@ namespace CTM.Codes.CustomControls.Shared
 
             return helper.InputGroupFor(expression, wrapperHtmlAttributes, htmlAttributes);
         }
+        public static MvcHtmlString FileGroupFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, object wrapperHtmlAttributes = null, object inputHtmlAttributes = null)
+        {
+            var htmlAttributes = HtmlHelperExtension.MergeAttributes(inputHtmlAttributes,
+                new { type = "file",
+                    accept = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ,
+                    id="file",name="file"});
+
+            return helper.InputGroupFor(expression, wrapperHtmlAttributes, htmlAttributes);
+        }
         public static MvcHtmlString CheckBoxGroupFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> expression, object wrapperHtmlAttributes = null, object inputHtmlAttributes = null)
         {
             var expression1 = (MemberExpression)expression.Body;

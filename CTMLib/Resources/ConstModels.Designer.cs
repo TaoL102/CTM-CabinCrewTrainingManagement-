@@ -187,6 +187,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 文件.
+        /// </summary>
+        public static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From.
         /// </summary>
         public static string FromDate {

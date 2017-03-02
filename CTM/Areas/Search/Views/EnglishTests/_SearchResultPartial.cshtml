@@ -5,28 +5,28 @@
 @using CTMLib.Resources
 @model IEnumerable<CTM.Areas.Search.ViewModels.EnglishTests.SearchResult>
 
+<div class="container">
 
-
-@if (Model.Any())
-{
+    @if (Model.Any())
+    {
 
     <!-- #region Pagination -->
-    Pager pager = ViewBag.Pager;
-    Search searchViewModel=ViewBag.SearchResultViewModel  ;
-    @Ajax.Pagination(searchViewModel, pager)
+        Pager pager = ViewBag.Pager;
+        Search searchViewModel = ViewBag.SearchResultViewModel;
+        @Ajax.Pagination(searchViewModel, pager)
 
 
     <!-- #endregion -->
 
-    @Html.Table_SearchResult(Model)
+        @Html.Table_SearchResult(Model)
 
 
 
-}
-else
-{
-    <p>@ConstViews.INFO_RecordsNotFound</p>
-}
-
+    }
+    else
+    {
+        <p>@ConstViews.INFO_RecordsNotFound</p>
+    }
+</div>
 
 

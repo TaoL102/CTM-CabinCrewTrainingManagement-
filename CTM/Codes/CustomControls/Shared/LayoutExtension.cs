@@ -12,7 +12,7 @@ namespace CTM.Codes.CustomControls.Shared
 {
     public static class LayoutExtension
     {
-        public static ModalControl DisplayModal(this HtmlHelper helper)
+        public static ModalControl MidSizeModal(this HtmlHelper helper)
         {
             var div=new DivControl().SetId("mid_size_modal_content");
             var obj = helper.Modal("mid_size_modal", "Confirm")
@@ -25,6 +25,15 @@ namespace CTM.Codes.CustomControls.Shared
             var obj = helper.Modal("msg_modal", "Confirm")
                 .SetSize(SizeOptions.Small)
                 .SetBodyHtml("msg_modal_content", div.ToHtmlString());
+            return obj;
+        }
+        public static ModalControl FullSizeModal(this HtmlHelper helper)
+        {
+            // Body
+            var div = new DivControl().SetId("full_size_modal_content");
+            var obj = helper.Modal("full_size_modal", "Confirm")
+                .SetSize(SizeOptions.Full)
+                .SetBodyHtml("full_size_modal_content", div.ToHtmlString());
             return obj;
         }
     }

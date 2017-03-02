@@ -23,7 +23,7 @@ namespace CTM.Codes.CustomControls.EnglishTests
         private static PaginationControlAjax GetPaginationControl(AjaxHelper helper, Search searchViewModel, Pager pager)
         {
             return helper.Pagination("Search", "EnglishTests", "Search", pager)
-    .SetUpdateTargetId("search_result_table")
+    .SetUpdateTargetId("full_size_modal_content")
     .SetRouteValues(new
     {
         searchViewModel.IsLatest,

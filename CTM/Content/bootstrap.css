@@ -6051,9 +6051,6 @@ button.close {
   filter: alpha(opacity=0);
   /* support: IE8 */
 }
-.ui-front {
-  z-index: 100;
-}
 /* Interaction Cues
 ----------------------------------*/
 .ui-state-disabled {
@@ -7975,7 +7972,7 @@ a.ui-button:active,
 }
 .modal-open .modal {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .modal-dialog {
   position: relative;
@@ -8024,6 +8021,7 @@ a.ui-button:active,
 .modal-body {
   position: relative;
   padding: 40px;
+  overflow-y: auto;
 }
 .modal-footer {
   padding: 40px;
@@ -8059,11 +8057,26 @@ a.ui-button:active,
   .modal-sm {
     width: 300px;
   }
+  .modal-full {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
 }
 @media (min-width: 992px) {
   .modal-lg {
     width: 900px;
   }
+}
+.modal-full {
+  width: 100%;
+  margin: 0;
+}
+.modal-full .modal-content {
+  width: 100%;
+}
+.modal-full .modal-content .modal-body {
+  height: calc(100vh);
 }
 .tooltip {
   position: absolute;

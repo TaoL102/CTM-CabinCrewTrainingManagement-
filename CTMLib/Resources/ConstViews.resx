@@ -159,4 +159,7 @@
   <data name="BTN_Upload" xml:space="preserve">
     <value>上传</value>
   </data>
+  <data name="BTN_DownloadTemplate" xml:space="preserve">
+    <value>下载模板</value>
+  </data>
 </root>

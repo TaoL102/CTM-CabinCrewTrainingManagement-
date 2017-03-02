@@ -7,6 +7,6 @@ namespace CTMLib.CustomControls
 
     public enum SizeOptions
     {
-        Default,Large,Small,ExtraSmall
+        Default,Full,Large,Small,ExtraSmall
     }
 }

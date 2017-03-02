@@ -79,6 +79,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 下载模板.
+        /// </summary>
+        public static string BTN_DownloadTemplate {
+            get {
+                return ResourceManager.GetString("BTN_DownloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 下一页.
         /// </summary>
         public static string BTN_Next {

@@ -4,7 +4,9 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "outFile": "Scripts/site.js",
+    "outDir": "Scripts"
   },
   "exclude": [
     "node_modules",

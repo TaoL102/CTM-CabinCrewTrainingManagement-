@@ -1,36 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using CTM.Areas.ManageAccount.Models;
-using EntityFramework.BulkInsert.Extensions;
+using CTM.Areas.ManageData.ViewModels.EnglishTests;
 using Microsoft.AspNet.Identity;
-using PagedList;
-using CTM;
 using CTM.Codes.Database;
 using CTM.Controllers;
 using CTMLib.Helpers;
 using CTMLib.Models;
-using static System.String;
 
 namespace CTM.Areas.ManageData.Controllers
 {
     public class EnglishTestsController : BaseController
     {
         private readonly DbManager _dbManager=new DbManager();
-
-        // Parameters
-        List<object> parameterValues ;
-        List<string> parameterNames ;
 
         // GET: EnglishTests/Create
         public ActionResult Create()
@@ -75,16 +62,16 @@ namespace CTM.Areas.ManageData.Controllers
         }
 
         // GET: EnglishTests/Edit/5
-        public async Task<PartialViewResult> Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
-                // return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             EnglishTest englishTest = await _dbManager.GetEntityAsync<EnglishTest>(id);
             if (englishTest == null)
             {
-                // return HttpNotFound();
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
@@ -105,7 +92,6 @@ namespace CTM.Areas.ManageData.Controllers
                 await _dbManager.SaveChangesAsync();
                 return new HttpStatusCodeResult(HttpStatusCode.Accepted);
             }
-            ViewBag.CategoryID = new SelectList(_dbManager.Categories.Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
 
             return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
@@ -146,43 +132,41 @@ namespace CTM.Areas.ManageData.Controllers
         // GET: EnglishTests/Upload
         public ActionResult Upload()
         {
-            // Dropdownlist for EnglishTestCategory
-            ViewBag.EnglishTestCategoryList = new SelectList(_dbManager.Categories.Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
+            Upload uploadModelView = new Upload()
+            {
+                CategoryList =
+                    new SelectList(_dbManager.Categories.Where(o => o.Type == SuperCategory.英语考核), "ID", "Name")
+            };
 
-            return PartialView("_UploadPartial");
+            return PartialView("_UploadPartial", uploadModelView);
         }
 
         // POST: EnglishTests/Upload
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Upload(HttpPostedFileBase upload, string categoryID, DateTime date)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Upload(Upload uploadModelView)
         {
             // EXCEL upload
-            if (upload != null && upload.ContentLength > 0)
+            HttpPostedFileBase fileBase = Request.Files.Get(0);
+            if (fileBase != null && fileBase.ContentLength > 0)
             {
                 // Check file type
-                if (ExcelHelper.CheckIsExcel(upload))
+                if (ExcelHelper.CheckIsExcel(fileBase))
                 {
-                    // uploadRecordID
-                    var uploadRecordID = Guid.NewGuid().ToString();
-
-                    // Get category name
-
 
                     // Save to TABLE UploadRecord
                     await _dbManager.Add<UploadRecord>(new UploadRecord()
                     {
-                        ID = uploadRecordID,
-                        CategoryID = categoryID,
+                        ID = uploadModelView.UploadRecordID,
+                        CategoryID = uploadModelView.CategoryID,
                         DateTime = DateTime.UtcNow,
                         ApplicationUserID = User.Identity.GetUserId(),
                         IsWithdrawn = false,
-
                     });
 
-                    var englishTestsUpload = ExcelHelper.GenerateListEnglishTestFromExcel(upload.InputStream, date, categoryID, uploadRecordID);
+                    var englishTestsUpload = ExcelHelper.GenerateListEnglishTestFromExcel(fileBase.InputStream, uploadModelView.Date, uploadModelView.CategoryID, uploadModelView.UploadRecordID);
 
                     if (englishTestsUpload.Any<EnglishTest>())
                     {
@@ -191,13 +175,13 @@ namespace CTM.Areas.ManageData.Controllers
 
                     var result = await _dbManager.GetContext().SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false);
 
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(HttpStatusCode.Accepted);
                 }
             }
-            return View("Index");
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
 
-         protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

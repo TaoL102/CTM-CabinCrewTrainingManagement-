@@ -38,7 +38,7 @@ namespace CTMLib.CustomControls.Button
                 InsertionMode = InsertionMode.Replace,
                 UpdateTargetId = UpdateTargetId,
                 LoadingElementId = LoadingElementId,
-                OnSuccess = OnSuccessFun
+                OnSuccess = "new function(){"+OnSuccessFun?.Replace("\"", "\'") +"}"
             };
 
             RouteValues = HtmlHelperExtension.AddRouteValue(RouteValues, new { area = _areaName });

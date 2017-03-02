@@ -48,6 +48,9 @@ namespace CTMLib.Helpers
                 case SizeOptions.ExtraSmall:
                     sizeStr = "xs";
                     break;
+                default:
+                    sizeStr=sizeOption.ToString().ToLower();
+                    break;
             }
 
             return ControlTypeAbbr+"-"+ sizeStr;

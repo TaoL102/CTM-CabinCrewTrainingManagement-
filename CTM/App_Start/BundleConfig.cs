@@ -28,7 +28,6 @@ namespace CTM
 
             bundles.Add(new ScriptBundle("~/bundles/bundleCustomizedJS").Include(           
                       "~/Scripts/jquery.dropdown.js",
-                      "~/Scripts/sitemethod.js",
                       "~/Scripts/site.js"));
 
             bundles.Add(new StyleBundle("~/bundles/bundleCss")

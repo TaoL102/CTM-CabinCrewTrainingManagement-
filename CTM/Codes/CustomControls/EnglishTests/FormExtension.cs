@@ -20,20 +20,25 @@ namespace CTM.Codes.CustomControls.EnglishTests
         public static MvcForm Form_Search(this AjaxHelper<Search> helper)
         {
             var htmlHelper = new HtmlHelper<Search>(helper.ViewContext, helper.ViewDataContainer);
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext,helper.RouteCollection);
             var model = (Search)htmlHelper.ViewDataContainer.ViewData.Model;
 
             var form = helper.BeginForm("Search", "EnglishTests", new {area = "Search"}, new AjaxOptions
                 {
                     HttpMethod = "POST",
                     InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "search_result_table",
+                    UpdateTargetId = "full_size_modal_content",
                     LoadingElementId = "loader",
-                },
+                    OnSuccess = "new function(){openModal('full_size_modal',true)}"
+            },
                 new {id = "form_search"});
 
             string hidableDivId = Guid.NewGuid().ToString();
             var ccName = htmlHelper
-                .TextBoxGroupFor(o => o.CCName, new { @class = "col-lg-12 col-md-12" });
+                .TextBoxGroupFor(o => o.CCName, new { @class = "col-lg-12 col-md-12" },new
+                {
+                    data_url= urlHelper.Action("GetCabinCrewNames", "Query", new { area = "API" })
+                });
             var categoryID = htmlHelper
                 .DropDownListGroupFor(o => o.CategoryID, model.CateforyList,new {@class="col-lg-4 col-md-4"});
             var fromDate = htmlHelper

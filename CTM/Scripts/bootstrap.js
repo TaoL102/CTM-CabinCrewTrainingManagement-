@@ -1159,10 +1159,19 @@ if (typeof jQuery === 'undefined') {
   Modal.prototype.adjustDialog = function () {
     var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
 
-    this.$element.css({
+    if (this.$element.children().get(0).classList.contains("modal-full")) {
+        this.$element.css({
+            paddingLeft: '',
+            paddingRight: '',
+            zIndex:1049,// In case full modal would not cover msg box,ect...
+        })
+    } else {
+      this.$element.css({
       paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
       paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-    })
+    })  
+    }
+
   }
 
   Modal.prototype.resetAdjustments = function () {

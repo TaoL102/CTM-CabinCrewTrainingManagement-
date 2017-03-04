@@ -1,4 +1,6 @@
-﻿namespace CTMLib.Helpers
+﻿using System;
+
+namespace CTMLib.Helpers
 {
     public class ConstantHelper
     {
@@ -26,6 +28,7 @@
 
         public static string CssUnclickable = "disabled";
         #endregion
+
 
     }
 }

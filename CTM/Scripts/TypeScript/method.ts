@@ -7,7 +7,7 @@ function showAlert(htmlContent: string, type:string) {
     }
     // Insert html
     $("#alert").html(htmlContent);
-
+    
     $("#alert").fadeIn();
 };
 

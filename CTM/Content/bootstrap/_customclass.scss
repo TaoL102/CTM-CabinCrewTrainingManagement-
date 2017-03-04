@@ -1,0 +1,76 @@
+﻿.ctm-navbar {
+    @extend .navbar,
+    .fixed-top,
+    .navbar-toggleable-sm,
+    .navbar-inverse,
+    .bg-primary;
+}
+
+.ctm-progress-bar {
+    @extend .progress, .fixed-top;
+}
+
+.ctm-checkbox {
+    @extend .material-switch;
+
+    label {
+        background-color: $brand-primary;
+    }
+}
+
+.ctm-alert {
+    @extend .alert, .fixed-top;
+}
+
+// Full modal
+.ctm-modal-full {
+    @extend .modal, .fade;
+    z-index: 1049 !important;
+    overflow-y: hidden !important;
+
+    .modal-dialog {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        overflow-y: hidden !important;
+    }
+
+    $full-modal-header: 65px;
+
+    .modal-header {
+        height: $full-modal-header;
+    }
+
+    .modal-content {
+        width: 100% !important;
+
+        $full-height: 100vh;
+
+        .modal-body {
+            /* Firefox */
+            height: -moz-calc(#{$full-height} - #{$full-modal-header}) !important;
+            /* WebKit */
+            height: -webkit-calc(#{$full-height} - #{$full-modal-header}) !important;
+            /* Opera */
+            height: -o-calc(#{$full-height} - #{$full-modal-header}) !important;
+            /* Standard */
+            height: calc(#{$full-height} - #{$full-modal-header}) !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+        }
+    }
+}
+
+
+
+// btn
+.btn-default {
+    @extend .btn-primary;
+}
+
+.btn-round {
+    @extend .rounded-circle;
+    height: 30px;
+    width: 30px;
+    padding: 0px;
+}

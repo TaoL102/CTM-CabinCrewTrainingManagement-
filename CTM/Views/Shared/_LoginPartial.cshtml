@@ -5,35 +5,34 @@
 @if (Request.IsAuthenticated)
 {
     @* Message *@
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">message</i>
         </a>
     </li>
 
     @* Account *@
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">account_circle</i>
         </a>
-        <ul class="dropdown-menu">
-            <li>
-                @Html.ActionLink("个人账户设置", "Index", "Manage", new {area = "ManageAccount"}, htmlAttributes: new {title = "Manage"})
-            </li>
-            <li>
-                @Html.ActionLink("后台数据管理", "Index", "AdminData", new { area = "ManageData" }, htmlAttributes: new { title = "Admin Data"})
-            </li>
-            <li>
-                <a href="#">用户权限管理</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-                <a href="javascript:document.getElementById('logoutForm').submit()">取消登录</a>
-            </li>
-        </ul>
+        <div class="dropdown-menu dropdown-menu-right">
+
+            @Html.ActionLink("个人账户设置", "Index", "Manage", new { area = "ManageAccount" }, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
+
+
+            @Html.ActionLink("后台数据管理", "Index", "AdminData", new { area = "ManageData" }, htmlAttributes: new { title = "Admin Data", @class = "dropdown-item" })
+
+            <a class="dropdown-item" href="#">用户权限管理</a>
+
+            <div role="separator" class="dropdown-divider"></div>
+
+            <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">取消登录</a>
+
+        </div>
     </li>
 
-    using (Html.BeginForm("LogOff", "Account", new { area = "ManageAccount" }, FormMethod.Post, new { id = "logoutForm" }))
+    using (Html.BeginForm("LogOff", "Account", new { area = "ManageAccount" }, FormMethod.Post, new { id = "logoutForm",style="display:none" }))
     {
         @Html.AntiForgeryToken()
     }
@@ -41,7 +40,7 @@
 else
 {
     <li>
-        @Html.ActionLink("登录", "Login", "Account", new {area = "ManageAccount"}, htmlAttributes: new {id = "loginLink"})
+        @Html.ActionLink("登录", "Login", "Account", new { area = "ManageAccount" }, htmlAttributes: new { id = "loginLink" })
     </li>
 }
 

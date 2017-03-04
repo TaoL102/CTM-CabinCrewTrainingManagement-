@@ -240,10 +240,6 @@ namespace CTMLib.Extensions
         {
             return new ModalControl(id, title);
         }
-        public static PaginationControlAjax Pagination(this AjaxHelper helper, string actionName, string controllerName, string areaName, Pager pager)
-        {
-            return new PaginationControlAjax(helper,  actionName,  controllerName,  areaName,  pager);
-        }
     }
 
 }

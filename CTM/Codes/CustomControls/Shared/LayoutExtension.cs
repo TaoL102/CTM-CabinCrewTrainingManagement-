@@ -6,6 +6,7 @@ using CTMLib.CustomControls;
 using CTMLib.CustomControls.Div;
 using CTMLib.Extensions;
 using System.Web.Mvc;
+using CTM.Codes.Helpers;
 using CTMLib.CustomControls.Modal;
 
 namespace CTM.Codes.CustomControls.Shared
@@ -14,26 +15,27 @@ namespace CTM.Codes.CustomControls.Shared
     {
         public static ModalControl MidSizeModal(this HtmlHelper helper)
         {
-            var div=new DivControl().SetId("mid_size_modal_content");
-            var obj = helper.Modal("mid_size_modal", "Confirm")
-                .SetBodyHtml("mid_size_modal_content", div.ToHtmlString());
+            var div=new DivControl().SetId(ConstantHelper.MidModalContentId);
+            var obj = helper.Modal(ConstantHelper.MidModalId, "Confirm")
+                .SetBodyHtml(ConstantHelper.MidModalContentId, div.ToHtmlString());
             return obj;
         }
         public static ModalControl MsgModal(this HtmlHelper helper)
         {
-            var div = new DivControl().SetId("msg_modal_content");
-            var obj = helper.Modal("msg_modal", "Confirm")
+            var div = new DivControl().SetId(ConstantHelper.MsgModalContentId);
+            var obj = helper.Modal(ConstantHelper.MsgModalId, "Confirm")
                 .SetSize(SizeOptions.Small)
-                .SetBodyHtml("msg_modal_content", div.ToHtmlString());
+                .SetBodyHtml(ConstantHelper.MsgModalContentId, div.ToHtmlString());
             return obj;
         }
         public static ModalControl FullSizeModal(this HtmlHelper helper)
         {
             // Body
-            var div = new DivControl().SetId("full_size_modal_content");
-            var obj = helper.Modal("full_size_modal", "Confirm")
+            var div = new DivControl().SetId(ConstantHelper.FullModalContentId);
+            var obj = helper.Modal(ConstantHelper.FullModalId, "Confirm")
                 .SetSize(SizeOptions.Full)
-                .SetBodyHtml("full_size_modal_content", div.ToHtmlString());
+                .AddCssClass("ctm-modal-full")
+                .SetBodyHtml(ConstantHelper.FullModalContentId, div.ToHtmlString());
             return obj;
         }
     }

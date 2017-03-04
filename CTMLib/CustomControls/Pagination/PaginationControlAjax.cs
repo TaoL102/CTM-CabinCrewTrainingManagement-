@@ -29,8 +29,9 @@ namespace CTMLib.CustomControls.Pagination
         protected override string Render()
         {
             // Wrapper
-            TagBuilder wrapper = new TagBuilder("ul");
-            wrapper.AddCssClass("pagination");
+            TagBuilder nav=new TagBuilder("nav");
+            TagBuilder ul = new TagBuilder("ul");
+            ul.AddCssClass("pagination");
 
             string first = null;
             string previous = null;
@@ -55,8 +56,9 @@ namespace CTMLib.CustomControls.Pagination
                 last = LiWithLink("Last", GetRouteValuesByPage(_pager.TotalPages));
             }
 
-            wrapper.InnerHtml = first + previous + pages + next + last;
-            return wrapper.ToString();
+            ul.InnerHtml = first + previous + pages + next + last;
+            nav.InnerHtml = ul.ToString();
+            return nav.ToString();
         }
 
         private object GetRouteValuesByPage(int page)
@@ -70,6 +72,7 @@ namespace CTMLib.CustomControls.Pagination
             // Wrapper
             TagBuilder li = new TagBuilder("li");
             li.AddCssClass(liCssClass);
+            li.AddCssClass("page-item");
 
             // link
             var a = _ajaxHelper.
@@ -78,7 +81,8 @@ namespace CTMLib.CustomControls.Pagination
                 .IsLinkBtn(true)
                 .SetRouteValues(routeValues)
                 .SetUpdateTargetId(UpdateTargetId)
-                .RemoveAllCssClass();
+                .RemoveAllCssClass()
+                .AddCssClass("page-link");
 
             li.InnerHtml = a.ToString();
             return li.ToString();

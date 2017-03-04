@@ -3,34 +3,34 @@ function modalOpen() {
     // Solve: Multiple modal open focus lost problem
     // Reference: https://github.com/nakupanda/bootstrap3-dialog/issues/70
     var modals = $(".modal").filter(function () {
-        return $(_this).attr("id") !== "full_size_modal"; // Return non-fullscreen modals
+        return $(_this).attr("id") !== ConstantHelper.FullModalId; // Return non-fullscreen modals
     });
     modals.on("hidden.bs.modal", function () {
         $("body").addClass("modal-open"); // If closed,add modal-open to body,so focus is back on modal
     });
-    $("#full_size_modal").on("hidden.bs.modal", function () {
+    $("#" + ConstantHelper.FullModalId).on("hidden.bs.modal", function () {
         $("body").removeClass("modal-open");
     });
 }
 function fullModalOpenAndClose() {
     // Full modal open and close event handler
     // Add alert and progress bar to full modal and remove
-    $("#full_size_modal")
+    $("#" + ConstantHelper.FullModalId)
         .on("show.bs.modal", function () {
         console.log("show.bs.modal");
-        $("#alert").detach().insertBefore($(this).find(".modal-header"));
-        $("#loader").detach().insertAfter($(this).find(".modal-header"));
+        $("#" + ConstantHelper.AlertId).detach().insertBefore($(this).find(".modal-header"));
+        $("#" + ConstantHelper.LoaderId).detach().insertAfter($(this).find(".modal-header"));
     })
         .on("hidden.bs.modal", function () {
-        $("#alert").detach().prependTo($("nav"));
-        $("#loader").detach().appendTo($("nav"));
+        $("#" + ConstantHelper.AlertId).detach().prependTo($("nav"));
+        $("#" + ConstantHelper.LoaderId).detach().appendTo($("nav"));
     });
 }
 function msgModalOpen() {
-    $('#message_box_modal').on("show.bs.modal", function (e) {
+    $("#" + ConstantHelper.MsgModalId).on("show.bs.modal", function (e) {
         var $invoker = $(e.relatedTarget);
         console.log($invoker);
-        $('#message_box_modal').find('.btn-yes').attr('data-url', $invoker.data('url')).attr('data-rowid', $invoker.data('rowid'));
+        $("#" + ConstantHelper.MsgModalId).find('.btn-yes').attr('data-url', $invoker.data('url')).attr('data-rowid', $invoker.data('rowid'));
     });
 }
 function msgModalYesBtnClick() {
@@ -56,7 +56,7 @@ function msgModalYesBtnClick() {
 }
 function checkBoxClick() {
     // Islatest checkbox
-    $(".material-switch > label").on("click", function () {
+    $(".ctm-checkbox > label").on("click", function () {
         var value = $(this).prev().attr("value");
         var hidableDivId = $(this).prev().data("hidabledivid");
         console.log(hidableDivId);
@@ -75,13 +75,21 @@ function checkBoxHidableDivHide() {
     var ids = $("input[type='checkbox'][value='true'][data-hidabledivid]").data("hidabledivid");
     $("#" + ids).hide();
 }
-// Set global variables
+// Set constants
 var ConstantHelper = (function () {
     function ConstantHelper() {
     }
     return ConstantHelper;
 }());
-ConstantHelper.CssColorFontPrimary = "font-primary";
+ConstantHelper.LoaderId = "loader";
+ConstantHelper.ProgressBarId = "alert";
+ConstantHelper.FullModalId = "full_size_modal";
+ConstantHelper.FullModalContentId = "full_size_modal_content";
+ConstantHelper.AlertId = "alert";
+ConstantHelper.MsgModalId = "Msg_modal";
+ConstantHelper.MsgModalContentId = "Msg_modal_content";
+ConstantHelper.MidModalId = "Midl_size_modal";
+ConstantHelper.MidModalContentId = "Mid_size_modal_content";
 /// <reference path="sitevariable.ts"/>
 // ShowAlert
 function showAlert(htmlContent, type) {

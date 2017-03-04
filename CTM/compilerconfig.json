@@ -1,6 +1,6 @@
 ﻿[
   {
     "outputFile": "Content/bootstrap.css",
-    "inputFile": "Content/bootstrap/bootstrap.less"
+    "inputFile": "Content/bootstrap/bootstrap.scss"
   }
 ]

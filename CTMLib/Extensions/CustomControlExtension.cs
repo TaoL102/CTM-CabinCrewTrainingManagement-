@@ -56,7 +56,7 @@ namespace CTMLib.Extensions
 
         public static T Hide<T>(this T obj) where T : ICustomControlOptions
         {
-            obj.HtmlAttributes = HtmlHelperExtension.MergeAttributes(obj.HtmlAttributes, new {style="display:none"});
+            obj.HtmlAttributes = HtmlHelperExtension.MergeAttribute(obj.HtmlAttributes, "style","display:none");
             return obj;
 
         }

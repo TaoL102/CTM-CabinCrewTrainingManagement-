@@ -1,4 +1,5 @@
 ﻿@using CTM.Areas.Search.ViewModels.EnglishTests
+@using CTM.Codes.CustomControls
 @using CTM.Codes.CustomControls.EnglishTests
 @using CTMLib.Extensions
 @using CTMLib.Models
@@ -10,17 +11,17 @@
     @if (Model.Any())
     {
 
-    <!-- #region Pagination -->
         Pager pager = ViewBag.Pager;
         Search searchViewModel = ViewBag.SearchResultViewModel;
+
+        // Pagination
         @Ajax.Pagination(searchViewModel, pager)
 
-
-    <!-- #endregion -->
-
+        // Table
         @Html.Table_SearchResult(Model)
 
-
+        // Pagination
+        @Ajax.Pagination(searchViewModel, pager)
 
     }
     else

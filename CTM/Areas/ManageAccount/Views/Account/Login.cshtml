@@ -1,5 +1,6 @@
 ﻿
 @using CTM.Codes.CustomControls.Shared
+@using CTM.Codes.Helpers
 @using CTMLib.CustomControls
 @using CTMLib.Extensions
 @using CTMLib.Resources
@@ -20,84 +21,60 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
 </head>
-<body style="background-color: #F9F9F9; ">
+    <body style="background-color:#F9F9F9">
+        <nav class="ctm-navbar" style="height: 90px">
 
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-        
-            <a class="navbar-brand" >
-                @*<img alt="Brand" src="~/Images/logo_westair.gif" style="height: 30px;">*@
-                CTM
-            </a>
-        </div>
+            <a class="navbar-brand" href="@Url.Action("Index","Home",new {area="Home"})">CTM</a>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav"></ul>
+            <!--Progress bar-->
+            <div id="@ConstantHelper.LoaderId" class="ctm-progress-bar" style="display: none">
+                <div class="indeterminate"></div>
+            </div><!--/.Progree bar-->
+        </nav>
+        <div class="d-flex align-items-center" style="margin-top: 90px;height: calc(100vh - 130px);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
 
-            <ul class="nav navbar-nav navbar-right">
-                
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-    <!--Progress bar-->
-    <div id="loader" class="progress" style="display:none">
-        <div class="progress-bar active " role="progressbar" aria-valuenow="100"
-             aria-valuemin="0" aria-valuemax="100" style="width:100%">
-            <span class="sr-only">100% Complete</span>
-        </div>
-    </div><!--/.Progree bar-->
-</nav>
-    <div class="container" style="margin-top: 130px; ">
-        <div class="row" style="    padding: 70px 0;">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2" ></div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.TextBoxGroupFor(o => o.Email, null, new { @Value = "test@test.com" })
+                        @Html.PasswordGroupFor(o => o.Password, null, new { @Value = "TESTtest123!" })
+                        @Html.CheckBoxGroupFor(o => o.RememberMe)
+                        @Html.Button().SetText("Log in").IsSubmitBtn(true).SetColor(ColorOptions.Info)
+                    }</div>
+                    <div class="col-sm-3"></div>
 
-                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.TextBoxGroupFor(o => o.Email,null,new {@Value="test@test.com"})
-                    @Html.PasswordGroupFor(o => o.Password,null, new { @Value = "TESTtest123!" })
-                    @Html.CheckBoxGroupFor(o => o.RememberMe)
-                    @Html.Button().SetText("Log in").IsSubmitBtn(true).SetColor(ColorOptions.Info)
-                }
-
+                </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2"></div>
+
         </div>
-       
-    </div>
-<div class="footer" style="    background-color: grey;
-    height: 60px;
-    position: fixed;
-    bottom: 0px;
-    left: 0;
-    right: 0;">
-    @{
-        var curCulture = Request.Cookies["culture"]?.Value.ToString();
-        string culture = "en-NZ";
-        string displayText = "EN";
-        string returnUrl = Request.Url.AbsoluteUri;
-        bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
-        if (isCurEnglish)
-        {
-            culture = "zh-CN";
-            displayText = "中";
-        }
-    }
-    @using (Html.BeginForm("ChangeLanguage", "Account", new { area = "ManageAccount", culture, returnUrl }, FormMethod.Post))
-    {
-        @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
-    }
-</div>
+        <div class="fixed-bottom" style="background-color: grey;height: 40px">
+            @{
+                var curCulture = Request.Cookies["culture"]?.Value.ToString();
+                string culture = "en-NZ";
+                string displayText = "EN";
+                string returnUrl = Request.Url.AbsoluteUri;
+                bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
+                if (isCurEnglish)
+                {
+                    culture = "zh-CN";
+                    displayText = "中";
+                }
+            }
+            @using (Html.BeginForm("ChangeLanguage", "Account", new { area = "ManageAccount", culture, returnUrl }, FormMethod.Post))
+            {
+                @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
+            }
+        </div>
 
 
-@Scripts.Render("~/bundles/bundleJquery")
-@Scripts.Render("~/bundles/bundleBootstrap")
-@Scripts.Render("~/bundles/bundleCustomizedJS")
-</body>
+        @Scripts.Render("~/bundles/bundleJquery")
+        @Scripts.Render("~/bundles/bundleBootstrap")
+        @Scripts.Render("~/bundles/bundleCustomizedJS")
+    </body>
 </html>
 
 

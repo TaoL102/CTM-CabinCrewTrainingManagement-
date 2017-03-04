@@ -27,6 +27,9 @@ namespace CTMLib.CustomControls.Modal
             TagBuilder builder5 = new TagBuilder("div");
             TagBuilder builder6 = new TagBuilder("div");
 
+            // HTML Attributes
+            builder1.MergeAttributes(HtmlAttributes);
+
             builder1.GenerateId(Id);
             builder1.AddCssClass("modal");
             builder1.AddCssClass("fade");
@@ -45,7 +48,7 @@ namespace CTMLib.CustomControls.Modal
             buiderCloseBtn.AddCssClass("close");
             buiderCloseBtn.SetInnerText("×");
             buiderCloseBtn.MergeAttribute("data-dismiss", "modal");
-            builder4.InnerHtml = buiderCloseBtn+ buiderTitle.ToString() ;
+            builder4.InnerHtml =  buiderTitle.ToString()+ buiderCloseBtn;
 
             builder5.AddCssClass("modal-body");
             builder5.GenerateId(BodyId);

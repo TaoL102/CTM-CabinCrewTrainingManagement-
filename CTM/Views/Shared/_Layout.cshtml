@@ -1,4 +1,5 @@
 ﻿@using CTM.Codes.CustomControls.Shared
+@using CTM.Codes.Helpers
 @using CTMLib.CustomControls
 @using CTMLib.Extensions
 @using CTMLib.Resources
@@ -15,129 +16,93 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
 </head>
-<body>
+<body style="background-color:#F9F9F9" >
+    @Html.Alert(text: "").AddCssClass("ctm-alert").SetId(ConstantHelper.AlertId).SetColor(ColorOptions.Warning).Hide()
+    <nav class="ctm-navbar">
+         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="@Url.Action("Index","Home",new {area="Home"})">CTM</a>
 
-<nav class="navbar navbar-default navbar-fixed-top">
-    <!-- #region Alert -->
-
-    @Html.Alert(text: "").SetId("alert").SetColor(ColorOptions.Warning)
-
-    <!-- #endregion -->
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="@Url.Action("Index", "Home", new {area = "Home"})">
-                @*<img alt="Brand" src="~/Images/logo_westair.gif" style="height: 30px;">*@
-                CTM
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav"></ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                @* English *@
-                <li class="dropdown @(Html.IsActiveLink("Search", "EnglishTests", "Index") ? "active" : "")">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown @(Html.IsActiveLink("Search", "EnglishTests", "Index") ? "active " : "")">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @ConstModels.EnglishTest
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            @Html.ActionLink(ConstViews.BTN_Search, "Index", "EnglishTests", new { area = "Search" }, null)
-                        </li>
-                        <li>
-                            @Ajax.Button("Upload", "EnglishTests", "ManageData").IsLinkBtn(true).SetText(ConstViews.BTN_Upload).SetOnSuccessFun("openModal('mid_size_modal',true)").SetUpdateTargetId("mid_size_modal_content")
-                            
-                        </li>
-                        <li>
-                            @Ajax.Button("Create", "EnglishTests","ManageData").IsLinkBtn(true).SetText(ConstViews.BTN_Add).SetOnSuccessFun("openModal('mid_size_modal',true)").SetUpdateTargetId("mid_size_modal_content")
-                        </li>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink(ConstViews.BTN_Search, "Index", "EnglishTests", new { area = "Search" }, new { @class = "dropdown-item" })
 
-                    </ul>
+                        @Ajax.Button("Upload", "EnglishTests", "ManageData").IsLinkBtn(true).SetText(ConstViews.BTN_Upload).SetOnSuccessFun("openModal('"+ConstantHelper.MidModalId+"',true)").SetUpdateTargetId(ConstantHelper.MidModalContentId)
+
+                        @Ajax.Button("Create", "EnglishTests", "ManageData").IsLinkBtn(true).SetText(ConstViews.BTN_Add).SetOnSuccessFun("openModal('" + ConstantHelper.MidModalId + "',true)").SetUpdateTargetId(ConstantHelper.MidModalContentId)
+
+                    </div>
                 </li>
-
-                
-
-                <li class="@(Html.IsActiveLink("Search", "RefresherTrainings", "Index") ? "active" : "")">
-                    @Html.ActionLink(ConstModels.RefresherTraining, "Index", "RefresherTrainings", new {area = "Search"}, null)
+                <li class="nav-item @(Html.IsActiveLink("Search", "RefresherTrainings", "Index") ? "active " : "")">
+                    @Html.ActionLink(ConstModels.RefresherTraining, "Index", "RefresherTrainings", new { area = "Search" }, new { @class = "nav-link" })
                 </li>
                 @Html.Partial("_LoginPartial")
+
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-    <!--Progress bar-->
-    <div id="loader" class="progress" style="display: none">
-        <div class="indeterminate"></div>
-    </div><!--/.Progree bar-->
-</nav>
-    <div style="margin-top: 80px; ">
+        </div>
+        <!--Progress bar-->
+        <div id="@ConstantHelper.LoaderId" class="ctm-progress-bar" style="display: none">
+            <div class="indeterminate"></div>
+        </div><!--/.Progree bar-->
+    </nav>
 
-            @RenderBody()
+<div class="d-sm-flex align-items-center" style="    height: calc(100vh);
+    overflow-y: auto;
+    padding-bottom: 90px;
+    padding-top: 90px;">
 
-    </div>
-    <div class="footer" style="background-color: grey; ">
-        @{
-            var curCulture = Request.Cookies["culture"]?.Value.ToString();
-            string culture = "en-NZ";
-            string displayText = "EN";
-            string returnUrl = Request.Url.AbsoluteUri;
-            bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
-            if (isCurEnglish)
-            {
-                culture = "zh-CN";
-                displayText = "中";
-            }
-        }
-        @using (Html.BeginForm("ChangeLanguage", "Account", new { area = "ManageAccount", culture, returnUrl }, FormMethod.Post))
+    @RenderBody()
+</div>
+<div class="fixed-bottom" style="background-color: grey;">
+    @{
+        var curCulture = Request.Cookies["culture"]?.Value.ToString();
+        string culture = "en-NZ";
+        string displayText = "EN";
+        string returnUrl = Request.Url.AbsoluteUri;
+        bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
+        if (isCurEnglish)
         {
-            @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
+            culture = "zh-CN";
+            displayText = "中";
         }
-    </div>
+    }
+    @using (Html.BeginForm("ChangeLanguage", "Account", new {area = "ManageAccount", culture, returnUrl}, FormMethod.Post))
+    {
+        @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
+    }
+</div>
 
-    @* -- Loader Start -- *@
+<!-- #region Message_box_modal -->
 
-    @*<svg id="loader" class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-        </svg>*@
-
-
-    @* -- Loader End -- *@
-
-    <!-- #region Message_box_modal -->
-
-    @Html.MsgModal()
-
-    <!-- #endregion -->
-    <!-- #region mid_size_modal -->
-
-    @Html.MidSizeModal()
+@Html.MsgModal()
 
 <!-- #endregion -->
-    
-    <!-- #region full_size_modal -->
+<!-- #region mid_size_modal -->
 
-    @Html.FullSizeModal()
+@Html.MidSizeModal()
 
-    <!-- #endregion -->
+<!-- #endregion -->
+<!-- #region full_size_modal -->
+
+@Html.FullSizeModal()
+
+<!-- #endregion -->
 
 
 @Scripts.Render("~/bundles/bundleJquery")
-    @Scripts.Render("~/bundles/bundleBootstrap")
-    @Scripts.Render("~/bundles/bundleCustomizedJS")
-    @RenderSection("scripts", required: false)
-    
-    
+@Scripts.Render("~/bundles/bundleBootstrap")
+@Scripts.Render("~/bundles/bundleCustomizedJS")
+@RenderSection("scripts", required: false)
+
+
 <!-- #region Javascript -->
-    @Html.Partial("_PartialJavaScript")
-    <!-- #endregion -->
+@Html.Partial("_PartialJavaScript")
+<!-- #endregion -->
 </body>
 </html>
-
-

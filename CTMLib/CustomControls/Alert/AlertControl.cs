@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CTMLib.Extensions;
 using CTMLib.Helpers;
 
 namespace CTMLib.CustomControls.Alert
@@ -31,6 +32,9 @@ namespace CTMLib.CustomControls.Alert
             // Id
             wrapper.GenerateId(Id);
 
+            // HTML Attributes
+            wrapper.MergeAttributes(HtmlAttributes);
+
             // Class
             wrapper.AddCssClass("alert");
             wrapper.MergeAttribute("role", "alert");
@@ -44,9 +48,6 @@ namespace CTMLib.CustomControls.Alert
             {
                 wrapper.InnerHtml += RenderCloseButton();
             }
-
-            // HTML Attributes
-            wrapper.MergeAttributes(HtmlAttributes != null ? HtmlHelper.AnonymousObjectToHtmlAttributes(HtmlAttributes) : null);
 
             return wrapper.ToString();
         }

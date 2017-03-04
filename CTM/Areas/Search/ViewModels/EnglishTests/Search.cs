@@ -15,7 +15,7 @@ namespace CTM.Areas.Search.ViewModels.EnglishTests
     using CTMLib.Models;
     using CTMLib.Resources;
 
-    public class Search
+    public class Search:ISearchViewModel
     {
         [IsCabinCrew]
         [Display(Name = "CabinCrewName", ResourceType = typeof(ConstModels))]

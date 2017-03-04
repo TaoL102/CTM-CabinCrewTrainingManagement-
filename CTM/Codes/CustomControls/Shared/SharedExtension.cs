@@ -51,7 +51,7 @@ namespace CTM.Codes.CustomControls.Shared
             var label = helper.LabelFor(expression);
             var checkBox = new CheckBoxControl().SetId(name).SetColor(ColorOptions.Primary).SetAttributes(htmlAttributes);
 
-            var div2=new DivControl(checkBox.ToHtmlString()).AddCssClass(" material-switch");
+            var div2=new DivControl(checkBox.ToHtmlString()).AddCssClass(" ctm-checkbox");
             var div1 = new DivControl(label+div2.ToHtmlString() ).AddCssClass("form-group").MergeAttributes(wrapperHtmlAttributes);
 
             return MvcHtmlString.Create(div1.ToHtmlString());

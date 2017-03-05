@@ -1,19 +1,20 @@
 ﻿/// <reference path="sitevariable.ts"/>
 
-function registerPlugins() {
-
+function registerPlugins(wrapperSelector:string = null) {
+    wrapperSelector = wrapperSelector == null ? "body" : wrapperSelector;
     // DATEPICKER
-    $(".datepicker").datepicker({
+    $(wrapperSelector+" "+".datepicker").datepicker({
         showOtherMonths: true,
         selectOtherMonths: true,
         showButtonPanel: true,
         changeMonth: true,
         changeYear: true,
-        autoclose: true,
+        autoclose: true
     } as JQueryUI.DatepickerOptions);
 
     // Autocomplete
-    registerAutoComplete("CCName", true);
+    // CC Name
+    registerAutoComplete(wrapperSelector + " " +"input[name='CCName']");
 }
 
 function registerAjaxGlobalSettings() {
@@ -29,6 +30,14 @@ function registerAjaxGlobalSettings() {
             $("#loader").hide();
         });
 
+    $(document).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
+        let curModal = $(document.activeElement).parents(".modal");
+        if (curModal.attr("id") === ConstantHelper.MidModalId
+            || curModal.attr("id") === ConstantHelper.MsgModalId) {
+            curModal.modal("hide");
+            showAlert("success", "success");
+        }
+    });
 
     $(document).ajaxError((event, jqxhr, settings) => {
         console.log("ajaxError" + jqxhr);
@@ -44,11 +53,14 @@ function registerAjaxGlobalSettings() {
 
 }
 
-function registerAutoComplete(id: string, allowMultipleValues: boolean = false) {
+function registerAutoComplete(selector:string) {
     // Autocomplete
     // Reference: https://jqueryui.com/autocomplete/
-    let curElement: JQuery = $("#" + id);
+    let curElement: JQuery = $(selector);
     let cache: { [index: string]: string; } = {};
+    let allowMultipleValues: boolean =
+        curElement.data("allowmultiplevalues") === "True"
+        || curElement.data("allowmultiplevalues") === true;
 
     function split(val: string) {
         return val.split(/,\s*/);
@@ -120,6 +132,7 @@ function registerAutoComplete(id: string, allowMultipleValues: boolean = false) 
                     url: curElement.data("url"),
                     data: { name: query },
                     dataType: "json",
+                    global: false,
                     success: (data: any, status: any, xhr: any) => {
                         cache[query] = data;
                         response(data);
@@ -134,3 +147,4 @@ function registerAutoComplete(id: string, allowMultipleValues: boolean = false) 
     curElement
         .autocomplete("option", "classes.ui-autocomplete", "form-autocompelete-menu");
 }
+

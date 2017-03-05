@@ -6,6 +6,7 @@
 registerPlugins();
 registerAjaxGlobalSettings();
 
+
 // Bind event handlers
 modalOpen();
 fullModalOpenAndClose();

@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using CTM.Areas.ManageData.ViewModels.EnglishTests;
 using Microsoft.AspNet.Identity;
 using CTM.Codes.Database;
@@ -22,43 +23,47 @@ namespace CTM.Areas.ManageData.Controllers
         // GET: EnglishTests/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
-            return PartialView("_CreatePartial");
+            Create createViewModel=new Create()
+            {
+                CategoryList = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name"),
+            };
+
+            return PartialView("_CreatePartial",createViewModel);
         }
 
         // POST: EnglishTests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,ID,Type,Grade,CategoryID,Date")] EnglishTest englishTest, string CCName)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "CCName,Type,Grade,CategoryID,Date")] Create createViewModel)
         {
-            ModelState.Remove("ID");
-            ModelState.Remove("ID");
 
             if (ModelState.IsValid)
             {
                 // Cabin Crew
-                var cabinCrew =await  _dbManager.DbSet<CabinCrew>().FirstOrDefaultAsync(o => o.Name.ToLower().Equals(CCName.Trim().ToLower()));
-                var category = await _dbManager.Categories.FirstOrDefaultAsync(o => o.ID.Equals(englishTest.CategoryID));
+                var cabinCrew =await  _dbManager.DbSet<CabinCrew>().FirstOrDefaultAsync(o => o.Name.ToLower().Equals(createViewModel.CCName.Trim().ToLower()));
+                var category = await _dbManager.Categories.FirstOrDefaultAsync(o => o.ID.Equals(createViewModel.CategoryID));
 
                 if (cabinCrew != null)
                 {
-                    englishTest.CabinCrewID = cabinCrew.ID;
-                    englishTest.CabinCrew = cabinCrew;
-                    englishTest.Category = category;
+                    EnglishTest englishTest=new EnglishTest()
+                    {
+                        CabinCrewID = cabinCrew.ID,
+                        CabinCrew = cabinCrew,
+                        CategoryID = createViewModel.CategoryID,
+                        Category = category,
+                        Type = createViewModel.Type,
+                        Date = createViewModel.Date,
+                        Grade = createViewModel.Grade
+                    };
 
                     await _dbManager.Add(englishTest);
                     await _dbManager.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(HttpStatusCode.Accepted);
                 }
-
             }
-
-            var cabinCrewList = _dbManager.DbSet<CabinCrew>().OrderBy(o => o.Name).ToList();
-            ViewBag.CabinCrewID = new SelectList(cabinCrewList, "ID", "Name");
-            ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
-            return View(englishTest);
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
 
         // GET: EnglishTests/Edit/5

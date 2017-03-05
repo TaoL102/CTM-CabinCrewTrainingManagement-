@@ -85,5 +85,30 @@ function checkBoxHidableDivHide() {
     $("#" + ids).hide();
 }
 
+// Ajax with file upload
+// https://forums.asp.net/t/2026436.aspx?Request+Files+not+working+using+Ajax+BeginForm+on+partial+Views
+function uploadBtnClickEvent() {
 
+    var btn = $(event.target);
+    var form = btn.parents("form");
+
+    if (form.valid()) {
+
+        var dataString = new FormData(form[0] as HTMLFormElement);
+
+        event.preventDefault();
+
+        $.ajax({
+            url: btn.data("uploadurl"),
+            data: dataString,
+            contentType: false,
+            processData: false,
+            cache: false,
+            type: "POST",
+            dataType: "html",
+            global: false
+        });
+
+    }
+};
 

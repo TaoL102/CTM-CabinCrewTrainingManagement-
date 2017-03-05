@@ -1,4 +1,5 @@
-﻿@using CTM.Codes.CustomControls.Shared
+﻿@using CTM.Codes.CustomControls
+@using CTM.Codes.CustomControls.Shared
 @using CTMLib.Extensions
 @using CTMLib.Resources
 @model CTM.Areas.ManageData.ViewModels.EnglishTests.Upload
@@ -10,52 +11,8 @@
     @Html.Button().SetText(ConstViews.BTN_DownloadTemplate).IsSubmitBtn(true)
 }
 
-@using (Html.BeginForm("Upload", "EnglishTests", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Ajax.Form_Upload())
 {
-    @Html.AntiForgeryToken()
-
-    @Html.DropDownListGroupFor(o => o.CategoryID, Model.CategoryList)
-
-    @Html.DateTimeGroupFor(o => o.Date)
-
-    @Html.FileGroupFor(o => o.File)
-
-    @Html.Button().SetText(ConstViews.BTN_Upload).IsSubmitBtn(true).MergeAttribute("onclick", "uploadBtnClickEvent()").MergeAttribute("data-uploadurl", Url.Action("Upload", "EnglishTests",new {area="ManageData"}))
 
 }
 
-<script>
-    // Ajax with file upload
-    // https://forums.asp.net/t/2026436.aspx?Request+Files+not+working+using+Ajax+BeginForm+on+partial+Views
-    function uploadBtnClickEvent() {
-
-        var btn = $(event.target);
-        var form = btn.parents("form");
-
-        if (form.valid()) {
-
-            var dataString = new FormData(form.get(0));
-
-            event.preventDefault();
-
-            $.ajax({
-                url: btn.data("uploadurl"),
-                data: dataString,
-                contentType: false,
-                processData: false,
-                cache: false,
-                type: "POST",
-                dataType: "html",
-                success: function (data) {
-                    console.log(data);
-                },
-                global: false,
-                error: function (data) {
-                    alert("error" + data);
-                }
-            });
-
-        }
-    };
-
-</script>

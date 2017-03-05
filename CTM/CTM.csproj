@@ -269,6 +269,7 @@
     <Compile Include="Areas\ManageData\Controllers\EnglishTestsController.cs" />
     <Compile Include="Areas\ManageData\Controllers\LogsController.cs" />
     <Compile Include="Areas\ManageData\Controllers\RefresherTrainingsController.cs" />
+    <Compile Include="Areas\ManageData\ViewModels\EnglishTests\Create.cs" />
     <Compile Include="Areas\ManageData\ViewModels\EnglishTests\Upload.cs" />
     <Compile Include="Areas\Search\ViewModels\ISearchViewModel.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\Search.cs" />

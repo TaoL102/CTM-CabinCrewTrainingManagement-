@@ -29,6 +29,14 @@ namespace CTM.Codes.CustomControls
         {
             return GetCustomControl<T>().Form_Search(helper);
         }
+        public static MvcForm Form_Create<T>(this AjaxHelper<T> helper)
+        {
+            return GetCustomControl<T>().Form_Create(helper);
+        }
+        public static MvcForm Form_Upload<T>(this AjaxHelper<T> helper)
+        {
+            return GetCustomControl<T>().Form_Upload(helper);
+        }
 
         public static PaginationControlAjax Pagination<T>(this AjaxHelper<IEnumerable<T>> helper,
     ISearchViewModel searchViewModel, Pager pager)

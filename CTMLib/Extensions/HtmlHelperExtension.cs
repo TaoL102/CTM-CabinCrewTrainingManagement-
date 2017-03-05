@@ -43,6 +43,7 @@ namespace CTMLib.Extensions
                 return dictionary;
             }
             return new RouteValueDictionary(routeValues); ;
+
         }
 
         private static string GetEnumPropertyValue(Enum enumValue)
@@ -119,12 +120,12 @@ namespace CTMLib.Extensions
             return htmlAttributesDic;
         }
 
-        private static Dictionary<string, object> RemoveAttInDic(object htmlAttributes, string key, string value=null)
+        private static Dictionary<string, object> RemoveAttInDic(object htmlAttributes, string key, string value = null)
         {
             var htmlAttributesDic = ConvertHtmlAttributesToIDictionary(htmlAttributes);
             if (htmlAttributesDic.ContainsKey(key))
             {
-                if (value==null)
+                if (value == null)
                 {
                     htmlAttributesDic[key] = "";
                 }
@@ -220,9 +221,9 @@ namespace CTMLib.Extensions
         }
 
 
-        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName,string areaName)
+        public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName, string areaName)
         {
-            return new ButtonControlAjax(helper, actionName, controllerName,areaName);
+            return new ButtonControlAjax(helper, actionName, controllerName, areaName);
         }
         public static AlertControl Alert(this HtmlHelper html, string text)
         {

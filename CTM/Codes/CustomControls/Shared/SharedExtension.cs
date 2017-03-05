@@ -57,12 +57,26 @@ namespace CTM.Codes.CustomControls.Shared
             return MvcHtmlString.Create(div1.ToHtmlString());
         }
 
-        public static MvcHtmlString DropDownListGroupFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression,SelectList selectList, object wrapperHtmlAttributes = null, object inputHtmlAttributes = null)
+        public static MvcHtmlString DropDownListGroupFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, IEnumerable<SelectListItem> selectList, object wrapperHtmlAttributes = null, object inputHtmlAttributes = null)
+        {
+            return GenerateDropDownListGroupFor(helper, expression, selectList, wrapperHtmlAttributes,
+                inputHtmlAttributes);
+        }
+        public static MvcHtmlString EnumDropDownListGroupFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, object wrapperHtmlAttributes = null, object inputHtmlAttributes = null)
+        {
+            var selectList = expression.Body.Type.IsEnum
+                ? EnumHelper.GetSelectList(expression.Body.Type)
+                : null;
+            return GenerateDropDownListGroupFor(helper, expression, selectList, wrapperHtmlAttributes,
+    inputHtmlAttributes);
+        }
+
+        private static MvcHtmlString GenerateDropDownListGroupFor<TModel, TValue>(HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, IEnumerable<SelectListItem> selectList, object wrapperHtmlAttributes = null, object inputHtmlAttributes = null)
         {
             var htmlAttributes = HtmlHelperExtension.AddCssClass(inputHtmlAttributes, "form-control");
 
             var label = helper.LabelFor(expression, htmlAttributes: new { @class = "control-label" });
-            var input = helper.DropDownListFor(expression,selectList,"",htmlAttributes);
+            var input = helper.DropDownListFor(expression, selectList, "", htmlAttributes);
             var validationMsg = helper.ValidationMessageFor(expression, "", new { @class = "text-danger" });
 
             var div2 = new DivControl(input + validationMsg.ToHtmlString());

@@ -75,30 +75,53 @@ function checkBoxHidableDivHide() {
     var ids = $("input[type='checkbox'][value='true'][data-hidabledivid]").data("hidabledivid");
     $("#" + ids).hide();
 }
+// Ajax with file upload
+// https://forums.asp.net/t/2026436.aspx?Request+Files+not+working+using+Ajax+BeginForm+on+partial+Views
+function uploadBtnClickEvent() {
+    var btn = $(event.target);
+    var form = btn.parents("form");
+    if (form.valid()) {
+        var dataString = new FormData(form[0]);
+        event.preventDefault();
+        $.ajax({
+            url: btn.data("uploadurl"),
+            data: dataString,
+            contentType: false,
+            processData: false,
+            cache: false,
+            type: "POST",
+            dataType: "html",
+            global: false
+        });
+    }
+}
+;
 // Set constants
 var ConstantHelper = (function () {
     function ConstantHelper() {
     }
+    ConstantHelper.LoaderId = "loader";
+    ConstantHelper.ProgressBarId = "alert";
+    ConstantHelper.FullModalId = "full_size_modal";
+    ConstantHelper.FullModalContentId = "full_size_modal_content";
+    ConstantHelper.AlertId = "alert";
+    ConstantHelper.MsgModalId = "Msg_modal";
+    ConstantHelper.MsgModalContentId = "Msg_modal_content";
+    ConstantHelper.MidModalId = "Mid_size_modal";
+    ConstantHelper.MidModalContentId = "Mid_size_modal_content";
     return ConstantHelper;
 }());
-ConstantHelper.LoaderId = "loader";
-ConstantHelper.ProgressBarId = "alert";
-ConstantHelper.FullModalId = "full_size_modal";
-ConstantHelper.FullModalContentId = "full_size_modal_content";
-ConstantHelper.AlertId = "alert";
-ConstantHelper.MsgModalId = "Msg_modal";
-ConstantHelper.MsgModalContentId = "Msg_modal_content";
-ConstantHelper.MidModalId = "Midl_size_modal";
-ConstantHelper.MidModalContentId = "Mid_size_modal_content";
 /// <reference path="sitevariable.ts"/>
 // ShowAlert
 function showAlert(htmlContent, type) {
     if (type === "danger") {
-        $("#alert").removeClass().addClass("alert alert-warning");
+        $("#alert").css("background-color", "#f44336").show().delay(3000).fadeOut(1000);
+    }
+    else {
+        $("#alert").css("background-color", "#7cb342").show().delay(3000).fadeOut(1000);
     }
     // Insert html
     $("#alert").html(htmlContent);
-    $("#alert").fadeIn();
 }
 ;
 // Open Modal
@@ -111,30 +134,33 @@ function openModal(modalId, isRegisterPlugins) {
         // Register the form in modal to unobtrusive js, so that local validation would not fail
         $.validator.unobtrusive.parse(modalId + " form");
         // Register Plugins
-        registerPlugins();
+        registerPlugins(modalId);
     }
 }
 ;
 // Close Modal
 function closeModal(modalId) {
     modalId = "#" + modalId;
-    // Open
+    // Close
     $(modalId).modal("hide");
 }
 ;
 /// <reference path="sitevariable.ts"/>
-function registerPlugins() {
+function registerPlugins(wrapperSelector) {
+    if (wrapperSelector === void 0) { wrapperSelector = null; }
+    wrapperSelector = wrapperSelector == null ? "body" : wrapperSelector;
     // DATEPICKER
-    $(".datepicker").datepicker({
+    $(wrapperSelector + " " + ".datepicker").datepicker({
         showOtherMonths: true,
         selectOtherMonths: true,
         showButtonPanel: true,
         changeMonth: true,
         changeYear: true,
-        autoclose: true,
+        autoclose: true
     });
     // Autocomplete
-    registerAutoComplete("CCName", true);
+    // CC Name
+    registerAutoComplete(wrapperSelector + " " + "input[name='CCName']");
 }
 function registerAjaxGlobalSettings() {
     // AJAX Global Settings
@@ -143,6 +169,14 @@ function registerAjaxGlobalSettings() {
     });
     $(document).ajaxStop(function () {
         $("#loader").hide();
+    });
+    $(document).ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions) {
+        var curModal = $(document.activeElement).parents(".modal");
+        if (curModal.attr("id") === ConstantHelper.MidModalId
+            || curModal.attr("id") === ConstantHelper.MsgModalId) {
+            curModal.modal("hide");
+            showAlert("success", "success");
+        }
     });
     $(document).ajaxError(function (event, jqxhr, settings) {
         console.log("ajaxError" + jqxhr);
@@ -157,13 +191,14 @@ function registerAjaxGlobalSettings() {
         }
     });
 }
-function registerAutoComplete(id, allowMultipleValues) {
+function registerAutoComplete(selector) {
     var _this = this;
-    if (allowMultipleValues === void 0) { allowMultipleValues = false; }
     // Autocomplete
     // Reference: https://jqueryui.com/autocomplete/
-    var curElement = $("#" + id);
+    var curElement = $(selector);
     var cache = {};
+    var allowMultipleValues = curElement.data("allowmultiplevalues") === "True"
+        || curElement.data("allowmultiplevalues") === true;
     function split(val) {
         return val.split(/,\s*/);
     }
@@ -225,6 +260,7 @@ function registerAutoComplete(id, allowMultipleValues) {
                 url: curElement.data("url"),
                 data: { name: query },
                 dataType: "json",
+                global: false,
                 success: function (data, status, xhr) {
                     cache[query] = data;
                     response(data);

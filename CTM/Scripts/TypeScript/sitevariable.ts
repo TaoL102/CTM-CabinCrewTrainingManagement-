@@ -8,7 +8,7 @@
      public static  AlertId = "alert";
      public static  MsgModalId = "Msg_modal";
      public static  MsgModalContentId = "Msg_modal_content";
-     public static  MidModalId = "Midl_size_modal";
+     public static  MidModalId = "Mid_size_modal";
      public static  MidModalContentId = "Mid_size_modal_content";
 
 }

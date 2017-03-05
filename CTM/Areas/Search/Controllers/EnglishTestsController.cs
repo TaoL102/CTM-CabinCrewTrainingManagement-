@@ -25,19 +25,20 @@ namespace CTM.Areas.Search.Controllers
 
         public async Task<ActionResult> Index()
         {
-            // Dropdownlist for EnglishTestCategory
-            ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
-            ViewModels.EnglishTests.Search searchViewModel=new ViewModels.EnglishTests.Search();
-            searchViewModel.CateforyList= new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name");
+            ViewModels.EnglishTests.Search searchViewModel = new ViewModels.EnglishTests.Search
+            {
+                CateforyList =
+                    new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name")
+            };
             return View(searchViewModel);
         }
 
         // GET: EnglishTests
         public async Task<ActionResult> Search(ViewModels.EnglishTests.Search searchViewModel)
         {
-            // Save to local file
-            var path = AppDomain.CurrentDomain.BaseDirectory + @"\Log\SQLtrace.txt";
-            _dbManager.GetContext().Database.Log = message => System.IO.File.AppendAllText(path, message);
+            //// Save to local file
+            //var path = AppDomain.CurrentDomain.BaseDirectory + @"\Log\SQLtrace.txt";
+            //_dbManager.GetContext().Database.Log = message => System.IO.File.AppendAllText(path, message);
 
             // Get list
             object list ;

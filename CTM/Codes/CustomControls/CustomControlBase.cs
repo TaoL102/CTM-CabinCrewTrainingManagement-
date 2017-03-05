@@ -21,8 +21,13 @@ namespace CTM.Codes.CustomControls
     {
         ButtonControlAjax Button_Delete<TModel>(AjaxHelper<IEnumerable<TModel>> helper, string rowId);
         ButtonControlAjax Button_Edit<TModel>(AjaxHelper<IEnumerable<TModel>> helper, string rowId);
+
         PaginationControlAjax Pagination<TModel>(AjaxHelper<IEnumerable<TModel>> helper, ISearchViewModel viewModel, Pager pager);
+
         MvcForm Form_Search<TModel>(AjaxHelper<TModel> helper);
+        MvcForm Form_Create<TModel>(AjaxHelper<TModel> helper);
+        MvcForm Form_Upload<TModel>(AjaxHelper<TModel> helper);
+
         TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
         TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
 
@@ -32,14 +37,16 @@ namespace CTM.Codes.CustomControls
 
     public abstract class CustomControlBase<T> : ICustomControl
     {
-        protected string ControllerName { get;}
+        protected string ControllerName { get; }
 
         protected CustomControlBase()
         {
             ControllerName = GetCurrentControllerName();
         }
 
-        public PaginationControlAjax Pagination<TModel>(AjaxHelper<IEnumerable<TModel>> helper,ISearchViewModel viewModel, Pager pager)
+        #region Pagination
+
+        public PaginationControlAjax Pagination<TModel>(AjaxHelper<IEnumerable<TModel>> helper, ISearchViewModel viewModel, Pager pager)
         {
             return new PaginationControlAjax(
                 helper,
@@ -48,10 +55,14 @@ namespace CTM.Codes.CustomControls
                 ConstantHelper.AreaNameSearch,
                 pager)
                 .SetUpdateTargetId(ConstantHelper.FullModalContentId)
-                .SetRouteValues(GetPaginationRouteValues(viewModel));
+                .SetRouteValues(PaginationRouteValues(viewModel));
         }
 
-        protected abstract object GetPaginationRouteValues(ISearchViewModel viewModel);
+        protected abstract object PaginationRouteValues(ISearchViewModel viewModel);
+
+        #endregion
+
+        #region Buttons
 
         public ButtonControlAjax Button_Delete<TModel>(AjaxHelper<IEnumerable<TModel>> helper, string rowId)
         {
@@ -65,11 +76,12 @@ namespace CTM.Codes.CustomControls
                     ConstantHelper.AreaNameManageData)
                 .SetUpdateTargetId(ConstantHelper.MsgModalContentId)
                 .SetRouteValues(routeValues)
-                .SetOnSuccessFun("openModal('" + ConstantHelper.MsgModalId + "')");
+                .SetOnSuccessFun(GenerateOpenModalJSCode(ModalOptions.Message, false));
 
             // Set style
             obj = obj.SetMaterialIcon("delete")
                 .SetColor(ColorOptions.Danger)
+                .AddCssClass("btn-round")
                 .IsLinkBtn(true);
 
             return obj;
@@ -87,7 +99,8 @@ namespace CTM.Codes.CustomControls
                     ConstantHelper.AreaNameManageData)
                 .SetUpdateTargetId(ConstantHelper.MidModalContentId)
                 .SetRouteValues(routeValues)
-                .SetOnSuccessFun("openModal('" + ConstantHelper.MidModalId + "',true)");
+                .AddCssClass("btn-round")
+                .SetOnSuccessFun(GenerateOpenModalJSCode(ModalOptions.MidiumSize, true));
 
             // Set style
             obj = obj.SetMaterialIcon("mode_edit")
@@ -97,56 +110,90 @@ namespace CTM.Codes.CustomControls
             return obj;
         }
 
+
+        #endregion
+
+        #region Forms
+
         public MvcForm Form_Search<TModel>(AjaxHelper<TModel> helper)
         {
-            var form = helper.BeginForm(ConstantHelper.ActionNameSearch, ControllerName, new { area = "Search" }, new AjaxOptions
+            var ajaxOptions = new AjaxOptions()
             {
-                HttpMethod = "POST",
                 InsertionMode = InsertionMode.Replace,
                 UpdateTargetId = ConstantHelper.FullModalContentId,
                 LoadingElementId = ConstantHelper.LoaderId,
                 OnSuccess = "new function(){openModal('" + ConstantHelper.FullModalId + "',true)}"
-            },
-                null);
-
-            string formBody = GenerateSearchFormBody(helper);
-
-            helper.ViewContext.Writer.Write(
-                formBody);
-            return form; ;
+            };
+            var ajaxOptionsToHtmlAttr = ajaxOptions.ToUnobtrusiveHtmlAttributes();
+            return GenerateForm(
+                helper,
+                ConstantHelper.ActionNameSearch,
+                ConstantHelper.AreaNameSearch,
+                null,
+                ajaxOptionsToHtmlAttr,
+                Form_Search_Body(helper));
         }
-
-        protected abstract string GenerateSearchFormBody(AjaxHelper helper);
+        public MvcForm Form_Create<TModel>(AjaxHelper<TModel> helper)
+        {
+            return GenerateForm(
+                helper,
+                ConstantHelper.ActionNameCreate,
+                ConstantHelper.AreaNameManageData,
+                null,
+                null,
+                Form_Create_Body(helper));
+        }
+        public MvcForm Form_Upload<TModel>(AjaxHelper<TModel> helper)
+        {
+            return GenerateForm(
+                helper,
+                ConstantHelper.ActionNameUpload,
+                ConstantHelper.AreaNameManageData,
+                null,
+                new
+                {
+                    enctype = "multipart/form-data"
+                },
+                Form_Upload_Body(helper));
+        }
+        protected abstract string Form_Search_Body(AjaxHelper helper);
+        protected abstract string Form_Create_Body(AjaxHelper helper);
+        protected abstract string Form_Upload_Body(AjaxHelper helper);
 
         public TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
         {
 
-            var header = GetSearchResultHeader(helper);
-            var rowsWithId = GetSearchResultRowsWithId(helper,models);
+            var header = Table_SearchResult_Header(helper);
+            var rowsWithId = Table_SearchResult_Rows(helper, models);
 
             return GenerateTable(header, rowsWithId);
         }
 
-        protected abstract string[] GetSearchResultHeader<TModel>(HtmlHelper<IEnumerable<TModel>> helper);
+        protected abstract string[] Table_SearchResult_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper);
 
-        protected abstract Dictionary<string, string[]> GetSearchResultRowsWithId<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
+        protected abstract Dictionary<string, string[]> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
 
-        protected TableControl GenerateTable(string[] header, Dictionary<string, string[]> rowsWithId)
-        {
-            return new TableControl(header, rowsWithId);
-        }
         public TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
         {
 
-            var header = GetSearchResultHeader_IsLatest(helper);
-            var rowsWithId = GetSearchResultRowsWithId_IsLatest(helper, models);
+            var header = Table_SearchResult_IsLatest_Header(helper);
+            var rowsWithId = Table_SearchResult_IsLatest_Rows(helper, models);
 
             return GenerateTable(header, rowsWithId);
         }
 
-        protected abstract string[] GetSearchResultHeader_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper);
+        protected abstract string[] Table_SearchResult_IsLatest_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper);
 
-        protected abstract Dictionary<string, string[]> GetSearchResultRowsWithId_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
+        protected abstract Dictionary<string, string[]> Table_SearchResult_IsLatest_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
+
+
+        #endregion
+
+        #region Private methods
+        private TableControl GenerateTable(string[] header, Dictionary<string, string[]> rowsWithId)
+        {
+            return new TableControl(header, rowsWithId);
+        }
 
         private string GetCurrentControllerName()
         {
@@ -179,6 +226,40 @@ namespace CTM.Codes.CustomControls
             return null;
         }
 
+        private MvcForm GenerateForm(AjaxHelper helper, string actionName, string areaName, object routeValues, object htmlAttributes, string formBody)
+        {
+            var form = helper.BeginForm(
+                actionName,
+                ControllerName,
+                HtmlHelperExtension.AddRouteValue(routeValues, new { area = areaName }),
+                new AjaxOptions
+                {
+                    HttpMethod = "POST"
+                },
+                HtmlHelperExtension.ConvertHtmlAttributesToIDictionary(htmlAttributes));
+
+            var htmlHelper = new HtmlHelper(helper.ViewContext, helper.ViewDataContainer);
+
+            string token = htmlHelper.AntiForgeryToken().ToHtmlString();
+
+            helper.ViewContext.Writer.Write(token + formBody);
+            return form; ;
+        }
+
+        private string GenerateOpenModalJSCode(ModalOptions modalOptions, bool isRegisterPlugins)
+        {
+            Dictionary<ModalOptions, string> modalsDic = new Dictionary<ModalOptions, string>()
+            {
+                { ModalOptions.Full,ConstantHelper.FullModalId},
+                { ModalOptions.MidiumSize,ConstantHelper.MidModalId},
+                { ModalOptions.Message,ConstantHelper.MsgModalId}
+            };
+            return "openModal('" + modalsDic[modalOptions] + "'" +
+                "," + isRegisterPlugins.ToString().ToLower() + ")";
+        }
+        #endregion
+
 
     }
+    public enum ModalOptions { Full, MidiumSize, Message }
 }

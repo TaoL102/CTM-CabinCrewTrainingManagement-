@@ -4,20 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using CTM.Areas.ManageData.ViewModels.EnglishTests;
 using CTM.Areas.Search.ViewModels;
 using CTM.Areas.Search.ViewModels.EnglishTests;
 using CTM.Codes.CustomControls.Shared;
 using CTMLib.CustomControls.Div;
 using CTMLib.Extensions;
-using CTMLib.Helpers;
 using CTMLib.Models;
+using CTMLib.Resources;
+using CTMLib.Helpers;
 
 namespace CTM.Codes.CustomControls.EnglishTests
 {
     public class CustomControlEnglishTest : CustomControlBase<EnglishTest>
     {
 
-        protected sealed override string GenerateSearchFormBody(AjaxHelper helper)
+        protected sealed override string Form_Search_Body(AjaxHelper helper)
         {
             var htmlHelper = new HtmlHelper<Search>(helper.ViewContext, helper.ViewDataContainer);
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
@@ -27,7 +29,8 @@ namespace CTM.Codes.CustomControls.EnglishTests
             var ccName = htmlHelper
                 .TextBoxGroupFor(o => o.CCName, new { @class = "col-sm-12" }, new
                 {
-                    data_url = urlHelper.Action("GetCabinCrewNames", "Query", new { area = "API" })
+                    data_url = urlHelper.Action("GetCabinCrewNames", "Query", new { area =Helpers.ConstantHelper.AreaNameAPI }),
+                    data_allowMultipleValues=true
                 });
             var categoryID = htmlHelper
                 .DropDownListGroupFor(o => o.CategoryID, model.CateforyList, new { @class = "col-sm-4" });
@@ -66,7 +69,7 @@ namespace CTM.Codes.CustomControls.EnglishTests
                    + row4;
         }
 
-        protected override object GetPaginationRouteValues(ISearchViewModel viewModel)
+        protected override object PaginationRouteValues(ISearchViewModel viewModel)
         {
             var searchViewModel = (Search)viewModel;
             return new
@@ -80,11 +83,11 @@ namespace CTM.Codes.CustomControls.EnglishTests
             };
         }
 
-        protected override Dictionary<string, string[]> GetSearchResultRowsWithId<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
+        protected override Dictionary<string, string[]> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
         {
             var ajaxHelper = new AjaxHelper<IEnumerable<SearchResult>>(
     helper.ViewContext, helper.ViewDataContainer);
-
+   
             var rowsWithId = new Dictionary<string, string[]>();
             foreach (var item in (IEnumerable<SearchResult>)models)
             {
@@ -95,14 +98,14 @@ namespace CTM.Codes.CustomControls.EnglishTests
                     helper.DisplayValueFor(o=>item.Grade).ToString() ,
                     helper.DisplayValueFor(o=>item.CategoryName).ToString(),
                     helper.DisplayValueFor(o=>item.Date).ToString(),
-                    ajaxHelper.Button_Edit(item.ID).AddCssClass("btn-round").ToHtmlString(),
-                    ajaxHelper.Button_Delete(item.ID).AddCssClass("btn-round").ToHtmlString(),
+                    ajaxHelper.Button_Edit(item.ID).ToHtmlString(),
+                    ajaxHelper.Button_Delete(item.ID).ToHtmlString(),
                 });
             }
             return rowsWithId;;
         }
 
-        protected override string[] GetSearchResultHeader<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
+        protected override string[] Table_SearchResult_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
         {
             var htmlHelper = new HtmlHelper<IEnumerable<SearchResult>>(
     helper.ViewContext, helper.ViewDataContainer);
@@ -120,7 +123,7 @@ namespace CTM.Codes.CustomControls.EnglishTests
             return header;;
         }
 
-        protected override string[] GetSearchResultHeader_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
+        protected override string[] Table_SearchResult_IsLatest_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
         {
             var htmlHelper = new HtmlHelper<IEnumerable<SearchResultIsLatest>>(
 helper.ViewContext, helper.ViewDataContainer);
@@ -135,7 +138,7 @@ helper.ViewContext, helper.ViewDataContainer);
             return header;
         }
 
-        protected override Dictionary<string, string[]> GetSearchResultRowsWithId_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
+        protected override Dictionary<string, string[]> Table_SearchResult_IsLatest_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
         {
             var modelsList = (IList<SearchResultIsLatest>)models.ToList();
             var rows = new Dictionary<string, string[]>();
@@ -154,6 +157,54 @@ helper.ViewContext, helper.ViewDataContainer);
                  });
             }
             return rows;
+        }
+
+        protected override string Form_Create_Body(AjaxHelper helper)
+        {
+            var htmlHelper = new HtmlHelper<Create>(helper.ViewContext, helper.ViewDataContainer);
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
+            var model = htmlHelper.ViewData.Model;
+
+            var row1=htmlHelper.TextBoxGroupFor(o => o.CCName,null, new
+            {
+                data_url = urlHelper.Action("GetCabinCrewNames", "Query", new { area =Helpers.ConstantHelper.AreaNameAPI }),
+            });
+
+           var row2= htmlHelper.DropDownListGroupFor(o => o.CategoryID, model.CategoryList);
+
+            var row3 = htmlHelper.EnumDropDownListGroupFor(o => o.Type);
+
+            var row4 = htmlHelper.TextBoxGroupFor(o => o.Grade);
+
+            var row5 = htmlHelper.DateTimeGroupFor(o => o.Date);
+
+            var row6 = htmlHelper.Button().SetText(ConstViews.BTN_Add).IsSubmitBtn(true);
+
+            return string.Concat(row1, row2, row3, row4, row5, row6);
+        }
+
+        protected override string Form_Upload_Body(AjaxHelper helper)
+        {
+            var htmlHelper = new HtmlHelper<Upload>(helper.ViewContext, helper.ViewDataContainer);
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
+            var model = htmlHelper.ViewData.Model;
+
+            var row1 = htmlHelper.DropDownListGroupFor(o => o.CategoryID, model.CategoryList);
+
+            var row2 = htmlHelper.DateTimeGroupFor(o => o.Date);
+
+            var row3 = htmlHelper.FileGroupFor(o => o.File);
+
+            var row4 = htmlHelper.Button()
+                .SetText(ConstViews.BTN_Upload)
+                .IsSubmitBtn(true)
+                .MergeAttribute("onclick", "uploadBtnClickEvent()")
+                .MergeAttribute(
+                    "data-uploadurl",
+                    urlHelper.Action(Helpers.ConstantHelper.ActionNameUpload, ControllerName, new {area = Helpers.ConstantHelper.AreaNameManageData}));
+
+            return string.Concat(row1, row2, row3, row4);
+
         }
     }
 

@@ -11,6 +11,7 @@ namespace CTM.Codes.Helpers
         public static string ActionNameDelete = "Delete";
         public static string ActionNameEdit = "Edit";
         public static string ActionNameCreate = "Create";
+        public static string ActionNameUpload = "Upload";
         public static string ActionNameSearch = "Search";
 
         public static string ControllerNameEnglishTest = "EnglishTests";

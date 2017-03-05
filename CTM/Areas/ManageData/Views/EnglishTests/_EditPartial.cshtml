@@ -7,9 +7,7 @@
 
     @using (Ajax.BeginForm(new AjaxOptions()
     {
-        HttpMethod = "POST",
-        OnFailure ="",
-        OnSuccess = "CloseModal",
+        HttpMethod = "POST"
     }))
     {
         @Html.AntiForgeryToken()

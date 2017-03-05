@@ -1,69 +1,16 @@
-﻿@using CTMLib.Models
-@model CTMLib.Models.EnglishTest
+﻿@using CTM.Codes.CustomControls
+@using CTM.Codes.CustomControls.Shared
+@using CTMLib.Extensions
+@using CTMLib.Models
+@using CTMLib.Resources
+@model CTM.Areas.ManageData.ViewModels.EnglishTests.Create
+
+<div class="container">
 
 
-    @using (Html.BeginForm("Create","EnglishTests",new {area="Search"},FormMethod.Post,new{id="create_form"}))
+    @using (Ajax.Form_Create())
     {
-        @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>新增英语成绩</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-            <div class="form-group">
-              @Html.LabelFor(model => model.CabinCrew.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                   
-
-                        @Html.TextBox("CCName", null, new { @class = "validate autocomplete form-control", id = "CCName"})
-                       @*<label for="CCName">姓名</label>*@
-                   
-                    @Html.ValidationMessageFor(model => model.CabinCrew.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Category.Name,  htmlAttributes: new { @class = "control-label col-md-2 " })
-                <div class="col-md-10 input-field col s12">
-                    @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control  " })
-                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.Type, EnumHelper.GetSelectList(typeof(EnglishTestType)), htmlAttributes: new { @class = "form-control " })
-                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Grade, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Grade, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Grade, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker picker__input" } })
-                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
     }
 
+</div>

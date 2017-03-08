@@ -4,27 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using WebGrease.Css.Extensions;
 
 namespace CTMLib.CustomControls.Table
 {
-    public class RowControl:CustomControlBase
+    public class RowControl : CustomControlBase
     {
-        private readonly string[] _innerHtmls;
-        public RowControl(params string[] innerHtmls)
+        private readonly string[] _innerHtml;
+        private readonly Dictionary<string, string> _keyAndInnerHtml;
+        public RowControl(Dictionary<string, string> keyAndInnerHtml)
         {
-            _innerHtmls = innerHtmls;
+            _keyAndInnerHtml = keyAndInnerHtml;
+        }
+
+        public RowControl(params string[] innerHtml)
+        {
+            _innerHtml = innerHtml;
         }
 
         protected override string Render()
         {
-            TagBuilder builder=new TagBuilder("tr");
-            builder.GenerateId(Id);
-            for (int i = 0; i < _innerHtmls.Length; i++)
+            TagBuilder builder = new TagBuilder("tr");
+            builder.MergeAttribute("id", Id);
+
+            _innerHtml?.ForEach(o =>
             {
-                TagBuilder td = new TagBuilder("td");
-                td.InnerHtml = _innerHtmls[i];
+                TagBuilder td = new TagBuilder("td")
+                {
+                    InnerHtml = o
+                };
                 builder.InnerHtml += td;
-            }
+            });
+
+            _keyAndInnerHtml?.ForEach(o =>
+            {
+                TagBuilder td = new TagBuilder("td")
+                {
+                    InnerHtml = o.Value
+                };
+                td.MergeAttribute("name", o.Key);
+                builder.InnerHtml += td;
+            });
+
             return builder.ToString();
         }
     }

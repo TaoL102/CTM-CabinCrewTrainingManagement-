@@ -138,11 +138,29 @@ function openModal(modalId, isRegisterPlugins) {
     }
 }
 ;
-// Close Modal
-function closeModal(modalId) {
-    modalId = "#" + modalId;
-    // Close
-    $(modalId).modal("hide");
+// Hide element
+function hideElement(elementId) {
+    elementId = "#" + elementId;
+    $(elementId).hide();
+}
+;
+function editElement(controllerName, elementId, url) {
+    $.ajax({
+        url: url,
+        data: {
+            controllerName: controllerName,
+            id: elementId
+        },
+        dataType: "json",
+        global: false,
+        success: function (data, status, xhr) {
+            var tds = $("#" + elementId + " " + "td[name]");
+            for (var i = 0; i < tds.length; i++) {
+                var tdName = $(tds[i]).attr("name");
+                $(tds[i]).html(data[tdName]);
+            }
+        },
+    });
 }
 ;
 /// <reference path="sitevariable.ts"/>

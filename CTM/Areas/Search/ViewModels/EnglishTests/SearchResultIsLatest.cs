@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using CTMLib.Models;
 using CTMLib.Resources;
 
 namespace CTM.Areas.Search.ViewModels.EnglishTests
 {
-    public class SearchResultIsLatest
+    public class SearchResultIsLatest: Model<EnglishTest>
     {
 
         public string CabinCrewID { get; set; }

@@ -88,6 +88,15 @@ namespace CTMLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 编辑.
+        /// </summary>
+        public static string BTN_Edit {
+            get {
+                return ResourceManager.GetString("BTN_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 下一页.
         /// </summary>
         public static string BTN_Next {
@@ -111,6 +120,15 @@ namespace CTMLib.Resources {
         public static string BTN_Previews {
             get {
                 return ResourceManager.GetString("BTN_Previews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 保存.
+        /// </summary>
+        public static string BTN_Save {
+            get {
+                return ResourceManager.GetString("BTN_Save", resourceCulture);
             }
         }
         

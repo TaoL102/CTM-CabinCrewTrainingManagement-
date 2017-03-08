@@ -27,12 +27,34 @@ function openModal(modalId: string, isRegisterPlugins: boolean = false) {
     }
 };
 
-// Close Modal
-function closeModal(modalId: string) {
-    modalId = "#" + modalId;
-    // Close
-    $(modalId).modal("hide");
+// Hide element
+function hideElement(elementId: string) {
+    elementId = "#" + elementId;
+    $(elementId).hide();
+};
 
+function editElement(controllerName: string, elementId: string,url:string) {
+
+    $.ajax({
+        url: url,
+        data: {
+            controllerName: controllerName ,
+            id:elementId
+        },
+        dataType: "json",
+        global: false,
+        success: (data: any, status: any, xhr: any) => {
+            var tds = $("#" + elementId + " " + "td[name]");
+            for (var i = 0; i < tds.length; i++) {
+                var tdName = $(tds[i]).attr("name");
+                $(tds[i]).html(data[tdName]);
+            }
+        },
+
+    });
+
+    
 
 };
+
 

@@ -27,7 +27,7 @@ namespace CTMLib.Models
         public string Grade { get; set; }
 
         [Required]
-        [Display(Name = "CategoryID", ResourceType = typeof(Resources.ConstModels))]
+        [Display(Name = "Category", ResourceType = typeof(Resources.ConstModels))]
         public string CategoryID { get; set; }
 
         [Required]

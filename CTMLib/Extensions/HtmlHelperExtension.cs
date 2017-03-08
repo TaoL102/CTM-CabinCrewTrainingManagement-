@@ -10,6 +10,7 @@ using CTMLib.CustomControls.Alert;
 using CTMLib.CustomControls.Button;
 using CTMLib.CustomControls.Modal;
 using CTMLib.CustomControls.Pagination;
+using CTMLib.Helpers;
 using CTMLib.Models;
 using WebGrease.Css.Extensions;
 
@@ -46,18 +47,7 @@ namespace CTMLib.Extensions
 
         }
 
-        private static string GetEnumPropertyValue(Enum enumValue)
-        {
-            try
-            {
-                return Resources.ConstModels.ResourceManager.GetString(enumValue.ToString());
-            }
-            catch (Exception e)
-            {
-                return enumValue.ToString();
-            }
 
-        }
 
         public static Dictionary<string, object> AddCssClass(object htmlAttributes, string cssClass)
         {
@@ -154,7 +144,7 @@ namespace CTMLib.Extensions
             var value = ModelMetadata.FromLambdaExpression(expression, html.ViewData).Model;
             if (value is Enum)
             {
-                return MvcHtmlString.Create(GetEnumPropertyValue(value as Enum));
+                return MvcHtmlString.Create(ModelHelper<TModel>.GetEnumPropertyValue(value as Enum));
             }
             return value != null ? html.DisplayFor(expression) : MvcHtmlString.Empty;
         }

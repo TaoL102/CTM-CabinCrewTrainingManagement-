@@ -29,8 +29,8 @@ namespace CTM.Codes.CustomControls.EnglishTests
             var ccName = htmlHelper
                 .TextBoxGroupFor(o => o.CCName, new { @class = "col-sm-12" }, new
                 {
-                    data_url = urlHelper.Action("GetCabinCrewNames", "Query", new { area =Helpers.ConstantHelper.AreaNameAPI }),
-                    data_allowMultipleValues=true
+                    data_url = urlHelper.Action("GetCabinCrewNames", "Query", new { area = Helpers.ConstantHelper.AreaNameAPI }),
+                    data_allowMultipleValues = true
                 });
             var categoryID = htmlHelper
                 .DropDownListGroupFor(o => o.CategoryID, model.CateforyList, new { @class = "col-sm-4" });
@@ -83,33 +83,64 @@ namespace CTM.Codes.CustomControls.EnglishTests
             };
         }
 
-        protected override Dictionary<string, string[]> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
+        protected override Dictionary<string, Dictionary<string, string>> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
         {
             var ajaxHelper = new AjaxHelper<IEnumerable<SearchResult>>(
     helper.ViewContext, helper.ViewDataContainer);
-   
-            var rowsWithId = new Dictionary<string, string[]>();
+
+            var rowsWithIdAndTrWithNameAttr = new Dictionary<string, Dictionary<string, string>>();
             foreach (var item in (IEnumerable<SearchResult>)models)
             {
-                rowsWithId.Add(item.ID, new string[]
+                rowsWithIdAndTrWithNameAttr.Add(item.ID,new Dictionary < string, string>()
                 {
-                    helper.DisplayValueFor(o=>item.CabinCrewName).ToString(),
-                    helper.DisplayValueFor(o=>item.Type).ToString(),
-                    helper.DisplayValueFor(o=>item.Grade).ToString() ,
-                    helper.DisplayValueFor(o=>item.CategoryName).ToString(),
-                    helper.DisplayValueFor(o=>item.Date).ToString(),
-                    ajaxHelper.Button_Edit(item.ID).ToHtmlString(),
-                    ajaxHelper.Button_Delete(item.ID).ToHtmlString(),
+                    { ModelHelper<TModel>.GetPropertyName(o=>item.CabinCrewName),helper.DisplayValueFor(o=>item.CabinCrewName).ToString()},
+                    { ModelHelper<TModel>.GetPropertyName(o=>item.Type),helper.DisplayValueFor(o=>item.Type).ToString()},
+                    { ModelHelper<TModel>.GetPropertyName(o=>item.Grade),helper.DisplayValueFor(o=>item.Grade).ToString()},
+                    { ModelHelper<TModel>.GetPropertyName(o=>item.CategoryName),helper.DisplayValueFor(o=>item.CategoryName).ToString()},
+                    { ModelHelper<TModel>.GetPropertyName(o=>item.Date),helper.DisplayValueFor(o=>item.Date).ToString()},
+                    { Guid.NewGuid().ToString(), ajaxHelper.Button_Edit(item.ID).ToHtmlString()},
+                    {Guid.NewGuid().ToString(), ajaxHelper.Button_Delete(item.ID).ToHtmlString()},
+
                 });
             }
-            return rowsWithId;;
+            return rowsWithIdAndTrWithNameAttr; ;
+        }
+        public override Dictionary<string, string> Table_SearchResult_Row(object model)
+        {
+            var searchResult = (SearchResult) model;
+            var rowsWithIdAndTrWithNameAttr = new Dictionary<string,string>
+            {
+                        {
+                            ModelHelper<Search>.GetPropertyName(o => searchResult.CabinCrewName),
+                            ModelHelper<Search>.GetPropertyDisplayValue(o => searchResult.CabinCrewName, model)
+                        },
+                        {
+                            ModelHelper<Search>.GetPropertyName(o => searchResult.Type),
+                            ModelHelper<Search>.GetPropertyDisplayValue(o => searchResult.Type, model)
+                        },
+                        {
+                            ModelHelper<Search>.GetPropertyName(o => searchResult.Grade),
+                            ModelHelper<Search>.GetPropertyDisplayValue(o => searchResult.Grade, model)
+                        },
+                        {
+                            ModelHelper<Search>.GetPropertyName(o => searchResult.CategoryName),
+                            ModelHelper<Search>.GetPropertyDisplayValue(o => searchResult.CategoryName, model)
+                        },
+                        {
+                            ModelHelper<Search>.GetPropertyName(o => searchResult.Date),
+                            ModelHelper<Search>.GetPropertyDisplayValue(o => searchResult.Date, model)
+                        },
+            };
+
+
+            return rowsWithIdAndTrWithNameAttr; 
         }
 
         protected override string[] Table_SearchResult_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
         {
             var htmlHelper = new HtmlHelper<IEnumerable<SearchResult>>(
     helper.ViewContext, helper.ViewDataContainer);
-            
+
             var header = new string[]
            {
                 htmlHelper.DisplayNameFor(o => o.CabinCrewName).ToString(),
@@ -120,7 +151,7 @@ namespace CTM.Codes.CustomControls.EnglishTests
                 "",""
            };
 
-            return header;;
+            return header; ;
         }
 
         protected override string[] Table_SearchResult_IsLatest_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
@@ -165,12 +196,12 @@ helper.ViewContext, helper.ViewDataContainer);
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
             var model = htmlHelper.ViewData.Model;
 
-            var row1=htmlHelper.TextBoxGroupFor(o => o.CCName,null, new
+            var row1 = htmlHelper.TextBoxGroupFor(o => o.CCName, null, new
             {
-                data_url = urlHelper.Action("GetCabinCrewNames", "Query", new { area =Helpers.ConstantHelper.AreaNameAPI }),
+                data_url = urlHelper.Action("GetCabinCrewNames", "Query", new { area = Helpers.ConstantHelper.AreaNameAPI }),
             });
 
-           var row2= htmlHelper.DropDownListGroupFor(o => o.CategoryID, model.CategoryList);
+            var row2 = htmlHelper.DropDownListGroupFor(o => o.CategoryID, model.CategoryList);
 
             var row3 = htmlHelper.EnumDropDownListGroupFor(o => o.Type);
 
@@ -178,15 +209,13 @@ helper.ViewContext, helper.ViewDataContainer);
 
             var row5 = htmlHelper.DateTimeGroupFor(o => o.Date);
 
-            var row6 = htmlHelper.Button().SetText(ConstViews.BTN_Add).IsSubmitBtn(true);
-
-            return string.Concat(row1, row2, row3, row4, row5, row6);
+            return string.Concat(row1, row2, row3, row4, row5);
         }
 
         protected override string Form_Upload_Body(AjaxHelper helper)
         {
             var htmlHelper = new HtmlHelper<Upload>(helper.ViewContext, helper.ViewDataContainer);
-            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
+
             var model = htmlHelper.ViewData.Model;
 
             var row1 = htmlHelper.DropDownListGroupFor(o => o.CategoryID, model.CategoryList);
@@ -195,17 +224,38 @@ helper.ViewContext, helper.ViewDataContainer);
 
             var row3 = htmlHelper.FileGroupFor(o => o.File);
 
-            var row4 = htmlHelper.Button()
-                .SetText(ConstViews.BTN_Upload)
-                .IsSubmitBtn(true)
-                .MergeAttribute("onclick", "uploadBtnClickEvent()")
-                .MergeAttribute(
-                    "data-uploadurl",
-                    urlHelper.Action(Helpers.ConstantHelper.ActionNameUpload, ControllerName, new {area = Helpers.ConstantHelper.AreaNameManageData}));
-
-            return string.Concat(row1, row2, row3, row4);
+            return string.Concat(row1, row2, row3);
 
         }
+
+        protected override string Form_Edit_Body(AjaxHelper helper)
+        {
+            var htmlHelper = new HtmlHelper<EnglishTest>(helper.ViewContext, helper.ViewDataContainer);
+            var model = (EnglishTest)helper.ViewData.Model;
+            var row1 = new TagBuilder("h4")
+            {
+                InnerHtml =
+                    htmlHelper.DisplayValueFor(o => o.CabinCrew.Name) +
+                    "(" +
+                    htmlHelper.DisplayValueFor(o => o.Type) +
+                    ")",
+            };
+
+            var row2 =
+                   htmlHelper.HiddenFor(o => o.ID).ToString() +
+                   htmlHelper.HiddenFor(o => o.CabinCrewID) +
+                   htmlHelper.HiddenFor(o => o.UploadRecordID) +
+                   htmlHelper.HiddenFor(o => o.Type);
+
+
+            var row3 = htmlHelper.TextBoxGroupFor(o => o.Grade);
+            var row4 = htmlHelper.DropDownListGroupFor(o => o.CategoryID, null);
+            var row5 = htmlHelper.DateTimeGroupFor(o => o.Date);
+
+            return string.Concat(row1, row2, row3, row4, row5);
+        }
+
+
     }
 
 }

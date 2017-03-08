@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using CTM.Areas.Search.ViewModels;
@@ -15,9 +16,20 @@ namespace CTM.Codes.CustomControls
 {
     public static class CustomControlExtension
     {
+
+        private static readonly Dictionary<string, ICustomControl> CustomControlImplemtationDic = new Dictionary<string, ICustomControl>()
+            {
+                {ConstantHelper.ControllerNameEnglishTest,new CustomControlEnglishTest()},
+                {ConstantHelper.ControllerNameRefresherTraining,null },
+                {ConstantHelper.ControllerNameCabinCrew,null },
+                {ConstantHelper.ControllerNameCategory,null },
+                {ConstantHelper.ControllerNameLog,null },
+                {ConstantHelper.ControllerNameUploadRecord,null }
+            };
+
         public static ButtonControlAjax Button_Delete<T>(this AjaxHelper<IEnumerable<T>> helper, string rowId)
         {
-            return GetCustomControl<T>().Button_Delete(helper,rowId);
+            return GetCustomControl<T>().Button_Delete(helper, rowId);
         }
 
         public static ButtonControlAjax Button_Edit<T>(this AjaxHelper<IEnumerable<T>> helper, string rowId)
@@ -37,6 +49,14 @@ namespace CTM.Codes.CustomControls
         {
             return GetCustomControl<T>().Form_Upload(helper);
         }
+        public static MvcForm Form_Edit<T>(this AjaxHelper<T> helper)
+        {
+            return GetCustomControl<T>().Form_Edit(helper);
+        }
+        public static MvcForm Form_Delete<T>(this AjaxHelper<T> helper)
+        {
+            return GetCustomControl<T>().Form_Delete(helper);
+        }
 
         public static PaginationControlAjax Pagination<T>(this AjaxHelper<IEnumerable<T>> helper,
     ISearchViewModel searchViewModel, Pager pager)
@@ -55,36 +75,13 @@ namespace CTM.Codes.CustomControls
             return GetCustomControl<T>().Table_SearchResult_IsLatest(helper, models);
         }
 
-
         private static ICustomControl GetCustomControl<T>()
         {
-            var nameSpace =
-                typeof(T).Namespace;
-            if (nameSpace.Contains(ConstantHelper.ControllerNameEnglishTest))
-            {
-                return new CustomControlEnglishTest();
-            }
-            //else if (nameSpace.Contains(ConstantHelper.ControllerNameRefresherTraining))
-            //{
-            //    return ConstantHelper.ControllerNameRefresherTraining;
-            //}
-            //else if (nameSpace.Contains(ConstantHelper.ControllerNameCabinCrew))
-            //{
-            //    return ConstantHelper.ControllerNameCabinCrew;
-            //}
-            //else if (nameSpace.Contains(ConstantHelper.ControllerNameCategory))
-            //{
-            //    return ConstantHelper.ControllerNameCategory;
-            //}
-            //else if (nameSpace.Contains(ConstantHelper.ControllerNameLog))
-            //{
-            //    return ConstantHelper.ControllerNameLog;
-            //}
-            //else if (nameSpace.Contains(ConstantHelper.ControllerNameUploadRecord))
-            //{
-            //    return ConstantHelper.ControllerNameUploadRecord;
-            //}
-            return null;
+            return CustomControlImplemtationDic[ControllerHelper<T>.GetControllerName()];
+        }
+        public static ICustomControl GetCustomControl(string controlName)
+        {
+            return CustomControlImplemtationDic[controlName];
         }
     }
 }

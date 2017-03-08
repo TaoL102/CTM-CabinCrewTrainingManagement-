@@ -8,7 +8,7 @@ using CTMLib.Resources;
 
 namespace CTM.Areas.Search.ViewModels.EnglishTests
 {
-    public class SearchResult
+    public class SearchResult: Model<EnglishTest>
     {
         public string ID { get; set; }
 

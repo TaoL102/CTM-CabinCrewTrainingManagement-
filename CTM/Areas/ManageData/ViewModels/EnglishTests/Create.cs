@@ -11,7 +11,7 @@ using CTMLib.Resources;
 
 namespace CTM.Areas.ManageData.ViewModels.EnglishTests
 {
-    public class Create
+    public class Create : Model<EnglishTest>
     {
         private DateTime date;
 

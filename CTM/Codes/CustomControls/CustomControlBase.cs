@@ -13,7 +13,10 @@ using CTMLib.CustomControls.Div;
 using CTMLib.CustomControls.Pagination;
 using CTMLib.CustomControls.Table;
 using CTMLib.Extensions;
+using CTMLib.Helpers;
 using CTMLib.Models;
+using CTMLib.Resources;
+using ConstantHelper = CTM.Codes.Helpers.ConstantHelper;
 
 namespace CTM.Codes.CustomControls
 {
@@ -27,15 +30,17 @@ namespace CTM.Codes.CustomControls
         MvcForm Form_Search<TModel>(AjaxHelper<TModel> helper);
         MvcForm Form_Create<TModel>(AjaxHelper<TModel> helper);
         MvcForm Form_Upload<TModel>(AjaxHelper<TModel> helper);
+        MvcForm Form_Edit<TModel>(AjaxHelper<TModel> helper);
+        MvcForm Form_Delete<TModel>(AjaxHelper<TModel> helper);
 
         TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
         TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
-
+        Dictionary<string,string> Table_SearchResult_Row(object model);
     }
 
 
 
-    public abstract class CustomControlBase<T> : ICustomControl
+    public abstract class CustomControlBase<T> : ICustomControl 
     {
         protected string ControllerName { get; }
 
@@ -135,16 +140,31 @@ namespace CTM.Codes.CustomControls
         }
         public MvcForm Form_Create<TModel>(AjaxHelper<TModel> helper)
         {
+            var htmlHelper = new HtmlHelper<TModel>(helper.ViewContext, helper.ViewDataContainer);
+            var button = htmlHelper.Button().SetText(ConstViews.BTN_Add).IsSubmitBtn(true);
+
             return GenerateForm(
                 helper,
                 ConstantHelper.ActionNameCreate,
                 ConstantHelper.AreaNameManageData,
                 null,
                 null,
-                Form_Create_Body(helper));
+                Form_Create_Body(helper)+button);
         }
         public MvcForm Form_Upload<TModel>(AjaxHelper<TModel> helper)
         {
+            var htmlHelper = new HtmlHelper<TModel>(helper.ViewContext, helper.ViewDataContainer);
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
+
+            var button = htmlHelper.Button()
+                .SetText(ConstViews.BTN_Upload)
+                .IsSubmitBtn(true)
+                .MergeAttribute("onclick", "uploadBtnClickEvent()")
+                .MergeAttribute(
+                    "data-uploadurl",
+                    urlHelper.Action(ConstantHelper.ActionNameUpload, ControllerName,
+                        new {area = ConstantHelper.AreaNameManageData}));
+
             return GenerateForm(
                 helper,
                 ConstantHelper.ActionNameUpload,
@@ -154,11 +174,65 @@ namespace CTM.Codes.CustomControls
                 {
                     enctype = "multipart/form-data"
                 },
-                Form_Upload_Body(helper));
+                Form_Upload_Body(helper)+button);
+        }
+        public MvcForm Form_Edit<TModel>(AjaxHelper<TModel> helper)
+        {
+            var htmlHelper = new HtmlHelper<TModel>(helper.ViewContext, helper.ViewDataContainer);
+            var model = helper.ViewData.Model;
+            var modelIdValue = ModelHelper<TModel>.GetPrimaryKeyValues(model)[0];
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
+            var url = urlHelper.Action("GetSearchResultRow", "Query", new {area = "API"});
+            var button = htmlHelper.Button()
+                .SetText(ConstViews.BTN_Save)
+                .IsSubmitBtn(true);
+                
+            AjaxOptions ajaxOptions=new AjaxOptions()
+            {
+                OnSuccess = "new function(){"+ GenerateEditElementJSCode(modelIdValue, url) + "}"
+
+            };
+        var ajaxOptionsToHtmlAttr = ajaxOptions.ToUnobtrusiveHtmlAttributes();
+
+            return GenerateForm(
+                helper,
+                ConstantHelper.ActionNameEdit,
+                ConstantHelper.AreaNameManageData,
+                null,
+                ajaxOptionsToHtmlAttr,
+                Form_Edit_Body(helper)+button);
+        }
+        public MvcForm Form_Delete<TModel>(AjaxHelper<TModel> helper)
+        {
+            return GenerateForm(
+                helper,
+                ConstantHelper.ActionNameDelete,
+                ConstantHelper.AreaNameManageData,
+                null,
+                null,
+                Form_Delete_Body(helper));
         }
         protected abstract string Form_Search_Body(AjaxHelper helper);
         protected abstract string Form_Create_Body(AjaxHelper helper);
         protected abstract string Form_Upload_Body(AjaxHelper helper);
+        protected abstract string Form_Edit_Body(AjaxHelper helper);
+
+        protected string Form_Delete_Body<TModel>(AjaxHelper<TModel> helper)
+        {
+            var htmlHelper = new HtmlHelper<TModel>(helper.ViewContext, helper.ViewDataContainer);
+            var model = helper.ViewData.Model;
+            var modelIdName = ModelHelper<TModel>.GetPrimaryKeys()[0].Name;
+            var modelIdValue = ModelHelper<TModel>.GetPrimaryKeyValues(model)[0];
+
+            var row1 = htmlHelper.Hidden(modelIdName, modelIdValue);
+            var row2= new DivControl(model.ToString());
+            var row3 = htmlHelper.Button()
+                .SetText(ConstViews.INFO_Delete)
+                .IsSubmitBtn(true)
+                .MergeAttribute("onclick", "hideElement('" + modelIdValue + "')");
+
+            return string.Concat(row1, row2,row3);
+        }
 
         public TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
         {
@@ -171,7 +245,7 @@ namespace CTM.Codes.CustomControls
 
         protected abstract string[] Table_SearchResult_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper);
 
-        protected abstract Dictionary<string, string[]> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
+        protected abstract Dictionary<string, Dictionary<string, string>> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
 
         public TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
         {
@@ -194,36 +268,13 @@ namespace CTM.Codes.CustomControls
         {
             return new TableControl(header, rowsWithId);
         }
-
+        private TableControl GenerateTable(string[] header, Dictionary<string, Dictionary<string, string>> rowsWithIdAndTrWithNameAttr)
+        {
+            return new TableControl(header, rowsWithIdAndTrWithNameAttr);
+        }
         private string GetCurrentControllerName()
         {
-            var nameSpace =
-                typeof(T).Namespace;
-            if (nameSpace.Contains(ConstantHelper.ControllerNameEnglishTest))
-            {
-                return ConstantHelper.ControllerNameEnglishTest;
-            }
-            else if (nameSpace.Contains(ConstantHelper.ControllerNameRefresherTraining))
-            {
-                return ConstantHelper.ControllerNameRefresherTraining;
-            }
-            else if (nameSpace.Contains(ConstantHelper.ControllerNameCabinCrew))
-            {
-                return ConstantHelper.ControllerNameCabinCrew;
-            }
-            else if (nameSpace.Contains(ConstantHelper.ControllerNameCategory))
-            {
-                return ConstantHelper.ControllerNameCategory;
-            }
-            else if (nameSpace.Contains(ConstantHelper.ControllerNameLog))
-            {
-                return ConstantHelper.ControllerNameLog;
-            }
-            else if (nameSpace.Contains(ConstantHelper.ControllerNameUploadRecord))
-            {
-                return ConstantHelper.ControllerNameUploadRecord;
-            }
-            return null;
+            return ControllerHelper<T>.GetControllerName();
         }
 
         private MvcForm GenerateForm(AjaxHelper helper, string actionName, string areaName, object routeValues, object htmlAttributes, string formBody)
@@ -257,6 +308,14 @@ namespace CTM.Codes.CustomControls
             return "openModal('" + modalsDic[modalOptions] + "'" +
                 "," + isRegisterPlugins.ToString().ToLower() + ")";
         }
+
+        private string GenerateEditElementJSCode(string id,string url)
+        {
+            return "editElement('" + ControllerName + "','" + id + "','" + url + "')";
+        }
+
+        public abstract Dictionary<string, string> Table_SearchResult_Row(object model);
+
         #endregion
 
 

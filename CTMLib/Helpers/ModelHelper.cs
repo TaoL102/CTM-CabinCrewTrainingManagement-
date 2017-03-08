@@ -6,12 +6,18 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Web.Mvc;
 using CTMLib.Extensions;
 using WebGrease.Css.Extensions;
 
 namespace CTMLib.Helpers
 {
-    public static class ModelHelper<T> where T:class
+    public static class ModelHelper
+    {
+
+    }
+
+    public static class ModelHelper<T> 
     {
 
         public static List<string> GetNavProperties(bool isCollection = false)
@@ -160,9 +166,37 @@ namespace CTMLib.Helpers
 
         }
 
+        public static string GetPropertyName<TValue>(Expression<Func<T, TValue>> expression)
+        {
+            // Reference: http://stackoverflow.com/questions/4606211/expressionfunctmodel-tvalue-how-can-i-get-tvalues-name
+            var memberEx = expression.Body as MemberExpression;
+
+            if (memberEx == null)
+                throw new ArgumentException("Body not a member-expression.");
+
+            return memberEx.Member.Name;
+        }
+
+        public static string GetPropertyDisplayValue<TValue>(Expression<Func<T, TValue>> expression,object obj)
+        {
+            object value = null;
+            var memberEx = expression.Body as MemberExpression;
+
+            if ((memberEx?.Member as PropertyInfo) != null)
+            {
+                value = GetPropertyValue(obj, (PropertyInfo) memberEx.Member);
+            }
+
+            return value?.ToString();
+        }
+
         public static string GetPropertyValue(object obj,PropertyInfo propertyInfo)
         {
             var value = propertyInfo.GetValue(obj);
+            if (value is Enum)
+            {
+                return GetEnumPropertyValue(value as Enum);
+            }
             return value?.ToString();
         }
 
@@ -171,6 +205,19 @@ namespace CTMLib.Helpers
         {
             var propertyInfo = typeof(T).GetProperty(propName);
             return GetPropertyValue(obj,propertyInfo);
+        }
+
+        public static string GetEnumPropertyValue(Enum enumValue)
+        {
+            try
+            {
+                return Resources.ConstModels.ResourceManager.GetString(enumValue.ToString());
+            }
+            catch (Exception e)
+            {
+                return enumValue.ToString();
+            }
+
         }
 
         public static string GetModelName()
@@ -185,6 +232,8 @@ namespace CTMLib.Helpers
         {
            return ObjectContext.GetObjectType(typeof(T));
         }
+
+
     }
 
  }

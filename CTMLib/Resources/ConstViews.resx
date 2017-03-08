@@ -162,4 +162,10 @@
   <data name="BTN_DownloadTemplate" xml:space="preserve">
     <value>下载模板</value>
   </data>
+  <data name="BTN_Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="BTN_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
 </root>

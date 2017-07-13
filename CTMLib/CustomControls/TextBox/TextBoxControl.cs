@@ -10,7 +10,7 @@ using CTMLib.Extensions;
 
 namespace CTMLib.CustomControls.TextBox
 {
-    public class TextBoxControl:CustomControlBase, ITextBoxOptions
+    public class TextBoxControl:CustomControlBase, ITextBoxProperty
     {
 
         public string Placeholder { get; set; }

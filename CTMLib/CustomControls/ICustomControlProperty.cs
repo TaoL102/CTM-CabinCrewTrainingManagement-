@@ -8,36 +8,36 @@ using System;
 
 namespace CTMLib.CustomControls
 {
-    public interface ICustomControlOptions : IHtmlString
+    public interface ICustomControlBaseProperty : IHtmlString
     {
         string Id { get; set; }
         Dictionary<string, object> HtmlAttributes { get; set; }
         RouteValueDictionary RouteValues { get; set; }
     }
 
-    public interface ISizeOptions : ICustomControlOptions
+    public interface ISizeProperty : ICustomControlBaseProperty
     {
         SizeOptions Size { get; set; }
     }
 
-    public interface IColorOptions : ICustomControlOptions
+    public interface IColorProperty : ICustomControlBaseProperty
     {
         ColorOptions BackgroundColor { get; set; }
     }
 
-    public interface IDialogueOptions : ICustomControlOptions
+    public interface IDialogueProperty : ICustomControlBaseProperty
     {
         bool HasCloseBtn { get; set; }
     }
 
-    public interface IModalOptions : ICustomControlOptions
+    public interface IModalProperty : ICustomControlBaseProperty
     {
         string BodyInnerHtml { get; set; }
         string BodyId { get; set; }
         string FooterInnerHtml { get; set; }
     }
 
-    public interface IAjaxOptions : ICustomControlOptions
+    public interface IAjaxProperty : ICustomControlBaseProperty
     {
         string UpdateTargetId { get; set; }
         string LoadingElementId { get; set; }
@@ -45,7 +45,7 @@ namespace CTMLib.CustomControls
         bool IsPost { get; set; }
     }
 
-    public interface ITextBoxOptions : ICustomControlOptions
+    public interface ITextBoxProperty : ICustomControlBaseProperty
     {
         string LabelText { get; set; }
         string Placeholder { get; set; }

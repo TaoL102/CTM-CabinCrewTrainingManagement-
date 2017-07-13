@@ -7,46 +7,46 @@ namespace CTMLib.Extensions
     public static class CustomControlExtension
     {
         #region IcustomControlOptions
-        public static T SetId<T>(this T obj, string id) where T : ICustomControlOptions
+        public static T SetId<T>(this T obj, string id) where T : ICustomControlBaseProperty
         {
             obj.Id = id;
             return obj;
         }
-        public static T SetAttributes<T>(this T obj,  object htmlAttributes) where T:ICustomControlOptions
+        public static T SetAttributes<T>(this T obj,  object htmlAttributes) where T:ICustomControlBaseProperty
         {
             obj.HtmlAttributes = HtmlHelperExtension.ConvertHtmlAttributesToIDictionary(htmlAttributes);
             return obj;
         }
 
-        public static T SetRouteValues<T>(this T obj, object routeValues) where T : ICustomControlOptions
+        public static T SetRouteValues<T>(this T obj, object routeValues) where T : ICustomControlBaseProperty
         {
             obj.RouteValues = HtmlHelperExtension.ConvertRouteValuesToIDictionary(routeValues);
             return obj;
         }
-        public static T AddCssClass<T>(this T obj, string cssClass) where T : ICustomControlOptions
+        public static T AddCssClass<T>(this T obj, string cssClass) where T : ICustomControlBaseProperty
         {
             obj.HtmlAttributes = HtmlHelperExtension.AddCssClass(obj.HtmlAttributes,cssClass);
             return obj;
         }
 
-        public static T RemoveCssClass<T>(this T obj, string cssClass) where T : ICustomControlOptions
+        public static T RemoveCssClass<T>(this T obj, string cssClass) where T : ICustomControlBaseProperty
         {
             obj.HtmlAttributes = HtmlHelperExtension.RemoveCssClass(obj.HtmlAttributes,cssClass);
             return obj;
         }
 
-        public static T RemoveAllCssClass<T>(this T obj) where T : ICustomControlOptions
+        public static T RemoveAllCssClass<T>(this T obj) where T : ICustomControlBaseProperty
         {
             obj.HtmlAttributes = HtmlHelperExtension.RemoveAllCssClass(obj.HtmlAttributes);
             return obj;
         }
 
-        public static T MergeAttribute<T>(this T obj, string key,string value) where T : ICustomControlOptions
+        public static T MergeAttribute<T>(this T obj, string key,string value) where T : ICustomControlBaseProperty
         {
             obj.HtmlAttributes = HtmlHelperExtension.MergeAttribute(obj.HtmlAttributes, key,value);
             return obj;
         }
-        public static T MergeAttributes<T>(this T obj, object htmlAttributes) where T : ICustomControlOptions
+        public static T MergeAttributes<T>(this T obj, object htmlAttributes) where T : ICustomControlBaseProperty
         {
             obj.HtmlAttributes = HtmlHelperExtension.MergeAttributes(obj.HtmlAttributes, htmlAttributes);
             return obj;
@@ -54,7 +54,7 @@ namespace CTMLib.Extensions
 
 
 
-        public static T Hide<T>(this T obj) where T : ICustomControlOptions
+        public static T Hide<T>(this T obj) where T : ICustomControlBaseProperty
         {
             obj.HtmlAttributes = HtmlHelperExtension.MergeAttribute(obj.HtmlAttributes, "style","display:none");
             return obj;
@@ -63,8 +63,8 @@ namespace CTMLib.Extensions
 
         #endregion
 
-        #region IColorOptions
-        public static T SetColor<T>(this T obj, ColorOptions colorOption) where T : IColorOptions
+        #region IColorProperty
+        public static T SetColor<T>(this T obj, ColorOptions colorOption) where T : IColorProperty
         {
             obj.BackgroundColor = colorOption;
             return obj;
@@ -72,8 +72,8 @@ namespace CTMLib.Extensions
 
         #endregion
 
-        #region ISizeOptions
-        public static T SetSize<T>(this T obj, SizeOptions sizeOption) where T : ISizeOptions
+        #region ISizeProperty
+        public static T SetSize<T>(this T obj, SizeOptions sizeOption) where T : ISizeProperty
         {
             obj.Size = sizeOption;
             return obj;
@@ -82,22 +82,22 @@ namespace CTMLib.Extensions
 
         #region IButtonControl
 
-        public static T SetText<T>(this T obj, string text) where T : IButtonControlBase
+        public static T SetText<T>(this T obj, string text) where T : IButtonControl
         {
             obj.Text = text;
             return obj;
         }
-        public static T SetMaterialIcon<T>(this T obj, string materialIcon) where T : IButtonControlBase
+        public static T SetMaterialIcon<T>(this T obj, string materialIcon) where T : IButtonControl
         {
             obj.MaterialIcon = materialIcon;
             return obj;
         }
-        public static T IsLinkBtn<T>(this T obj, bool isLinkBtn) where T : IButtonControlBase
+        public static T IsLinkBtn<T>(this T obj, bool isLinkBtn) where T : IButtonControl
         {
             obj.IsLinkBtn = isLinkBtn;
             return obj;
         }
-        public static T IsSubmitBtn<T>(this T obj, bool isSubmitBtn) where T : IButtonControlBase
+        public static T IsSubmitBtn<T>(this T obj, bool isSubmitBtn) where T : IButtonControl
         {
             obj.IsSubmitBtn = isSubmitBtn;
             return obj;
@@ -105,9 +105,9 @@ namespace CTMLib.Extensions
 
         #endregion
 
-        #region IDialogueOptions
+        #region IDialogueProperty
 
-        public static T HasCloseBtn<T>(this T obj, bool hasCloseBtn) where T : IDialogueOptions
+        public static T HasCloseBtn<T>(this T obj, bool hasCloseBtn) where T : IDialogueProperty
         {
             obj.HasCloseBtn = hasCloseBtn;
             return obj;
@@ -115,20 +115,20 @@ namespace CTMLib.Extensions
 
         #endregion
 
-        #region IModalOptions
-        public static T SetBodyHtml<T>(this T obj, string bodyId,string bodyHtml) where T : IModalOptions
+        #region IModalProperty
+        public static T SetBodyHtml<T>(this T obj, string bodyId,string bodyHtml) where T : IModalProperty
         {
             obj.BodyId = bodyId;
             obj.BodyInnerHtml = bodyHtml;
             return obj;
         }
-        public static T SetFooterHtml<T>(this T obj,string footerHtml) where T : IModalOptions
+        public static T SetFooterHtml<T>(this T obj,string footerHtml) where T : IModalProperty
         {
             obj.BodyInnerHtml = footerHtml;
             return obj;
         }
 
-        public static T SetFooterYesBtn<T>(this T obj, string footerHtml) where T : IModalOptions
+        public static T SetFooterYesBtn<T>(this T obj, string footerHtml) where T : IModalProperty
         {
             var yesBtn = new ButtonControl().SetText("Confirm").SetColor(ColorOptions.Danger);
             obj.BodyInnerHtml = footerHtml;
@@ -137,42 +137,42 @@ namespace CTMLib.Extensions
 
         #endregion
 
-        #region IAjaxOptions
-        public static T SetUpdateTargetId<T>(this T obj, string updateTargetId) where T : IAjaxOptions
+        #region IAjaxProperty
+        public static T SetUpdateTargetId<T>(this T obj, string updateTargetId) where T : IAjaxProperty
         {
             obj.UpdateTargetId = updateTargetId;
             return obj;
         }
-        public static T SetLoadingElementId<T>(this T obj, string loadingElementId) where T : IAjaxOptions
+        public static T SetLoadingElementId<T>(this T obj, string loadingElementId) where T : IAjaxProperty
         {
             obj.LoadingElementId = loadingElementId;
             return obj;
         }
-        public static T SetOnSuccessFun<T>(this T obj, string onSuccessFun) where T : IAjaxOptions
+        public static T SetOnSuccessFun<T>(this T obj, string onSuccessFun) where T : IAjaxProperty
         {
             obj.OnSuccessFun = onSuccessFun;
             return obj;
         }
         #endregion
 
-        #region ITextBoxOptions
+        #region ITextBoxProperty
 
-        public static T SetLabelText<T>(this T obj, string labelText) where T : ITextBoxOptions
+        public static T SetLabelText<T>(this T obj, string labelText) where T : ITextBoxProperty
         {
             obj.LabelText = labelText;
             return obj;
         }
-        public static T SetPlaceholder<T>(this T obj, string placeholder) where T : ITextBoxOptions
+        public static T SetPlaceholder<T>(this T obj, string placeholder) where T : ITextBoxProperty
         {
             obj.Placeholder = placeholder;
             return obj;
         }
-        public static T SetGoogleIcon<T>(this T obj, string googleIcon) where T : ITextBoxOptions
+        public static T SetGoogleIcon<T>(this T obj, string googleIcon) where T : ITextBoxProperty
         {
             obj.GoogleIcon = googleIcon;
             return obj;
         }
-        public static T SetGlyphIcon<T>(this T obj, string glyphIcon) where T : ITextBoxOptions
+        public static T SetGlyphIcon<T>(this T obj, string glyphIcon) where T : ITextBoxProperty
         {
             obj.GlyphIcon = glyphIcon;
             return obj;

@@ -5,7 +5,7 @@ using System.Web.Routing;
 
 namespace CTMLib.CustomControls.Button
 {
-    public abstract class ButtonControlBase : CustomControlBase,IButtonControlBase
+    public abstract class ButtonControlBase : CustomControlBase,IButtonControl
     {
 
         public SizeOptions Size { get; set; }

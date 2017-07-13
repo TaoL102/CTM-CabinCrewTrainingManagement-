@@ -8,7 +8,7 @@ using System.Web.Routing;
 
 namespace CTMLib.CustomControls
 {
-   public abstract class CustomControlBase: ICustomControlOptions
+   public abstract class CustomControlBase: ICustomControlBaseProperty
    {
         public Dictionary<string, object> HtmlAttributes { get; set; }
         public RouteValueDictionary RouteValues { get; set; }

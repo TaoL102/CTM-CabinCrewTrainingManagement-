@@ -8,6 +8,7 @@ using System.Web.Routing;
 using CTMLib.CustomControls;
 using CTMLib.CustomControls.Alert;
 using CTMLib.CustomControls.Button;
+using CTMLib.CustomControls.DropdownItem;
 using CTMLib.CustomControls.Modal;
 using CTMLib.CustomControls.Pagination;
 using CTMLib.Helpers;
@@ -210,11 +211,21 @@ namespace CTMLib.Extensions
             return new ButtonControl();
         }
 
-
         public static ButtonControlAjax Button(this AjaxHelper helper, string actionName, string controllerName, string areaName)
         {
             return new ButtonControlAjax(helper, actionName, controllerName, areaName);
         }
+
+        public static DropDownItemControl DropDownItem(this HtmlHelper helper, string actionName, string controllerName, string areaName)
+        {
+            return new DropDownItemControl(helper, actionName, controllerName, areaName);
+        }
+
+        public static DropDownItemControlAjax DropDownItemAjax(this AjaxHelper helper, string actionName, string controllerName, string areaName)
+        {
+            return new DropDownItemControlAjax(helper, actionName, controllerName, areaName);
+        }
+
         public static AlertControl Alert(this HtmlHelper html, string text)
         {
             return new AlertControl(text);

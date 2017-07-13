@@ -1,6 +1,6 @@
 ﻿namespace CTMLib.CustomControls.Button
 {
-    public interface IButtonControlBase : ISizeOptions, IColorOptions
+    public interface IButtonControl : ISizeProperty, IColorProperty
     {
         string Text { get; set; }
         bool IsLinkBtn { get; set; }

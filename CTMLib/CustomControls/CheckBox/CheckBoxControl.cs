@@ -6,7 +6,7 @@ using CTMLib.Helpers;
 
 namespace CTMLib.CustomControls.CheckBox
 {
-    public class CheckBoxControl : CustomControlBase,IColorOptions
+    public class CheckBoxControl : CustomControlBase,IColorProperty
     {
         protected override string Render()
         {

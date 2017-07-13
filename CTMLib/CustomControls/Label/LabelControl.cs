@@ -9,7 +9,7 @@ using CTMLib.Helpers;
 
 namespace CTMLib.CustomControls.Label
 {
-    public class LabelControl:CustomControlBase,IColorOptions
+    public class LabelControl:CustomControlBase,IColorProperty
     {
 
         protected override string Render()

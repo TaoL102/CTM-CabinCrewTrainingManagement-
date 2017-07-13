@@ -4,7 +4,7 @@ using CTMLib.Models;
 
 namespace CTMLib.CustomControls.Pagination
 {
-    public class PaginationControlAjax : CustomControlBase, IAjaxOptions
+    public class PaginationControlAjax : CustomControlBase, IAjaxProperty
     {
         private readonly AjaxHelper _ajaxHelper;
         private readonly string _controllerName;

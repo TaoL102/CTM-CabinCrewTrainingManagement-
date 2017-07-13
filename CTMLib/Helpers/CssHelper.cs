@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using CTMLib.CustomControls;
 using CTMLib.CustomControls.Alert;
 using CTMLib.CustomControls.Button;
+using IButtonControl = CTMLib.CustomControls.Button.IButtonControl;
 
 namespace CTMLib.Helpers
 {
@@ -23,7 +24,7 @@ namespace CTMLib.Helpers
         {
             string abbr=null;
             Type type = typeof(T);
-            if (type.GetInterfaces().Contains(typeof(IButtonControlBase)))
+            if (type.GetInterfaces().Contains(typeof(IButtonControl)))
             {
                 abbr = "btn";
             }

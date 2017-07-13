@@ -110,6 +110,8 @@
     <Compile Include="CustomControls\CheckBox\CheckBoxControl.cs" />
     <Compile Include="CustomControls\CustomControlBase.cs" />
     <Compile Include="CustomControls\Div\DivControl.cs" />
+    <Compile Include="CustomControls\DropdownItem\DropDownItemControl.cs" />
+    <Compile Include="CustomControls\DropdownItem\DropDownItemControlAjax.cs" />
     <Compile Include="CustomControls\Label\LabelControl.cs" />
     <Compile Include="CustomControls\Modal\ModalControl.cs" />
     <Compile Include="CustomControls\Pagination\PaginationControlAjax.cs" />
@@ -120,7 +122,7 @@
     <Compile Include="Extensions\CustomControlExtension.cs" />
     <Compile Include="CustomControls\Button\IButtonControlBase.cs" />
     <Compile Include="CustomControls\CssOptions.cs" />
-    <Compile Include="CustomControls\ICustomControlOptions.cs" />
+    <Compile Include="CustomControls\ICustomControlProperty.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\HtmlHelperExtension.cs" />
     <Compile Include="Extensions\ModelExtension.cs" />

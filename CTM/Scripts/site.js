@@ -100,17 +100,17 @@ function uploadBtnClickEvent() {
 var ConstantHelper = (function () {
     function ConstantHelper() {
     }
-    ConstantHelper.LoaderId = "loader";
-    ConstantHelper.ProgressBarId = "alert";
-    ConstantHelper.FullModalId = "full_size_modal";
-    ConstantHelper.FullModalContentId = "full_size_modal_content";
-    ConstantHelper.AlertId = "alert";
-    ConstantHelper.MsgModalId = "Msg_modal";
-    ConstantHelper.MsgModalContentId = "Msg_modal_content";
-    ConstantHelper.MidModalId = "Mid_size_modal";
-    ConstantHelper.MidModalContentId = "Mid_size_modal_content";
     return ConstantHelper;
 }());
+ConstantHelper.LoaderId = "loader";
+ConstantHelper.ProgressBarId = "alert";
+ConstantHelper.FullModalId = "full_size_modal";
+ConstantHelper.FullModalContentId = "full_size_modal_content";
+ConstantHelper.AlertId = "alert";
+ConstantHelper.MsgModalId = "Msg_modal";
+ConstantHelper.MsgModalContentId = "Msg_modal_content";
+ConstantHelper.MidModalId = "Mid_size_modal";
+ConstantHelper.MidModalContentId = "Mid_size_modal_content";
 /// <reference path="sitevariable.ts"/>
 // ShowAlert
 function showAlert(htmlContent, type) {

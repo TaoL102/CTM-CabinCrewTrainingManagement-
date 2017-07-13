@@ -10,38 +10,53 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ConstSettings.WebAppName</title>
+
+    @* CSS *@
     @Styles.Render("~/bundles/bundleCss")
     @Styles.Render("~/bundles/bundleCustomizedCSS")
+
+    @* JS *@
     @Scripts.Render("~/bundles/bundleModernizr")
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+
+    @* Google Icon *@
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body style="background-color:#F9F9F9" >
+<body style="background-color: #F9F9F9">
+
+    <!-- #region Alert -->
     @Html.Alert(text: "").AddCssClass("ctm-alert").SetId(ConstantHelper.AlertId).SetColor(ColorOptions.Warning).Hide()
+    <!-- #endregion -->
+    <!-- #region Navigation bar -->
     <nav class="ctm-navbar">
-         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        @* Menu button *@
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="@Url.Action("Index","Home",new {area="Home"})">CTM</a>
+
+        @* Title *@
+        <a class="navbar-brand" href="@Url.Action("Index", "Home", new {area = "Home"})">CTM</a>
 
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
             <ul class="navbar-nav">
+                @* English Test *@
                 <li class="nav-item dropdown @(Html.IsActiveLink("Search", "EnglishTests", "Index") ? "active " : "")">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @ConstModels.EnglishTest
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @Html.ActionLink(ConstViews.BTN_Search, "Index", "EnglishTests", new { area = "Search" }, new { @class = "dropdown-item" })
-
-                        @Ajax.Button("Upload", "EnglishTests", "ManageData").IsLinkBtn(true).SetText(ConstViews.BTN_Upload).SetOnSuccessFun("openModal('"+ConstantHelper.MidModalId+"',true)").SetUpdateTargetId(ConstantHelper.MidModalContentId)
-
-                        @Ajax.Button("Create", "EnglishTests", "ManageData").IsLinkBtn(true).SetText(ConstViews.BTN_Add).SetOnSuccessFun("openModal('" + ConstantHelper.MidModalId + "',true)").SetUpdateTargetId(ConstantHelper.MidModalContentId)
-
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                 
+                        @Html.DropDownItem("Index", "EnglishTests", "Search").SetText(ConstViews.BTN_Search)
+                        @Ajax.DropDownItemAjax("Upload", "EnglishTests", "ManageData").SetText(ConstViews.BTN_Upload).SetOnSuccessFun("openModal('" + ConstantHelper.MidModalId + "',true)").SetUpdateTargetId(ConstantHelper.MidModalContentId)
+                        @Ajax.DropDownItemAjax("Create", "EnglishTests", "ManageData").SetText(ConstViews.BTN_Add).SetOnSuccessFun("openModal('" + ConstantHelper.MidModalId + "',true)").SetUpdateTargetId(ConstantHelper.MidModalContentId)
                     </div>
                 </li>
+
+                @* Refresher Training *@
                 <li class="nav-item @(Html.IsActiveLink("Search", "RefresherTrainings", "Index") ? "active " : "")">
                     @Html.ActionLink(ConstModels.RefresherTraining, "Index", "RefresherTrainings", new { area = "Search" }, new { @class = "nav-link" })
                 </li>
+
+                @* Account Settings *@
                 @Html.Partial("_LoginPartial")
 
             </ul>
@@ -49,60 +64,50 @@
         <!--Progress bar-->
         <div id="@ConstantHelper.LoaderId" class="ctm-progress-bar" style="display: none">
             <div class="indeterminate"></div>
-        </div><!--/.Progree bar-->
+        </div>
+        <!--/.Progree bar-->
     </nav>
-
-<div class="d-sm-flex align-items-center" style="    height: calc(100vh);
-    overflow-y: auto;
-    padding-bottom: 90px;
-    padding-top: 90px;">
-
-    @RenderBody()
-</div>
-<div class="fixed-bottom" style="background-color: grey;">
-    @{
-        var curCulture = Request.Cookies["culture"]?.Value.ToString();
-        string culture = "en-NZ";
-        string displayText = "EN";
-        string returnUrl = Request.Url.AbsoluteUri;
-        bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
-        if (isCurEnglish)
-        {
-            culture = "zh-CN";
-            displayText = "中";
+    <!-- #endregion -->
+    <!-- #region Content -->
+    <div class="d-sm-flex align-items-center" style="height: calc(100vh); overflow-y: auto; padding-bottom: 90px; padding-top: 90px;">
+        @RenderBody()
+    </div>
+    <!-- #endregion -->
+    <!-- #region Bottom -->
+    <div class="fixed-bottom" style="background-color: grey;">
+        @{
+            var curCulture = Request.Cookies["culture"]?.Value.ToString();
+            string culture = "en-NZ";
+            string displayText = "EN";
+            string returnUrl = Request.Url.AbsoluteUri;
+            bool isCurEnglish = curCulture == null || curCulture.Substring(0, 2).ToLower() == "en";
+            if (isCurEnglish)
+            {
+                culture = "zh-CN";
+                displayText = "中";
+            }
         }
-    }
-    @using (Html.BeginForm("ChangeLanguage", "Account", new {area = "ManageAccount", culture, returnUrl}, FormMethod.Post))
-    {
-        @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
-    }
-</div>
+        @using (Html.BeginForm("ChangeLanguage", "Account", new { area = "ManageAccount", culture, returnUrl }, FormMethod.Post))
+        {
+            @Html.Button().SetText(displayText).SetColor(ColorOptions.Default).IsSubmitBtn(true)
+        }
+    </div>
+    <!-- #endregion -->
+    <!-- #region Hidden modals -->
+    @* Message_box_modal *@
+    @Html.MsgModal()
 
-<!-- #region Message_box_modal -->
+    @* mid_size_modal *@
+    @Html.MidSizeModal()
 
-@Html.MsgModal()
-
-<!-- #endregion -->
-<!-- #region mid_size_modal -->
-
-@Html.MidSizeModal()
-
-<!-- #endregion -->
-<!-- #region full_size_modal -->
-
-@Html.FullSizeModal()
-
-<!-- #endregion -->
-
-
-@Scripts.Render("~/bundles/bundleJquery")
-@Scripts.Render("~/bundles/bundleBootstrap")
-@Scripts.Render("~/bundles/bundleCustomizedJS")
-@RenderSection("scripts", required: false)
-
-
-<!-- #region Javascript -->
-@Html.Partial("_PartialJavaScript")
-<!-- #endregion -->
+    @* full_size_modal *@
+    @Html.FullSizeModal()
+    <!-- #endregion -->
+    <!-- #region JS -->
+    @Scripts.Render("~/bundles/bundleJquery")
+    @Scripts.Render("~/bundles/bundleBootstrap")
+    @Scripts.Render("~/bundles/bundleCustomizedJS")
+    @Html.Partial("_PartialJavaScript")
+    <!-- #endregion -->
 </body>
 </html>

@@ -3,7 +3,7 @@ using CTMLib.Helpers;
 
 namespace CTMLib.CustomControls.Modal
 {
-    public class ModalControl:CustomControlBase, IModalOptions,ISizeOptions
+    public class ModalControl:CustomControlBase, IModalProperty,ISizeProperty
     {
         private readonly string _title;
 

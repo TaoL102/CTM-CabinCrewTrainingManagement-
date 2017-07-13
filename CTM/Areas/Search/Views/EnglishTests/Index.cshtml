@@ -4,20 +4,20 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="container-fluid" style="background-color:#F9F9F9 ">
+
+<div class="container-fluid">
     <div class="container">
+        
+        @* Title *@
         <div class="row">
             <h1>@ConstModels.EnglishTest</h1>
         </div>
-
+        
+        @* Search Form *@
         <div class="row">
-            <!-- #region Search_Div -->
-
-            @using (Ajax.Form_Search()) { }
-
-            <!-- #endregion -->
-
-
+            @using (Ajax.Form_Search())
+            {
+            }
         </div>
     </div>
 </div>

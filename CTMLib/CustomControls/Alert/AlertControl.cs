@@ -8,7 +8,7 @@ using CTMLib.Helpers;
 namespace CTMLib.CustomControls.Alert
 {
 
-    public class AlertControl : CustomControlBase, IDialogueOptions,IColorOptions
+    public class AlertControl : CustomControlBase, IDialogueProperty,IColorProperty
     {
         private readonly string _textOrHtml;
         public bool HasCloseBtn { get; set; }

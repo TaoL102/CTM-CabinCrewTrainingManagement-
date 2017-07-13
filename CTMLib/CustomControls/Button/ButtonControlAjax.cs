@@ -6,7 +6,7 @@ using CTMLib.Helpers;
 
 namespace CTMLib.CustomControls.Button
 {
-    public class ButtonControlAjax : ButtonControlBase, IAjaxOptions
+    public class ButtonControlAjax : ButtonControlBase, IAjaxProperty
     {
         private readonly AjaxHelper _ajaxHelper;
         private readonly string _actionName;

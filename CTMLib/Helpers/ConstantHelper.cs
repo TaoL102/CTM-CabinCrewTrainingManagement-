@@ -24,6 +24,8 @@ namespace CTMLib.Helpers
         public static string CssBtnDefault = "";
         public static string CssBtnIcon = "";
 
+        public static string CssDropDownList = "dropdown-item";
+
         public static string CssTextBoxAutoComplete = "validate autocomplete";
 
         public static string CssUnclickable = "disabled";

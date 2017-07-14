@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
-using CTMLib.Extensions;
-using CTMLib.Helpers;
+using CTMCustomControlLib.Extensions;
+using CTMCustomControlLib.Helpers;
 
-namespace CTMLib.CustomControls.Button
+namespace CTMCustomControlLib.CustomControls.Button
 {
     public class ButtonControlAjax : ButtonControlBase, IAjaxProperty
     {

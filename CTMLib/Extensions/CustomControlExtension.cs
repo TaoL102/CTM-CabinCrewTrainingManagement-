@@ -1,8 +1,7 @@
-﻿using CTMLib.CustomControls;
-using CTMLib.CustomControls.Alert;
-using CTMLib.CustomControls.Button;
+﻿using CTMCustomControlLib.CustomControls;
+using CTMCustomControlLib.CustomControls.Button;
 
-namespace CTMLib.Extensions
+namespace CTMCustomControlLib.Extensions
 {
     public static class CustomControlExtension
     {

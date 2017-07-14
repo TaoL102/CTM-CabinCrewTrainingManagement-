@@ -85,6 +85,25 @@ function checkBoxHidableDivHide() {
     $("#" + ids).hide();
 }
 
+function downloadBtnClickEvent() {
+    var btn = $(event.target);
+    var form = btn.parents("form");
+    var formHtml = form[0] as HTMLFormElement;
+    // Add value to the form, indicating this is the download button
+    var isDownloadInput = $('<input />')
+        .attr('type', 'hidden')
+        .attr('name', "isDownload")
+        .attr('value', "true");
+
+    // Append to form and submit
+    form.append(isDownloadInput);
+
+    formHtml.submit();
+
+    // After submit, remove the value
+    isDownloadInput.remove();
+}
+
 // Ajax with file upload
 // https://forums.asp.net/t/2026436.aspx?Request+Files+not+working+using+Ajax+BeginForm+on+partial+Views
 function uploadBtnClickEvent() {

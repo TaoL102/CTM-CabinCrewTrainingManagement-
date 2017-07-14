@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations.Builders;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using CTMLib.CustomControls.Div;
-using CTMLib.Extensions;
+﻿using System.Web.Mvc;
+using CTMCustomControlLib.CustomControls.Div;
+using CTMCustomControlLib.Extensions;
 
-namespace CTMLib.CustomControls.TextBox
+namespace CTMCustomControlLib.CustomControls.TextBox
 {
     public class TextBoxControl:CustomControlBase, ITextBoxProperty
     {

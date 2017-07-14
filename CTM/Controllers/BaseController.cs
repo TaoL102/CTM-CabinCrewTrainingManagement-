@@ -1,19 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using CTM.Codes.Attributes;
+using CTM.Codes.Managers;
 
 namespace CTM.Controllers
 {
     public class BaseController : Controller
     {
+
+        #region Fields
+
+        protected readonly DbManager DbManager = new DbManager();
+
+        #endregion
+
         /// <summary>
         /// Localization
         /// Reference:http://afana.me/post/aspnet-mvc-internationalization.aspx
@@ -71,6 +75,15 @@ namespace CTM.Controllers
                 smtp.EnableSsl = true;
                 await smtp.SendMailAsync(message);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DbManager.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using CTMLib.CustomControls.Div;
-using CTMLib.Extensions;
+using CTMCustomControlLib.CustomControls.Div;
+using CTMCustomControlLib.Extensions;
 using Microsoft.Ajax.Utilities;
 
-namespace CTMLib.CustomControls.Table
+namespace CTMCustomControlLib.CustomControls.Table
 {
     public class TableControl : CustomControlBase
     {
@@ -43,7 +39,7 @@ namespace CTMLib.CustomControls.Table
             table.AddCssClass("table-hover");
 
             // Header
-            TagBuilder header = _header != null ? null : new TagBuilder("thead")
+            TagBuilder header = new TagBuilder("thead")
             {
                 InnerHtml = new HeaderControl(_header).ToHtmlString()
             };

@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using CTM.Areas.Search.ViewModels;
 using CTM.Areas.Search.ViewModels.EnglishTests;
-using CTM.Codes.CustomControls.Shared;
 using CTM.Codes.Helpers;
-using CTMLib.CustomControls;
-using CTMLib.CustomControls.Button;
-using CTMLib.CustomControls.Div;
-using CTMLib.CustomControls.Pagination;
-using CTMLib.CustomControls.Table;
-using CTMLib.Extensions;
-using CTMLib.Helpers;
-using CTMLib.Models;
-using CTMLib.Resources;
+using CTMCustomControlLib.CustomControls;
+using CTMCustomControlLib.CustomControls.Button;
+using CTMCustomControlLib.CustomControls.Div;
+using CTMCustomControlLib.CustomControls.Pagination;
+using CTMCustomControlLib.CustomControls.Table;
+using CTMCustomControlLib.Extensions;
+using CTMCustomControlLib.Models;
+using CTMLocalizationLib.Resources;
+using Microsoft.Ajax.Utilities;
 using ConstantHelper = CTM.Codes.Helpers.ConstantHelper;
 
 namespace CTM.Codes.CustomControls
@@ -33,9 +33,9 @@ namespace CTM.Codes.CustomControls
         MvcForm Form_Edit<TModel>(AjaxHelper<TModel> helper);
         MvcForm Form_Delete<TModel>(AjaxHelper<TModel> helper);
 
-        TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
-        TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
-        Dictionary<string,string> Table_SearchResult_Row(object model);
+        TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models) where TModel : ISearchResultModel;
+        TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models) where TModel : ISearchResultModel;
+        Dictionary<string,string> Table_SearchResult_Row<TModel>(TModel model);
     }
 
 
@@ -43,11 +43,6 @@ namespace CTM.Codes.CustomControls
     public abstract class CustomControlBase<T> : ICustomControl 
     {
         protected string ControllerName { get; }
-
-        protected CustomControlBase()
-        {
-            ControllerName = GetCurrentControllerName();
-        }
 
         #region Pagination
 
@@ -130,7 +125,7 @@ namespace CTM.Codes.CustomControls
                 OnSuccess = "new function(){openModal('" + ConstantHelper.FullModalId + "',true)}"
             };
             var ajaxOptionsToHtmlAttr = ajaxOptions.ToUnobtrusiveHtmlAttributes();
-            return GenerateForm(
+            return GenerateSearchForm(
                 helper,
                 ConstantHelper.ActionNameSearch,
                 ConstantHelper.AreaNameSearch,
@@ -182,7 +177,7 @@ namespace CTM.Codes.CustomControls
             var model = helper.ViewData.Model;
             var modelIdValue = ModelHelper<TModel>.GetPrimaryKeyValues(model)[0];
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
-            var url = urlHelper.Action("GetSearchResultRow", "Query", new {area = "API"});
+            var url = urlHelper.Action("GetEntityJson");
             var button = htmlHelper.Button()
                 .SetText(ConstViews.BTN_Save)
                 .IsSubmitBtn(true);
@@ -233,8 +228,62 @@ namespace CTM.Codes.CustomControls
 
             return string.Concat(row1, row2,row3);
         }
+       
+        #endregion
 
-        public TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
+        #region Tables
+
+        public Dictionary<string, string> Table_SearchResult_Row<TModel>(TModel model)
+        {
+            return ModelHelper.GetDisplayPropertyNameAndValues(model);
+        }
+
+        protected List<string> Table_SearchResult_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
+        {
+            return ModelHelper<TModel>.GetPropertyDisplayNames();
+        }
+
+        protected List<string> Table_SearchResult_IsLatest_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper)
+        {
+            return Table_SearchResult_Header<TModel>(helper);
+        }
+
+        protected Dictionary<string, Dictionary<string, string>> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models) where TModel:ISearchResultModel
+        {
+            var ajaxHelper = new AjaxHelper<IEnumerable<SearchResult>>(
+                helper.ViewContext, helper.ViewDataContainer);
+            var modelsList = (IList<TModel>)models.ToList();
+            var rows = new Dictionary<string, Dictionary<string, string>>();
+
+            modelsList.ForEach(o =>
+            {
+                var dic = Table_SearchResult_Row(o);
+                dic.Add(Guid.NewGuid().ToString(), ajaxHelper.Button_Edit(o.ID).ToHtmlString());
+                dic.Add(Guid.NewGuid().ToString(), ajaxHelper.Button_Delete(o.ID).ToHtmlString());
+                rows.Add(o.ID, dic);
+            });
+
+
+            return rows;
+
+        }
+
+        protected Dictionary<string, string[]> Table_SearchResult_IsLatest_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
+        {
+            var modelsList = (IList<TModel>)models.ToList();
+            var rows = new Dictionary<string, string[]>();
+            for (int i = 0; i < modelsList.Count(); i++)
+            {
+                var item = modelsList[i];
+                rows.Add(
+                    i.ToString(),
+                    ModelHelper<TModel>.GetDisplayPropertyValues(item).ToArray());
+            }
+
+            return rows;
+        }
+
+        public TableControl Table_SearchResult<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models) where TModel : ISearchResultModel
         {
 
             var header = Table_SearchResult_Header(helper);
@@ -243,11 +292,7 @@ namespace CTM.Codes.CustomControls
             return GenerateTable(header, rowsWithId);
         }
 
-        protected abstract string[] Table_SearchResult_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper);
-
-        protected abstract Dictionary<string, Dictionary<string, string>> Table_SearchResult_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
-
-        public TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models)
+        public TableControl Table_SearchResult_IsLatest<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models) where TModel : ISearchResultModel
         {
 
             var header = Table_SearchResult_IsLatest_Header(helper);
@@ -256,22 +301,27 @@ namespace CTM.Codes.CustomControls
             return GenerateTable(header, rowsWithId);
         }
 
-        protected abstract string[] Table_SearchResult_IsLatest_Header<TModel>(HtmlHelper<IEnumerable<TModel>> helper);
-
-        protected abstract Dictionary<string, string[]> Table_SearchResult_IsLatest_Rows<TModel>(HtmlHelper<IEnumerable<TModel>> helper, IEnumerable<TModel> models);
 
 
         #endregion
 
-        #region Private methods
-        private TableControl GenerateTable(string[] header, Dictionary<string, string[]> rowsWithId)
+        #region methods
+
+        protected CustomControlBase()
         {
-            return new TableControl(header, rowsWithId);
+            ControllerName = GetCurrentControllerName();
         }
-        private TableControl GenerateTable(string[] header, Dictionary<string, Dictionary<string, string>> rowsWithIdAndTrWithNameAttr)
+
+        private TableControl GenerateTable(List<string> header, Dictionary<string, string[]> rowsWithId)
         {
-            return new TableControl(header, rowsWithIdAndTrWithNameAttr);
+            return new TableControl(header.ToArray(), rowsWithId);
         }
+
+        private TableControl GenerateTable(List<string> header, Dictionary<string, Dictionary<string, string>> rowsWithIdAndTrWithNameAttr)
+        {
+            return new TableControl(header.ToArray(), rowsWithIdAndTrWithNameAttr);
+        }
+
         private string GetCurrentControllerName()
         {
             return ControllerHelper<T>.GetControllerName();
@@ -294,8 +344,31 @@ namespace CTM.Codes.CustomControls
             string token = htmlHelper.AntiForgeryToken().ToHtmlString();
 
             helper.ViewContext.Writer.Write(token + formBody);
-            return form; ;
+            return form; 
         }
+
+        private MvcForm GenerateSearchForm(AjaxHelper helper, string actionName, string areaName, object routeValues, object htmlAttributes, string formBody)
+        {
+            var htmlHelper = new HtmlHelper(helper.ViewContext, helper.ViewDataContainer);
+
+            // Search & Download buttons
+            var searchBtn = htmlHelper.Button()
+                .IsSubmitBtn(true)
+                .SetMaterialIcon("search")
+                .AddCssClass("col-sm-6");
+            var downloadBtn = htmlHelper.Button()
+                .SetMaterialIcon("file_download")
+                .AddCssClass("col-sm-6")
+                .MergeAttribute("onclick", "downloadBtnClickEvent(); ");
+            var buttonWrapper = new DivControl(searchBtn.ToHtmlString() + downloadBtn)
+                .AddCssClass("col-12");
+
+            var row = new DivControl(buttonWrapper.ToString()).AddCssClass("row");
+
+            formBody += row;
+
+            return GenerateForm(helper, actionName, areaName, routeValues, htmlAttributes, formBody);
+        } 
 
         private string GenerateOpenModalJSCode(ModalOptions modalOptions, bool isRegisterPlugins)
         {
@@ -313,8 +386,6 @@ namespace CTM.Codes.CustomControls
         {
             return "editElement('" + ControllerName + "','" + id + "','" + url + "')";
         }
-
-        public abstract Dictionary<string, string> Table_SearchResult_Row(object model);
 
         #endregion
 

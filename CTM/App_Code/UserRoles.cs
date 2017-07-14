@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
-using CTMLib.Resources;
+using CTMLocalizationLib.Resources;
 
 namespace CTM
 {

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
-using CTMLib.CustomControls;
-using CTMLib.CustomControls.Alert;
-using CTMLib.CustomControls.Button;
-using IButtonControl = CTMLib.CustomControls.Button.IButtonControl;
+using CTMCustomControlLib.CustomControls;
+using CTMCustomControlLib.CustomControls.Button;
 
-namespace CTMLib.Helpers
+namespace CTMCustomControlLib.Helpers
 {
-    static class CssHelper<T>
+    internal static class CssHelper<T>
     {
         public static string ControlTypeAbbr { get; }
 

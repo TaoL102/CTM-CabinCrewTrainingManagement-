@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
-using CTMLib.Helpers;
+using CTMCustomControlLib.Helpers;
 
-namespace CTMLib.CustomControls.Modal
+namespace CTMCustomControlLib.CustomControls.Modal
 {
     public class ModalControl:CustomControlBase, IModalProperty,ISizeProperty
     {

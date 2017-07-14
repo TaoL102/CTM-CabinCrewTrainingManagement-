@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using CTMLib.CustomControls.Button;
-using CTMLib.Helpers;
+﻿using System.Web.Mvc;
+using CTMCustomControlLib.Helpers;
 
-namespace CTMLib.CustomControls.Label
+namespace CTMCustomControlLib.CustomControls.Label
 {
     public class LabelControl:CustomControlBase,IColorProperty
     {

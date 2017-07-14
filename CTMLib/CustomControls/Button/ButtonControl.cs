@@ -1,9 +1,7 @@
 ﻿using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using CTMLib.Extensions;
-using CTMLib.Helpers;
+using CTMCustomControlLib.Helpers;
 
-namespace CTMLib.CustomControls.Button
+namespace CTMCustomControlLib.CustomControls.Button
 {
     public class ButtonControl : ButtonControlBase
     {

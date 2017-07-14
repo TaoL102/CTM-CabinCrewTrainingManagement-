@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using CTMLib.Models;
-using CTMLib.Resources;
+using CTM.Codes.Interfaces;
+using CTM.Models;
+using CTMLocalizationLib.Resources;
 
 namespace CTM.Areas.Search.ViewModels.EnglishTests
 {
-    public class SearchResultIsLatest: Model<EnglishTest>
+    public class SearchResultIsLatest: IEnglishTest, ISearchResultModel
     {
 
         public string CabinCrewID { get; set; }
@@ -37,5 +35,7 @@ namespace CTM.Areas.Search.ViewModels.EnglishTests
 
         [Display(Name = "Category", ResourceType = typeof(ConstModels))]
         public string SpokenSkillCategoryName { get; set; }
+
+        public string ID { get; set; }
     }
 }

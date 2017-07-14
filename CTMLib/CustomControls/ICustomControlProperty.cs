@@ -1,12 +1,8 @@
 ﻿using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-using CTMLib.Extensions;
 using System.Collections.Generic;
 using System.Web.Routing;
-using System;
 
-namespace CTMLib.CustomControls
+namespace CTMCustomControlLib.CustomControls
 {
     public interface ICustomControlBaseProperty : IHtmlString
     {

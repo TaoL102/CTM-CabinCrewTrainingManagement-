@@ -1,15 +1,13 @@
 ﻿@using CTM.Areas.Search.ViewModels.EnglishTests
 @using CTM.Codes.CustomControls
-@using CTM.Codes.CustomControls.EnglishTests
-@using CTMLib.Models
-@using CTMLib.Resources
+@using CTMCustomControlLib.Models
+@using CTMLocalizationLib.Resources
 @model IEnumerable<CTM.Areas.Search.ViewModels.EnglishTests.SearchResultIsLatest>
 
 
 @if (Model.Any())
 {
 
-    <!-- #region Pagination -->
     Pager pager = ViewBag.Pager;
     Search searchViewModel = ViewBag.SearchResultViewModel;
 
@@ -21,8 +19,6 @@
 
     // Pagination
     @Ajax.Pagination(searchViewModel, pager)
-
-
 
 }
 else

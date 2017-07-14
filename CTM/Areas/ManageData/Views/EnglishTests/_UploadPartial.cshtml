@@ -1,18 +1,14 @@
 ﻿@using CTM.Codes.CustomControls
-@using CTM.Codes.CustomControls.Shared
-@using CTMLib.Extensions
-@using CTMLib.Resources
+@using CTMCustomControlLib.Extensions
+@using CTMLocalizationLib.Resources
 @model CTM.Areas.ManageData.ViewModels.EnglishTests.Upload
-
-<h4>@ConstViews.BTN_Upload</h4>
-
-@using (Html.BeginForm("DownloadTemplate", "EnglishTests", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.Button().SetText(ConstViews.BTN_DownloadTemplate).IsSubmitBtn(true)
-}
 
 @using (Ajax.Form_Upload())
 {
 
-}
+}   
+@using (Html.BeginForm("DownloadTemplate", "EnglishTests", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+     {
+@Html.Button().SetText(ConstViews.BTN_DownloadTemplate).IsSubmitBtn(true)
+     }
 

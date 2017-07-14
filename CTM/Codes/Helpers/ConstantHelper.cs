@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CTMLib.Models;
-
-namespace CTM.Codes.Helpers
+﻿namespace CTM.Codes.Helpers
 {
     public class ConstantHelper
     {
@@ -30,6 +26,16 @@ namespace CTM.Codes.Helpers
 
         #endregion
 
+
+        #region SQL
+        public static string TableNameCabinCrews = "[TableCabinCrews]";
+        public static string TableNameRefresherTrainings = "[TableRefresherTrainings]";
+        public static string TableNameCategories = "[TableCategories]";
+        public static string TableNameEnglishTests = "[TableEnglishTests]";
+
+        public static int PaginationPageSize = 20;
+        #endregion
+
         #region CSS & HTML
         public static string LoaderId = "loader";
         public static string AlertId = "alert";
@@ -40,6 +46,8 @@ namespace CTM.Codes.Helpers
         public static string MsgModalId = "Msg_modal";
         public static string MsgModalContentId = "Msg_modal_content";
 
+
+        public static string CssTextBoxAutoComplete = "validate autocomplete";
 
 
         #endregion

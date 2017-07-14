@@ -1,4 +1,4 @@
-namespace CTMLib.CustomControls
+namespace CTMCustomControlLib.CustomControls
 {
     public enum ColorOptions
     {

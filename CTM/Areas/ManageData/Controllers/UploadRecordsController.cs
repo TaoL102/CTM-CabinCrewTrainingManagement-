@@ -3,9 +3,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using CTM.Areas.ManageAccount.Models;
 using CTM.Codes.Database;
-using CTMLib.Models;
+using CTM.Models;
 using EntityFramework.Extensions;
 
 namespace CTM.Areas.ManageData.Controllers
@@ -80,10 +79,10 @@ namespace CTM.Areas.ManageData.Controllers
 
             switch (uploadRecord.Category.Type)
             {
-                case SuperCategory.英语考核:
+                case SuperCategory.EnglishTest:
                     db.EnglishTests.Where(o => o.UploadRecordID.Equals(id)).Delete();
                     break;
-                case SuperCategory.复训:
+                case SuperCategory.RefresherTraining:
                     db.RefresherTrainings.Where(o => o.UploadRecordID.Equals(id)).Delete();
                     break;
             }
@@ -107,11 +106,11 @@ namespace CTM.Areas.ManageData.Controllers
 
             switch (uploadRecord.Category.Type)
             {
-                case SuperCategory.英语考核:
+                case SuperCategory.EnglishTest:
 
                     return RedirectToAction("Search", "EnglishTests", new { UploadRecordID = id, Area = "Search" });
                     break;
-                case SuperCategory.复训:
+                case SuperCategory.RefresherTraining:
                     return RedirectToAction("Search", "RefresherTrainings", new { UploadRecordID = id });
                     break;
             }

@@ -1,16 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using CTM.Areas.Search.ViewModels;
-using CTM.Areas.Search.ViewModels.EnglishTests;
 using CTM.Codes.CustomControls.EnglishTests;
 using CTM.Codes.Helpers;
-using CTMLib.CustomControls.Button;
-using CTMLib.CustomControls.Pagination;
-using CTMLib.CustomControls.Table;
-using CTMLib.Extensions;
-using CTMLib.Models;
+using CTMCustomControlLib.CustomControls.Button;
+using CTMCustomControlLib.CustomControls.Pagination;
+using CTMCustomControlLib.CustomControls.Table;
+using CTMCustomControlLib.Models;
 
 namespace CTM.Codes.CustomControls
 {
@@ -65,12 +62,12 @@ namespace CTM.Codes.CustomControls
         }
 
         public static TableControl Table_SearchResult<T>(this HtmlHelper<IEnumerable<T>> helper,
-            IEnumerable<T> models)
+            IEnumerable<T> models) where T : ISearchResultModel
         {
             return GetCustomControl<T>().Table_SearchResult(helper, models);
         }
         public static TableControl Table_SearchResult_IsLatest<T>(this HtmlHelper<IEnumerable<T>> helper,
-    IEnumerable<T> models)
+    IEnumerable<T> models) where T : ISearchResultModel
         {
             return GetCustomControl<T>().Table_SearchResult_IsLatest(helper, models);
         }

@@ -1,14 +1,7 @@
 ﻿@inherits CTM.App_Code.HelperPage
-@using System.Dynamic
 @using System.Web.Mvc
-@using System.Web.Mvc.Ajax
 @using System.Web.Mvc.Html
-@using System.Web.Routing
-@using CTMLib.CustomControls
-@using CTMLib.CustomControls.Button
-@using CTMLib.Extensions
-@using CTMLib.Helpers
-@using log4net.Util.TypeConverters
+@using CTM.Codes.Helpers
 
 
 <!-- #region Text_Box_AutoComplete -->
@@ -59,26 +52,6 @@ if (!string.IsNullOrEmpty(labelText))
     </label>
 }
 <!-- #endregion -->
-<!-- #region Button_Default -->
-@helper Button_Default(string value, string id, string materialIconName, object htmlAttributes, bool isSubmit)
-        {
 
-// Add default button css class
-var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnDefault);
-htmlAttributesDic.Add("id", id);
-
-    @Html.Button().SetText(value).SetMaterialIcon(materialIconName).IsSubmitBtn(isSubmit).SetAttributes(htmlAttributesDic)
-}
-<!-- #endregion -->
-<!-- #region Button_Icon -->
-@helper Button_Icon(string value, string id, string materialIconName, object htmlAttributes, bool isSubmit = false, bool isLinkBtn = false)
-{
-// Add default button css class
-var htmlAttributesDic = HtmlHelperExtension.AddCssClass(htmlAttributes, ConstantHelper.CssBtnIcon);
-    htmlAttributesDic.Add("id",id);
-
-    @Html.Button().SetText(value).SetMaterialIcon(materialIconName).IsSubmitBtn(isSubmit).IsLinkBtn(isLinkBtn).SetAttributes(htmlAttributesDic)
-}
-<!-- #endregion -->
 
 

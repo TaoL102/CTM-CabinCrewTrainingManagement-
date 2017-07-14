@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
-using CTMLib.Extensions;
-using CTMLib.Models;
+using CTMCustomControlLib.Extensions;
+using CTMCustomControlLib.Models;
 
-namespace CTMLib.CustomControls.Pagination
+namespace CTMCustomControlLib.CustomControls.Pagination
 {
     public class PaginationControlAjax : CustomControlBase, IAjaxProperty
     {

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using CTMLib.Models;
-using CTMLib.Resources;
+using CTM.Models;
+using CTMLocalizationLib.Resources;
+using CTM.Codes.Interfaces;
 
 namespace CTM.Areas.Search.ViewModels.EnglishTests
 {
-    public class SearchResult: Model<EnglishTest>
+    public class SearchResult: IEnglishTest, ISearchResultModel
     {
         public string ID { get; set; }
 

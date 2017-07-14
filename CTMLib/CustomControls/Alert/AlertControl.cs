@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Web.Routing;
-using CTMLib.Extensions;
-using CTMLib.Helpers;
+﻿using System.Web.Mvc;
+using CTMCustomControlLib.Helpers;
 
-namespace CTMLib.CustomControls.Alert
+namespace CTMCustomControlLib.CustomControls.Alert
 {
 
     public class AlertControl : CustomControlBase, IDialogueProperty,IColorProperty

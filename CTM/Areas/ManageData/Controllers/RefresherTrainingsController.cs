@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using CTM.Areas.ManageAccount.Models;
 using CTM.Codes.Database;
 using CTM.Controllers;
-using CTMLib.Helpers;
-using CTMLib.Models;
-using Microsoft.AspNet.Identity;
+using CTM.Models;
 
 namespace CTM.Areas.ManageData.Controllers
 {
@@ -29,7 +21,7 @@ namespace CTM.Areas.ManageData.Controllers
         {
             var cabinCrewList = db.CabinCrews.OrderBy(o => o.Name).ToList();
             ViewBag.CabinCrewID = new SelectList(cabinCrewList, "ID", "Name");
-            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.复训), "ID", "Name");
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.RefresherTraining), "ID", "Name");
             return View();
         }
 
@@ -52,7 +44,7 @@ namespace CTM.Areas.ManageData.Controllers
             var cabinCrewList = db.CabinCrews.OrderBy(o => o.Name).ToList();
 
             ViewBag.CabinCrewID = new SelectList(cabinCrewList, "ID", "Name", refresherTraining.CabinCrewID);
-            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.复训), "ID", "Name", refresherTraining.CategoryID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.RefresherTraining), "ID", "Name", refresherTraining.CategoryID);
             return View(refresherTraining);
         }
 
@@ -68,7 +60,7 @@ namespace CTM.Areas.ManageData.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.复训), "ID", "Name", refresherTraining.CategoryID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.RefresherTraining), "ID", "Name", refresherTraining.CategoryID);
             return View(refresherTraining);
         }
 
@@ -85,7 +77,7 @@ namespace CTM.Areas.ManageData.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.复训), "ID", "Name", refresherTraining.CategoryID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.RefresherTraining), "ID", "Name", refresherTraining.CategoryID);
             return View(refresherTraining);
         }
 
@@ -119,52 +111,52 @@ namespace CTM.Areas.ManageData.Controllers
         public ActionResult Upload()
         {
             // Dropdownlist for CategoryName
-            var list = db.Categories.Where(o => o.Type == SuperCategory.复训);
+            var list = db.Categories.Where(o => o.Type == SuperCategory.RefresherTraining);
             ViewBag.CategoryList = new SelectList(list, "ID", "Name");
 
             return View();
         }
 
-        // POST: RefresherTrainings/Upload
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Upload(HttpPostedFileBase upload, string categoryID, DateTime date)
-        {
-            // EXCEL upload
-            if (upload != null && upload.ContentLength > 0)
-            {
-                // Check file type
-                if (ExcelHelper.CheckIsExcel(upload))
-                {
-                    // uploadRecordID
-                    var uploadRecordID = Guid.NewGuid().ToString();
-                    // Save to TABLE UploadRecord
-                    db.UploadRecords.Add(new UploadRecord()
-                    {
-                        ID = uploadRecordID,
-                   //  CategoryID = categoryID,
-                        DateTime = DateTime.UtcNow,
-                        ApplicationUserID = User.Identity.GetUserId(),
-                        IsWithdrawn = false,
+        //// POST: RefresherTrainings/Upload
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Upload(HttpPostedFileBase upload, string categoryID, DateTime date)
+        //{
+        //    // EXCEL upload
+        //    if (upload != null && upload.ContentLength > 0)
+        //    {
+        //        // Check file type
+        //        if (ExcelHelper.CheckIsExcel(upload))
+        //        {
+        //            // uploadRecordID
+        //            var uploadRecordID = Guid.NewGuid().ToString();
+        //            // Save to TABLE GenerateUploadRecord
+        //            db.UploadRecords.Add(new GenerateUploadRecord()
+        //            {
+        //                ID = uploadRecordID,
+        //           //  CategoryID = categoryID,
+        //                DateTime = DateTime.UtcNow,
+        //                ApplicationUserID = User.Identity.GetUserId(),
+        //                IsWithdrawn = false,
 
-                    });
+        //            });
 
-                    var refresherTrainingsUpload = ExcelHelper.GenerateListRefresherTrainingFromExcel(upload.InputStream, date, categoryID, uploadRecordID);
+        //            var refresherTrainingsUpload = ExcelHelper.GenerateListRefresherTrainingFromExcel(upload.InputStream, date, categoryID, uploadRecordID);
 
-                    if (refresherTrainingsUpload.Count<RefresherTraining>() != 0)
-                    {
-                        db.RefresherTrainings.AddRange(refresherTrainingsUpload);
-                    }
+        //            if (refresherTrainingsUpload.Count<RefresherTraining>() != 0)
+        //            {
+        //                db.RefresherTrainings.AddRange(refresherTrainingsUpload);
+        //            }
 
-                    var result = await db.SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false);
+        //            var result = await db.SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false);
 
-                    return RedirectToAction("Index");
-                }
-            }
-            return View();
-        }
+        //            return RedirectToAction("Index");
+        //        }
+        //    }
+        //    return View();
+        //}
 
 
         protected override void Dispose(bool disposing)

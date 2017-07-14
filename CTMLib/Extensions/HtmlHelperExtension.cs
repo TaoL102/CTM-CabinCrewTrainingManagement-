@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
 using System.Web.Routing;
-using CTMLib.CustomControls;
-using CTMLib.CustomControls.Alert;
-using CTMLib.CustomControls.Button;
-using CTMLib.CustomControls.DropdownItem;
-using CTMLib.CustomControls.Modal;
-using CTMLib.CustomControls.Pagination;
-using CTMLib.Helpers;
-using CTMLib.Models;
+using CTMCustomControlLib.CustomControls.Alert;
+using CTMCustomControlLib.CustomControls.Button;
+using CTMCustomControlLib.CustomControls.DropdownItem;
+using CTMCustomControlLib.CustomControls.Modal;
 using WebGrease.Css.Extensions;
 
-namespace CTMLib.Extensions
+namespace CTMCustomControlLib.Extensions
 {
     /// <summary>
     /// Custom Html Helpers with extensions 
@@ -138,18 +133,6 @@ namespace CTMLib.Extensions
 
             return isActiveLink;
         }
-
-        public static MvcHtmlString DisplayValueFor<TModel, TValue>(this HtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue>> expression)
-        {
-            var value = ModelMetadata.FromLambdaExpression(expression, html.ViewData).Model;
-            if (value is Enum)
-            {
-                return MvcHtmlString.Create(ModelHelper<TModel>.GetEnumPropertyValue(value as Enum));
-            }
-            return value != null ? html.DisplayFor(expression) : MvcHtmlString.Empty;
-        }
-
 
 
         public static MvcHtmlString Table_Row(this HtmlHelper helper, string id, object trHtmlAttributes, Dictionary<int, object> tdContentDic, Dictionary<int, object> tdHtmlAttributesDic)

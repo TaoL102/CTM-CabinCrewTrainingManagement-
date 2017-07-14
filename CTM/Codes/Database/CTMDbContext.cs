@@ -1,4 +1,4 @@
-﻿using CTMLib.Models;
+﻿using CTM.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CTM.Codes.Database

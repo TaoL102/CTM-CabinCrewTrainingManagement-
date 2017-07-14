@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using CTMLib.CustomControls.Button;
-using CTMLib.Extensions;
-using CTMLib.Helpers;
-using CTMLib.Models;
+﻿using System.Web.Mvc;
+using CTMCustomControlLib.CustomControls.Button;
+using CTMCustomControlLib.Helpers;
+using CTMCustomControlLib.Extensions;
 
-namespace CTMLib.CustomControls.DropdownItem
+namespace CTMCustomControlLib.CustomControls.DropdownItem
 {
     public class DropDownItemControlAjax : ButtonControlAjax
     {

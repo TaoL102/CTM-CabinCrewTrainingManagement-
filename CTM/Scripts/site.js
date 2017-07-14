@@ -75,6 +75,21 @@ function checkBoxHidableDivHide() {
     var ids = $("input[type='checkbox'][value='true'][data-hidabledivid]").data("hidabledivid");
     $("#" + ids).hide();
 }
+function downloadBtnClickEvent() {
+    var btn = $(event.target);
+    var form = btn.parents("form");
+    var formHtml = form[0];
+    // Add value to the form, indicating this is the download button
+    var isDownloadInput = $('<input />')
+        .attr('type', 'hidden')
+        .attr('name', "isDownload")
+        .attr('value', "true");
+    // Append to form and submit
+    form.append(isDownloadInput);
+    formHtml.submit();
+    // After submit, remove the value
+    isDownloadInput.remove();
+}
 // Ajax with file upload
 // https://forums.asp.net/t/2026436.aspx?Request+Files+not+working+using+Ajax+BeginForm+on+partial+Views
 function uploadBtnClickEvent() {
@@ -144,6 +159,7 @@ function hideElement(elementId) {
     $(elementId).hide();
 }
 ;
+// Edit element
 function editElement(controllerName, elementId, url) {
     $.ajax({
         url: url,
@@ -163,6 +179,18 @@ function editElement(controllerName, elementId, url) {
     });
 }
 ;
+// Reference: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+function generateUUID() {
+    var d = new Date().getTime();
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+        d += performance.now(); //use high-precision timer if available
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
 /// <reference path="sitevariable.ts"/>
 function registerPlugins(wrapperSelector) {
     if (wrapperSelector === void 0) { wrapperSelector = null; }

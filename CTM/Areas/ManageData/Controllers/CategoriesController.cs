@@ -3,9 +3,8 @@ using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using CTM.Areas.ManageAccount.Models;
 using CTM.Codes.Database;
-using CTMLib.Models;
+using CTM.Models;
 
 namespace CTM.Areas.ManageData.Controllers
 {

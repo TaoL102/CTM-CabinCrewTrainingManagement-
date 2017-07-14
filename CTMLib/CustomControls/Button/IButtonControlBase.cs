@@ -1,4 +1,4 @@
-﻿namespace CTMLib.CustomControls.Button
+﻿namespace CTMCustomControlLib.CustomControls.Button
 {
     public interface IButtonControl : ISizeProperty, IColorProperty
     {

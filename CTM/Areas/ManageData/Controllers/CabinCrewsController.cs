@@ -5,14 +5,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using CTM.Areas.ManageAccount.Models;
 using CTM.Codes.Database;
 using CTM.Controllers;
-using CTMLib.Helpers;
-using CTMLib.Models;
-using Newtonsoft.Json;
+using CTM.Models;
 
 namespace CTM.Areas.ManageData.Controllers
 {
@@ -129,68 +125,68 @@ namespace CTM.Areas.ManageData.Controllers
             return View();
         }
 
-        // POST: CabinCrews/Upload
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Upload(HttpPostedFileBase upload)
-        {
-            // EXCEL upload
-            if (upload != null && upload.ContentLength > 0)
-            {
-                // Check file type
-                if (ExcelHelper.CheckIsExcel(upload))
-                {
+        //// POST: CabinCrews/Upload
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Upload(HttpPostedFileBase upload)
+        //{
+        //    // EXCEL upload
+        //    if (upload != null && upload.ContentLength > 0)
+        //    {
+        //        // Check file type
+        //        if (ExcelHelper.CheckIsExcel(upload))
+        //        {
 
-                    var cabinCrewsInUpload = ExcelHelper.GenerateListCabinCrewFromExcel(upload.InputStream);
+        //            var cabinCrewsInUpload = ExcelHelper.GenerateListCabinCrewFromExcel(upload.InputStream);
 
-                    // Check if cabin crew exists in current database
-                    // If true, update it
-                    // If false, add it
-                    // if some records in current database donot exist in upload file, set IsResigned true
-                    var cabinCrewsInDb = db.CabinCrews.ToList();
+        //            // Check if cabin crew exists in current database
+        //            // If true, update it
+        //            // If false, add it
+        //            // if some records in current database donot exist in upload file, set IsResigned true
+        //            var cabinCrewsInDb = db.CabinCrews.ToList();
 
-                    // If intersected, update
-                    var listIntersection = cabinCrewsInDb.Intersect(cabinCrewsInUpload, new CabinCrewComparer());
-                    if (listIntersection.Any())
-                    {
-                        foreach (CabinCrew c in listIntersection)
-                        {
+        //            // If intersected, update
+        //            var listIntersection = cabinCrewsInDb.Intersect(cabinCrewsInUpload, new CabinCrewComparer());
+        //            if (listIntersection.Any())
+        //            {
+        //                foreach (CabinCrew c in listIntersection)
+        //                {
 
-                            var ccInDb = await db.CabinCrews.FindAsync(c.ID);
-                            var ccInUpload = cabinCrewsInUpload.Where(o => o.ID.Equals(c.ID)).FirstOrDefault();
-                            if (!ccInDb.Equals(ccInUpload))
-                            {
-                                ccInDb.Name = ccInUpload.Name;
-                                ccInDb.IsResigned = false;
-                            }
-                        }
-                    }
+        //                    var ccInDb = await db.CabinCrews.FindAsync(c.ID);
+        //                    var ccInUpload = cabinCrewsInUpload.Where(o => o.ID.Equals(c.ID)).FirstOrDefault();
+        //                    if (!ccInDb.Equals(ccInUpload))
+        //                    {
+        //                        ccInDb.Name = ccInUpload.Name;
+        //                        ccInDb.IsResigned = false;
+        //                    }
+        //                }
+        //            }
 
 
-                    // If not existed in db, but in listUploaded
-                    var listDifference1 = cabinCrewsInUpload.Except(cabinCrewsInDb, new CabinCrewComparer());
-                    if (listDifference1.Any())
-                    {
-                        db.CabinCrews.AddRange(listDifference1);
-                    }
+        //            // If not existed in db, but in listUploaded
+        //            var listDifference1 = cabinCrewsInUpload.Except(cabinCrewsInDb, new CabinCrewComparer());
+        //            if (listDifference1.Any())
+        //            {
+        //                db.CabinCrews.AddRange(listDifference1);
+        //            }
 
-                    // If not existed in listUpload, but in db, 
-                    var listDifference2 = cabinCrewsInDb.Except(cabinCrewsInUpload, new CabinCrewComparer());
-                    if (listDifference2.Any())
-                    {
-                        foreach (CabinCrew c in listDifference2)
-                        {
-                            c.IsResigned = true;
-                        }
-                    }
-                    await db.SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false);
-                    return RedirectToAction("Index");
-                }
-            }
-            return View();
-        }
+        //            // If not existed in listUpload, but in db, 
+        //            var listDifference2 = cabinCrewsInDb.Except(cabinCrewsInUpload, new CabinCrewComparer());
+        //            if (listDifference2.Any())
+        //            {
+        //                foreach (CabinCrew c in listDifference2)
+        //                {
+        //                    c.IsResigned = true;
+        //                }
+        //            }
+        //            await db.SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false);
+        //            return RedirectToAction("Index");
+        //        }
+        //    }
+        //    return View();
+        //}
 
 
         public  JsonResult GetCabinCrewNames(string name)

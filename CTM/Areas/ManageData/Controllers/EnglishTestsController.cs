@@ -2,197 +2,286 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
+using CTM.Areas.ManageData.ViewModels;
 using CTM.Areas.ManageData.ViewModels.EnglishTests;
+using CTM.Areas.Search.ViewModels;
+using CTM.Areas.Search.ViewModels.EnglishTests;
+using CTM.Models;
 using Microsoft.AspNet.Identity;
-using CTM.Codes.Database;
-using CTM.Controllers;
-using CTMLib.Helpers;
-using CTMLib.Models;
 
 namespace CTM.Areas.ManageData.Controllers
 {
-    public class EnglishTestsController : BaseController
+    public class EnglishTestsController : ManageDataControllerBase
     {
-        private readonly DbManager _dbManager=new DbManager();
+        #region MVC Get & Post
 
-        // GET: EnglishTests/Create
+        /// <summary>
+        /// Get : Create
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
-            Create createViewModel=new Create()
-            {
-                CategoryList = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name"),
-            };
-
-            return PartialView("_CreatePartial",createViewModel);
+            return CreateGet();
         }
 
-        // POST: EnglishTests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Post : Create
+        /// </summary>
+        /// <param name="createViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "CCName,Type,Grade,CategoryID,Date")] Create createViewModel)
         {
-
-            if (ModelState.IsValid)
-            {
-                // Cabin Crew
-                var cabinCrew =await  _dbManager.DbSet<CabinCrew>().FirstOrDefaultAsync(o => o.Name.ToLower().Equals(createViewModel.CCName.Trim().ToLower()));
-                var category = await _dbManager.Categories.FirstOrDefaultAsync(o => o.ID.Equals(createViewModel.CategoryID));
-
-                if (cabinCrew != null)
-                {
-                    EnglishTest englishTest=new EnglishTest()
-                    {
-                        CabinCrewID = cabinCrew.ID,
-                        CabinCrew = cabinCrew,
-                        CategoryID = createViewModel.CategoryID,
-                        Category = category,
-                        Type = createViewModel.Type,
-                        Date = createViewModel.Date,
-                        Grade = createViewModel.Grade
-                    };
-
-                    await _dbManager.Add(englishTest);
-                    await _dbManager.SaveChangesAsync();
-                    return new HttpStatusCodeResult(HttpStatusCode.Accepted);
-                }
-            }
-            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            return await CreatePost<EnglishTest>(createViewModel);
         }
 
-        // GET: EnglishTests/Edit/5
+        /// <summary>
+        /// Get : Edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult> Edit(string id)
         {
-            if (id == null)
-            {
-                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EnglishTest englishTest = await _dbManager.GetEntityAsync<EnglishTest>(id);
-            if (englishTest == null)
-            {
-                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            ViewBag.CategoryID = new SelectList(_dbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.英语考核), "ID", "Name", englishTest.CategoryID);
-
-            return PartialView("_EditPartial", englishTest);
+            return await EditGet(id);
         }
 
-        // POST: EnglishTests/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Post : Edit
+        /// </summary>
+        /// <param name="englishTest"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "ID,CabinCrewID,Type,Grade,CategoryID,Date")] EnglishTest englishTest)
         {
-            if (ModelState.IsValid)
-            {
-                await _dbManager.Update(englishTest);
-                await _dbManager.SaveChangesAsync();
-                return new HttpStatusCodeResult(HttpStatusCode.Accepted);
-            }
-
-            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            return await EditPost<EnglishTest>(englishTest);
         }
 
-        // GET: EnglishTests/Delete/5
+        /// <summary>
+        /// Get : Delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult> Delete(string id)
         {
-            if (id == null)
-            {
-                // return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EnglishTest englishTest = await _dbManager.GetEntityAsync<EnglishTest>(id);
-            if (englishTest == null)
-            {
-                // return HttpNotFound();
-            }
-
-            return PartialView("_DeletePartial", englishTest);
+            return await DeleteGet(id);
         }
 
-        // POST: EnglishTests/Delete/5
+        /// <summary>
+        /// Post : Delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            try
-            {
-                await _dbManager.Remove<EnglishTest>(id);
-                await _dbManager.SaveChangesAsync();
-                return new HttpStatusCodeResult(HttpStatusCode.Accepted);
-            }
-            catch (Exception e)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
-            }
+            return  await DeleteConfirmedPost<EnglishTest>(id);
         }
 
-        // GET: EnglishTests/Upload
+        /// <summary>
+        /// Get : Upload
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Upload()
         {
-            Upload uploadModelView = new Upload()
+            return UploadGet();
+        }
+
+        /// <summary>
+        /// Post : Upload
+        /// </summary>
+        /// <param name="uploadViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Upload(Upload uploadViewModel)
+        {
+            return await UploadPost<EnglishTest>(uploadViewModel);
+        }
+
+        /// <summary>
+        /// Post : Download Template
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DownloadTemplate()
+        {
+            return DownloadTemplate<UploadTemplate>();
+        }
+
+        #endregion
+
+        #region Overridden Methods
+
+        protected override async Task<Model> GetEntityById(string id)
+        {
+            return await DbManager.GetEntityAsync<EnglishTest>(id);
+        }
+
+        #region Create
+
+        protected override ICreate CreateViewModel()
+        {
+            var createViewModel = new Create()
+            {
+                CategoryList = new SelectList(DbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.EnglishTest), "ID", "Name"),
+            };
+            return createViewModel;
+        }
+
+        #endregion
+
+        #region Edit
+
+        protected override void EditGetViewBag(Model entity)
+        {
+            ViewBag.CategoryID = new SelectList(
+                DbManager.DbSet<Category>().Where(o => o.Type == SuperCategory.EnglishTest), 
+                "ID",
+                "Name",
+                ((EnglishTest)entity).CategoryID);
+        }
+
+        #endregion
+
+        #region Upload
+
+        protected override IUpload UploadViewModel()
+        {
+            var uploadModelView = new Upload()
             {
                 CategoryList =
-                    new SelectList(_dbManager.Categories.Where(o => o.Type == SuperCategory.英语考核), "ID", "Name")
+                    new SelectList(DbManager.Categories.Where(o => o.Type == SuperCategory.EnglishTest), "ID", "Name")
             };
 
-            return PartialView("_UploadPartial", uploadModelView);
+            return uploadModelView;
         }
 
-        // POST: EnglishTests/Upload
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<ActionResult> Upload(Upload uploadModelView)
+        protected override UploadRecord GenerateUploadRecord(IUpload iUpload)
         {
-            // EXCEL upload
-            HttpPostedFileBase fileBase = Request.Files.Get(0);
-            if (fileBase != null && fileBase.ContentLength > 0)
+            var uploadViewModel = (Upload)iUpload;
+            return new UploadRecord()
             {
-                // Check file type
-                if (ExcelHelper.CheckIsExcel(fileBase))
+                ID = uploadViewModel.UploadRecordID,
+                CategoryID = uploadViewModel.CategoryID,
+                DateTime = DateTime.UtcNow,
+                ApplicationUserID = User.Identity.GetUserId(),
+                IsWithdrawn = false,
+            };
+        }
+
+        protected override IUploadTemplate GenerateUploadTemplate(List<string> strList)
+        {
+            var uploadTemplate = new UploadTemplate()
+            {
+                CabinCrewID = strList[0],
+                CabinCrewName = strList[1],
+                CabinAnnoucement = strList[2],
+                SpokenSkill = strList[3]
+            };
+            return uploadTemplate;
+        }
+
+        protected override ISearchResultModel ConvertEntityToSearchResult(IModel entity)
+        {
+            var item = (EnglishTest)entity;
+            var searchResult = new SearchResult()
+            {
+                ID = item.ID,
+                CabinCrewID = item.CabinCrewID,
+                CabinCrewName = item.CabinCrew.Name,
+                CategoryName = item.Category.Name,
+                Date = item.Date,
+                Grade = item.Grade,
+                Type = item.Type
+            };
+            return searchResult;
+        }
+        
+        protected override List<IModel> ConvertUploadTemplateToEntity(List<IUploadTemplate> listUploadTemplate, IUpload uploadViewModel)
+        {
+            var list = new List<IModel>();
+
+            // Extra data from upload view model
+            var englishTestCategoryId = ((Upload)uploadViewModel).CategoryID;
+            var uploadRecordId = ((Upload)uploadViewModel).UploadRecordID;
+            var date = ((Upload)uploadViewModel).Date;
+
+            listUploadTemplate.ForEach(o =>
+            {
+                var item = (UploadTemplate)o;
+
+                // If cabin crew Id and name are null, ignore 
+                if (!string.IsNullOrEmpty(item.CabinCrewID) && !string.IsNullOrEmpty(item.CabinCrewName))
                 {
-
-                    // Save to TABLE UploadRecord
-                    await _dbManager.Add<UploadRecord>(new UploadRecord()
+                    if (!string.IsNullOrEmpty(item.CabinAnnoucement))
                     {
-                        ID = uploadModelView.UploadRecordID,
-                        CategoryID = uploadModelView.CategoryID,
-                        DateTime = DateTime.UtcNow,
-                        ApplicationUserID = User.Identity.GetUserId(),
-                        IsWithdrawn = false,
-                    });
-
-                    var englishTestsUpload = ExcelHelper.GenerateListEnglishTestFromExcel(fileBase.InputStream, uploadModelView.Date, uploadModelView.CategoryID, uploadModelView.UploadRecordID);
-
-                    if (englishTestsUpload.Any<EnglishTest>())
-                    {
-                        _dbManager.AddRange(englishTestsUpload);
+                        list.Add(
+                            // Announcement grade
+                            new EnglishTest()
+                            {
+                                ID = Guid.NewGuid().ToString(),
+                                CabinCrewID = item.CabinCrewID,
+                                Grade = item.CabinAnnoucement,
+                                Type = EnglishTestType.CabinAnnoucement,
+                                Date = date.ToUniversalTime().Date,
+                                CategoryID = englishTestCategoryId,
+                                UploadRecordID = uploadRecordId,
+                            }
+                        );
                     }
 
-                    var result = await _dbManager.GetContext().SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false);
-
-                    return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+                    if (!string.IsNullOrEmpty(item.SpokenSkill))
+                    {
+                        list.Add(
+                            // Oral English grade
+                            new EnglishTest()
+                            {
+                                ID = Guid.NewGuid().ToString(),
+                                CabinCrewID = item.CabinCrewID,
+                                Grade = item.SpokenSkill,
+                                Type = EnglishTestType.SpokenSkill,
+                                Date = date.ToUniversalTime().Date,
+                                CategoryID = englishTestCategoryId,
+                                UploadRecordID = uploadRecordId,
+                            }
+                        );
+                    }
                 }
-            }
-            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            });
+
+            return list;
         }
 
-        protected override void Dispose(bool disposing)
+        protected override async Task<IModel> ConvertCreateViewModelToEntity(ICreate iCreate)
         {
-            if (disposing)
+            var createViewModel = (Create)iCreate;
+
+            // Cabin Crew
+            var cabinCrew = await DbManager.DbSet<CabinCrew>()
+                .FirstOrDefaultAsync(o => o.Name.ToLower().Equals(createViewModel.CCName.Trim().ToLower()));
+            var category = await DbManager.Categories.FirstOrDefaultAsync(o => o.ID.Equals(createViewModel.CategoryID));
+
+            if (cabinCrew != null)
             {
-                _dbManager.Dispose();
+                EnglishTest englishTest = new EnglishTest()
+                {
+                    CabinCrewID = cabinCrew.ID,
+                    CabinCrew = cabinCrew,
+                    CategoryID = createViewModel.CategoryID,
+                    Category = category,
+                    Type = createViewModel.Type,
+                    Date = createViewModel.Date,
+                    Grade = createViewModel.Grade
+                };
+                return englishTest;
             }
-            base.Dispose(disposing);
+            return null;
         }
+
+        #endregion
     }
+    #endregion
 }

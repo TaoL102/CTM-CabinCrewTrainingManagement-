@@ -1,10 +1,8 @@
 ﻿using System.Web.Mvc;
-using CTMLib.CustomControls.Button;
-using CTMLib.CustomControls.Label;
-using CTMLib.Extensions;
-using CTMLib.Helpers;
+using CTMCustomControlLib.CustomControls.Label;
+using CTMCustomControlLib.Extensions;
 
-namespace CTMLib.CustomControls.CheckBox
+namespace CTMCustomControlLib.CustomControls.CheckBox
 {
     public class CheckBoxControl : CustomControlBase,IColorProperty
     {

@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using CTM.Areas.ManageAccount.Models;
 using CTM.Areas.Search.ViewModels.RefresherTrainings;
 using CTM.Codes.Database;
-using CTMLib.Helpers;
-using CTMLib.Models;
-using Microsoft.AspNet.Identity;
+using CTM.Models;
+using CTM.Codes.Helpers;
 
 namespace CTM.Areas.Search.Controllers
 {
@@ -27,7 +21,7 @@ namespace CTM.Areas.Search.Controllers
         public async Task<ActionResult> Index()
         {
             // Dropdownlist for CategoryName
-            ViewBag.CategoryList = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.复训), "ID", "Name");
+            ViewBag.CategoryList = new SelectList(db.Categories.Where(o => o.Type == SuperCategory.RefresherTraining), "ID", "Name");
 
             return View();
         }
@@ -50,7 +44,7 @@ namespace CTM.Areas.Search.Controllers
             {
                 return PartialView("_SearchResultPartial", list);
             }
-            return ExportToFile("复训", IsLatest, list);
+            return ExportToFile("RefresherTraining", IsLatest, list);
 
 
         }
@@ -146,21 +140,21 @@ namespace CTM.Areas.Search.Controllers
         }
 
 
-        // POST: RefresherTrainings/DownloadTemplate
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        public ActionResult DownloadTemplate()
-        {
-            // Get 
-            var listCabinCrews = db.CabinCrews.ToList();
+        //// POST: RefresherTrainings/DownloadTemplate
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //public ActionResult DownloadTemplate()
+        //{
+        //    // Get 
+        //    var listCabinCrews = db.CabinCrews.ToList();
 
-            var stream = ExcelHelper.GenerateRefresherTrainingsTemplate(listCabinCrews); // Return a MemoryStream 
+        //    var stream = ExcelHelper.GenerateRefresherTrainingsTemplate(listCabinCrews); // Return a MemoryStream 
 
-            stream.Seek(0, SeekOrigin.Begin);
+        //    stream.Seek(0, SeekOrigin.Begin);
 
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Refresher Trainings Template.xlsx");
-        }
+        //    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Refresher Trainings Template.xlsx");
+        //}
 
 
         private FileStreamResult ExportToFile(string filename, bool isLatest, List<DisplayRefresherTrainingsViewModel> list)
@@ -208,12 +202,14 @@ namespace CTM.Areas.Search.Controllers
                 }
             }
 
+            // Must be deleted
+            return null;
 
-            var stream = ExcelHelper.GenerateExcel(filename, listSelected, hearderList); // Return a MemoryStream 
+            // var stream = ExcelHelper.GenerateExcel(filename, listSelected, hearderList); // Return a MemoryStream 
 
-            stream.Seek(0, SeekOrigin.Begin);
+            //  stream.Seek(0, SeekOrigin.Begin);
 
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename + ".xlsx");
+            //  return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename + ".xlsx");
         }
 
         protected override void Dispose(bool disposing)

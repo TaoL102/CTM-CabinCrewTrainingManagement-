@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using CTM.Areas.API.Controllers;
-using CTMLib.Resources;
+using CTMLocalizationLib.Resources;
 
 namespace CTM.Codes.Attributes
 {

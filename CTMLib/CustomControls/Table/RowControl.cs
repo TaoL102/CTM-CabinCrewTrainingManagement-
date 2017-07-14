@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using WebGrease.Css.Extensions;
 
-namespace CTMLib.CustomControls.Table
+namespace CTMCustomControlLib.CustomControls.Table
 {
     public class RowControl : CustomControlBase
     {

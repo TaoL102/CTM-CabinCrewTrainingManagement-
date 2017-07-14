@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTM", "CTM\CTM.csproj", "{3D0F5E5D-7BD6-4BE7-9078-D219A28F057C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTMLib", "CTMLib\CTMLib.csproj", "{8499F3A3-45A0-4D63-A9E4-E41BE2DEE387}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTMCutomControlLib", "CTMLib\CTMCutomControlLib.csproj", "{8499F3A3-45A0-4D63-A9E4-E41BE2DEE387}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTMLocalizationLib", "CTMLocalizationLib\CTMLocalizationLib.csproj", "{20219BF6-0440-42AA-8FD8-8A2F965AD576}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8499F3A3-45A0-4D63-A9E4-E41BE2DEE387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8499F3A3-45A0-4D63-A9E4-E41BE2DEE387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8499F3A3-45A0-4D63-A9E4-E41BE2DEE387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20219BF6-0440-42AA-8FD8-8A2F965AD576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20219BF6-0440-42AA-8FD8-8A2F965AD576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20219BF6-0440-42AA-8FD8-8A2F965AD576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20219BF6-0440-42AA-8FD8-8A2F965AD576}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

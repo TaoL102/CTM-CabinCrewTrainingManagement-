@@ -1,13 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Web;
 using System.Web.Mvc;
-using CTMLib.Models;
-using CTMLib.Resources;
+using CTM.Codes.Interfaces;
+using CTM.Models;
+using CTMLocalizationLib.Resources;
 
 namespace CTM.Areas.ManageData.ViewModels.EnglishTests
 {
-    public class Upload : Model<EnglishTest>
+    public class Upload :IUpload, IEnglishTest
     {
         private DateTime date;
 

@@ -274,11 +274,19 @@
     <Compile Include="Areas\ManageAccount\Controllers\AccountController.cs" />
     <Compile Include="Areas\ManageAccount\Controllers\ManageController.cs" />
     <Compile Include="Areas\ManageAccount\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\ManageData\Controllers\ManageDataControllerBase.cs" />
     <Compile Include="Areas\ManageData\Controllers\EnglishTestsController.cs" />
     <Compile Include="Areas\ManageData\Controllers\LogsController.cs" />
     <Compile Include="Areas\ManageData\Controllers\RefresherTrainingsController.cs" />
     <Compile Include="Areas\ManageData\ViewModels\EnglishTests\Create.cs" />
     <Compile Include="Areas\ManageData\ViewModels\EnglishTests\Upload.cs" />
+    <Compile Include="Areas\ManageData\ViewModels\EnglishTests\UploadTemplate.cs" />
+    <Compile Include="Areas\ManageData\ViewModels\ICreate.cs" />
+    <Compile Include="Areas\ManageData\ViewModels\IUpload.cs" />
+    <Compile Include="Areas\ManageData\ViewModels\IUploadTemplate.cs" />
+    <Compile Include="Areas\ManageData\ViewModels\UploadTemplateBase.cs" />
+    <Compile Include="Areas\Search\Controllers\ControllerSearchBase.cs" />
+    <Compile Include="Areas\Search\ViewModels\ISearchResultModel.cs" />
     <Compile Include="Areas\Search\ViewModels\ISearchViewModel.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\Search.cs" />
     <Compile Include="Areas\Search\ViewModels\EnglishTests\SearchResult.cs" />
@@ -292,11 +300,22 @@
     <Compile Include="Codes\Database\CTMDbContext.cs" />
     <Compile Include="Codes\Attributes\IsNameAttribute.cs" />
     <Compile Include="Codes\Attributes\SystemErrorHandleAttribute.cs" />
+    <Compile Include="Codes\Helpers\ExcelHelper.cs" />
+    <Compile Include="Codes\Interfaces\IEnglishTest.cs" />
+    <Compile Include="Codes\Managers\ISqlAction.cs" />
+    <Compile Include="Codes\Managers\SqlAction.cs" />
+    <Compile Include="Codes\Managers\SqlEnglishTest.cs" />
+    <Compile Include="Codes\Managers\SqlManager.cs" />
+    <Compile Include="Codes\Extensions\EnumExtension.cs" />
+    <Compile Include="Codes\Extensions\HtmlHelperExtension.cs" />
+    <Compile Include="Codes\Extensions\ModelExtension.cs" />
     <Compile Include="Codes\Helpers\ConstantHelper.cs" />
     <Compile Include="Codes\Helpers\ControllerHelper.cs" />
+    <Compile Include="Codes\Helpers\ModelHelper.cs" />
+    <Compile Include="Codes\Helpers\SqlQueryHelper.cs" />
     <Compile Include="Codes\SignalR\ViewDataUpdateHub.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Codes\Database\DbManager.cs" />
+    <Compile Include="Codes\Managers\DbManager.cs" />
     <Compile Include="Migrations\201702120209221_Init.cs" />
     <Compile Include="Migrations\201702120209221_Init.Designer.cs">
       <DependentUpon>201702120209221_Init.cs</DependentUpon>
@@ -318,6 +337,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CabinCrew.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\EnglishTest.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\RefresherTraining.cs" />
+    <Compile Include="Models\UploadRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -380,7 +408,6 @@
     <Content Include="Areas\ManageData\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Home\Views\_ViewStart.cshtml" />
     <Content Include="Areas\ManageUserRoles\Views\web.config" />
-    <Content Include="Areas\Search\Views\EnglishTests\_ManageDataPartial.cshtml" />
     <Content Include="App_Code\SharedHelpers.cshtml" />
     <Content Include="Images\bg_dog.png" />
     <Content Include="Images\login_card_bg.jpg" />
@@ -550,7 +577,6 @@
     <Folder Include="Areas\ManageUserRoles\Views\Shared\" />
     <Folder Include="Areas\Search\Views\Shared\" />
     <Folder Include="Database\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -580,9 +606,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CTMLib\CTMLib.csproj">
+    <ProjectReference Include="..\CTMLib\CTMCutomControlLib.csproj">
       <Project>{8499f3a3-45a0-4d63-a9e4-e41be2dee387}</Project>
-      <Name>CTMLib</Name>
+      <Name>CTMCutomControlLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CTMLocalizationLib\CTMLocalizationLib.csproj">
+      <Project>{20219bf6-0440-42aa-8fd8-8a2f965ad576}</Project>
+      <Name>CTMLocalizationLib</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
